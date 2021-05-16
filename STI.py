@@ -78,6 +78,7 @@ print(tabulate(df2, headers='keys', tablefmt='psql'))
 ontologies1 = dataInfoDF.getOntologiesTable1()
 ontologies2 = dataInfoDF.getOntologiesTable2()
 
+
 # Boolean qui permet de savoir si la colonne sujet trouve une correspondance avec une colonne du deuxième dataset.
 isSameColumn = False
 
@@ -102,8 +103,6 @@ if (isSameColumn):
     headers = list(df.columns.values)
     # STI du premier cas.
     while i < rowCount:
-        #print("HEADERS")
-        #print(headers)
         for item in headers:
             # print(item)
             # Si l'item est null il faut le remplir.

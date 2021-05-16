@@ -38,10 +38,6 @@ class DataInfoDF:
     def getOntologiesTable2(self):
         return self.__ontologiesTable2
 
-    def __printDf(self, df):
-        #print(df)
-        df.to_csv(r'C:\Users\ANTHONY\Desktop\ECOLE\MA1\Mémoire\Outil\File Name.csv', index=False)
-
     def __cleanOntologies(self, tableName, ctaInfos):
         ontologyList = list()
         for item in ctaInfos:
@@ -79,13 +75,14 @@ class DataInfoDF:
         # A Améliorer, il ne faudrait pas envoyer un df en parametre mais un array ça ferait moins de process!
         finalOntology = OntologyColumnsConverter(df)
         array = finalOntology.getCorrectOntologies()
+        ontologiesList = ontologies.copy()
         for i, word in enumerate(array):
           #(array[i])
             if str(array[i]) != '':
-                ontologies[i] = array[i]
+                ontologiesList[i] = array[i]
         # Voila pourquoi il faut améliorer on recréé un df alors que si on passe une array en argument on peut supprimer la création de df au dessus.
         df = pd.DataFrame(data=arrayTab,
-                          columns=ontologies,
+                          columns=ontologiesList,
                           dtype=str)
         return df
 
@@ -170,7 +167,6 @@ class DataInfoDF:
         ctaInfos = self.__readCsvFile(self.pathCTA)
 
         DataInfoDF.__ontologiesTable1 = self.__cleanOntologies("table1", ctaInfos)
-
         # Fill les tableaux. Vu que le tableau est inversé, il faut faire les index dans l'autre sens. Table1 Hard codé trouver autre chose aussi?
         # Je le fais direct passé en DataFrame
         array1 = self.__getArray('Table1', arrayTab1, dataList)
@@ -322,7 +318,6 @@ class OntologyColumnsConverter:
         # On pourrait réutiliser listOntologies a la place de finaListOntologies.
         finalListOntologies = list()
         #print("Liste ontologies")
-        #print(listOntologies)
         while i < len(listOntologies):
             most_common = ""
             if listOntologies[i]:
