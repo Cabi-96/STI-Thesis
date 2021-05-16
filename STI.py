@@ -175,6 +175,12 @@ if(isSameColumn):
                 insertDataDf(df,results1,i,item)
         i = i+1
     print("DataFrame Final")
+
+    #Clean les headers qui ont un chiffre à la fin.
+    for item in headers:
+        if(item[-1].isdigit()):
+            df.rename(columns={item:item[:-1]}, inplace=True)
+
     printDf(df)
 else:
     print("test")
