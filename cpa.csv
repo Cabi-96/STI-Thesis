@@ -1,5 +1,6 @@
 "table1,""0"",""http://dbpedia.org/ontology/Person"""
 "table1,""1"",""http://dbpedia.org/ontology/Place http://dbpedia.org/ontology/PopulatedPlace http://dbpedia.org/ontology/Settlement http://dbpedia.org/ontology/City"""
 "table1,""2"",""http://dbpedia.org/ontology/Person1"""
-"table2,""0"",""http://dbpedia.org/ontology/Place http://dbpedia.org/ontology/PopulatedPlace http://dbpedia.org/ontology/Settlement http://dbpedia.org/ontology/City"""
-"table2,""1"",""http://dbpedia.org/ontology/Person"""
+"table2,""0"",""http://dbpedia.org/ontology/Person"""
+"table2,""1"",""http://dbpedia.org/ontology/Place http://dbpedia.org/ontology/PopulatedPlace http://dbpedia.org/ontology/Settlement http://dbpedia.org/ontology/City"""
+
