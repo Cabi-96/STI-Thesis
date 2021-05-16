@@ -12,6 +12,14 @@ def printDf(df):
 #    value = value.replace(',','\,')
 #    return value
 
+def cleanLastDigit(item):
+    #Ici je récupère la cellule de la colonne pour l'ontologie qui m'intéresse je remove un chiffre s'il y a en a un à la fin.
+    itemOntology = item
+    if(item[-1].isdigit()):
+        itemOntology = item[:-1]
+    #print(itemOntology)
+    return itemOntology
+
 def executeSparqlQuery(query):
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
@@ -19,11 +27,36 @@ def executeSparqlQuery(query):
     return results
 
 #Va permettre d'insérer dans la colonne du dataframe, le resultat de la query SPARQL
-def insertDataDf(df,results):
-    df.at[i,item] = str(df.at[i,item]).replace("nan","")
+def insertDataDf(df,results,i,item):
+
+    itemOntology = cleanLastDigit(item)
+    objectFilter = itemOntology.split(" ")
+    stringFilter = ""
+
+    #Ici on récupère toutes les ontologies de la colonne une par une.
+    for object in objectFilter:
+        stringFilter += "?object = <"+object+"> ||\n"
+    stringFilter = stringFilter[:-3]
+
+
     for result in results["results"]["bindings"]:
         predicate = result["object"]["value"]
-        df.at[i,item] = str(df.at[i,item]) + str(predicate) + " "
+        #print(item)
+        #print(predicate)
+
+        #Cette query va permettre de vérifier que l'entité qu'on va insérer dans le tableau possède dans son rdf type, les différentes ontologies de la colonne.
+        queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <"+dbrSubject+"> rdf:type ?object } \n FILTER ("+stringFilter+")\n}"
+        resultsFilter = executeSparqlQuery(queryString)
+
+        #print("FILTER")
+        #print(queryString)
+        if resultsFilter:
+
+            #Faire disparaitre la valeur NaN avec fillna() mais pas réussi. df.fillna('') -> A AMELIORER!
+            if len(str(df.at[i,item])) == 3:
+                df.at[i,item] = str(df.at[i,item]).replace("nan","")
+
+            df.at[i,item] = str(df.at[i,item]) + str(predicate) + " "
 
 #Va permettre de retrouver les ontologies/colonnes lorsqu'on arrive pas à trouver une valeur pour une cellule. (Ca permet de remplir le tableau)
 def ontologiesSearch(df,rowCount,item):
@@ -68,6 +101,11 @@ def ontologiesSearch(df,rowCount,item):
 
     return most_common
 
+
+#-----------------------------------------------------------------
+#                           MAIN
+#-----------------------------------------------------------------
+
 # Code SPARQL vient de : https://stackoverflow.com/questions/58519010/constructing-graph-using-rdflib-for-the-outputs-from-sparql-select-query-with
 from SPARQLWrapper import SPARQLWrapper, JSON
 #labelName = URIRef("<http://dbpedia.org/resource/" + name +">")
@@ -101,16 +139,21 @@ if(isSameColumn):
     #Je mélange les deux datasets avec le append
     df = result = df1.append(df2, ignore_index=True, sort=False)
 
+
+
     # print the list of all the column headers
     #print("The column headers :")
     headers = list(df.columns.values)
     #print(headers)
     i = 0
     rowCount = len(df.index)
+    headers = list(df.columns.values)
+
 
     #STI du premier cas.
     while i < rowCount:
         for item in headers:
+            #print(item)
             #Si l'item est null il faut le remplir.
             if pd.isnull(df.at[i,item]):
 
@@ -119,21 +162,15 @@ if(isSameColumn):
                 #dbrSubject = cleanDbrOrDbo(dbrSubject)
                 #print(dbrSubject)
 
-                #Ici je récupère la cellule de la colonne pour l'ontologie qui m'intéresse je remove un chiffre s'il y a en a un à la fin.
-                itemOntology = item
-                if(item[-1].isdigit()):
-                    itemOntology = item[:-1]
-                dbo = itemOntology
-                #print(dbo)
-
                 #Je décide de vérifier les ontologies pouvant correspondre au tableau.
                 dbo = ontologiesSearch(df,rowCount,item)
                 #Via la query d'au dessus j'ai pu récupérer de nouveaux dbo qui peuvent correspondre à mon dbr
                 #Vérifier le rdf type avec l'ontologie de la colonne!
                 queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <"+dbrSubject+"> <"+dbo+"> ?object } \n}"
+                print(queryString)
                 results1 = executeSparqlQuery(queryString)
                 #J'écris les résultats trouvé grâce à la query au dessus.
-                insertDataDf(df,results1)
+                insertDataDf(df,results1,i,item)
         i = i+1
     print("DataFrame Final")
     printDf(df)
