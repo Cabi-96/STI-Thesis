@@ -1,10 +1,12 @@
 from DataIntoDF import DataInfoDF
 from collections import Counter
+from tabulate import tabulate
 import pandas as pd
 
 def printDf(df):
-    print(df)
-    df.to_csv(r'C:\Users\ANTHONY\Desktop\ECOLE\MA1\Mémoire\Outil\File Name.csv',index=False)
+    print(tabulate(df, headers='keys', tablefmt='psql'))
+    #df.to_csv(r'File Name.csv',index=False)
+    df.to_excel(r'File Name.xlsx',index=False)
 
 #def cleanDbrOrDbo(value):
 #    index = value.rfind('/')
@@ -118,9 +120,9 @@ dataInfoDF = DataInfoDF('annotations_CEA_12_05_2021(1).csv','cpa.csv')
 df1 = dataInfoDF.runTab1()
 df2 = dataInfoDF.runTab2()
 print("DataFrame 1")
-print(df1)
+print(tabulate(df1, headers='keys', tablefmt='psql'))
 print("DataFrame 2")
-print(df2)
+print(tabulate(df2, headers='keys', tablefmt='psql'))
 #Permet de retrouver tous les noms des colonnes/ontologies.
 ontologies1 = dataInfoDF.getOntologiesTable1()
 ontologies2 = dataInfoDF.getOntologiesTable2()
@@ -167,7 +169,7 @@ if(isSameColumn):
                 #Via la query d'au dessus j'ai pu récupérer de nouveaux dbo qui peuvent correspondre à mon dbr
                 #Vérifier le rdf type avec l'ontologie de la colonne!
                 queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <"+dbrSubject+"> <"+dbo+"> ?object } \n}"
-                print(queryString)
+                #print(queryString)
                 results1 = executeSparqlQuery(queryString)
                 #J'écris les résultats trouvé grâce à la query au dessus.
                 insertDataDf(df,results1,i,item)
