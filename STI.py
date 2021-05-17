@@ -47,7 +47,6 @@ def insertDataDf(df, results, i, key, item):
 
             # Cette query va permettre de vérifier que l'entité qu'on va insérer dans le tableau possède dans son rdf type, les différentes ontologies de la colonne.
             queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + predicate + "> rdf:type ?object } \n FILTER (" + stringFilter + ")\n}"
-            #print(queryString)
             resultsFilter = executeSparqlQuery(queryString)
             # print("FILTER")
             #print(queryString)
@@ -59,15 +58,25 @@ def insertDataDf(df, results, i, key, item):
     else:
         for result in results["results"]["bindings"]:
             predicate = result["object"]["value"]
+            print(predicate)
             if len(str(df.at[i, item])) == 4:
                 df.at[i, item] = str(df.at[i, item]).replace("<NA>", "")
             df.at[i, item] = str(df.at[i, item]) + str(predicate) + " "
 
 
 def insertColumnDf(df,column):
-    if column not in df:
+    index = column.rfind('/')
+    tmpColumn = column[index+1:]
+    listColumnName = list()
+
+    for item in df.columns.values:
+        index = item.rfind('/')
+        item = item[index+1:]
+        listColumnName.append(item)
+
+    if tmpColumn not in listColumnName:
         df[column] = np.nan
-    df[column] = df[column].astype('string')
+        df[column] = df[column].astype('string')
 
 
 
