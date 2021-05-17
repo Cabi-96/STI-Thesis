@@ -12,6 +12,7 @@ import pandas as pd
 class DataInfoDF:
     __ontologiesTable1 = ""
     __ontologiesTable2 = ""
+    __ontologiesDictTable = {}
 
     def __init__(self, pathCEA, pathCTA):
         self.pathCEA = pathCEA
@@ -38,6 +39,9 @@ class DataInfoDF:
     def getOntologiesTable2(self):
         return self.__ontologiesTable2
 
+    def getOntologiesDictTable(self):
+        return self.__ontologiesDictTable
+
     def __cleanOntologies(self, tableName, ctaInfos):
         ontologyList = list()
         for item in ctaInfos:
@@ -62,19 +66,18 @@ class DataInfoDF:
                 tmp = lastDataLineTab.replace(',', 'XXX', 1)
                 z = tmp.replace(',', 'XXX', 1).find(',')
                 indexITableau = int(lastDataLineTab[j + 1:z - 5])
-                # print('Index ok?')
-                # print(indexITableau-1,indexJTableau)
-                # print(len(arrayTab), len(arrayTab[0]))
                 arrayTab[indexITableau - 1][indexJTableau] = self.__cleanData(item)
         return arrayTab
 
-    def __getDf1(self, arrayTab, ontologies):
+    def __getDf(self, arrayTab, ontologies):
+        self.__ontologiesDictTable.clear()
         df = pd.DataFrame(data=arrayTab,
-                          # columns = arrayHeaders,
+                            columns = ontologies,
                           dtype=str)
         # A Améliorer, il ne faudrait pas envoyer un df en parametre mais un array ça ferait moins de process!
         finalOntology = OntologyColumnsConverter(df)
         array = finalOntology.getCorrectOntologies()
+        self.__ontologiesDictTable = finalOntology.getOntologiesDict()
         ontologiesList = ontologies.copy()
         for i, word in enumerate(array):
           #(array[i])
@@ -83,23 +86,6 @@ class DataInfoDF:
         # Voila pourquoi il faut améliorer on recréé un df alors que si on passe une array en argument on peut supprimer la création de df au dessus.
         df = pd.DataFrame(data=arrayTab,
                           columns=ontologiesList,
-                          dtype=str)
-        return df
-
-    def __getDf2(self, arrayTab, ontologies):
-        df = pd.DataFrame(data=arrayTab,
-                          # columns = arrayHeaders,
-                          dtype=str)
-        # A Améliorer, il ne faudrait pas envoyer un df en parametre mais un array ça ferait moins de process!
-        finalOntology = OntologyColumnsConverter(df)
-        array = finalOntology.getCorrectOntologies()
-        for i, word in enumerate(array):
-            #print(array[i])
-            if str(array[i]) != '':
-                ontologies[i] = array[i]
-        # Voila pourquoi il faut améliorer on recréé un df alors que si on passe une array en argument on peut supprimer la création de df au dessus.
-        df = pd.DataFrame(data=arrayTab,
-                          columns=ontologies,
                           dtype=str)
         return df
 
@@ -171,7 +157,7 @@ class DataInfoDF:
         # Je le fais direct passé en DataFrame
         array1 = self.__getArray('Table1', arrayTab1, dataList)
 
-        df1 = self.__getDf1(array1, DataInfoDF.__ontologiesTable1)
+        df1 = self.__getDf(array1, DataInfoDF.__ontologiesTable1)
         # printDf(df1)
 
         return df1
@@ -184,7 +170,7 @@ class DataInfoDF:
         lastDataLineTab2 = dataList[0]
         # print(lastDataLineTab2)
 
-        # ICi l'input change et qu'il y a une erreur, vérifier ici! Ici, on récupère le nombre max de ligne pour le tableau 1. .
+        # ICI l'input change et qu'il y a une erreur, vérifier ici! Ici, on récupère le nombre max de ligne pour le tableau 1. .
         indexITableau = self.__findIndexI(lastDataLineTab2)
         indexJTableau = self.__findIndexJ(lastDataLineTab2)
         # print(indexITableau,indexJTableau)
@@ -200,71 +186,11 @@ class DataInfoDF:
         # Fill les tableaux. Vu que le tableau est inversé, il faut faire les index dans l'autre sens. Table1 Hard codé trouver autre chose aussi?
         # Je le fais direct passé en DataFrame
         array2 = self.__getArray('Table2', arrayTab2, dataList)
-        df2 = self.__getDf2(array2, DataInfoDF.__ontologiesTable2)
+        df2 = self.__getDf(array2, DataInfoDF.__ontologiesTable2)
         # printDf(df2)
 
         return df2
 
-    # print(pd.isnull(result.at[1,"http://dbpedia.org/ontology/Person1"]))
-    # if pd.isnull(result.at[1,"http://dbpedia.org/ontology/Person1"]):
-
-
-class OntologyColumnsConverter:
-
-    def __init__(self, df):
-        self.df = df
-
-    def __executeSparqlQuery(self, query):
-        sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-        sparql.setQuery(query)
-        sparql.setReturnFormat(JSON)
-        results = sparql.query().convert()
-        return results
-
-    def getCorrectOntologies(self):
-        rowCount = len(self.df.index)
-        headers = list(self.df.columns.values)
-        tabOntology = [0 for x in range(len(headers))]
-        listOntologies = list()
-
-        # Temps log -> n^3 Je pense qu'on puisse faire moins! Je récupère la liste des ontlogies par colonnes.
-        for item in headers:
-            tmplistOntologies = list()
-            # print(int(item))
-            i = 0
-            while i < rowCount:
-                if (int(item) != 0):
-                    dbrSubject = self.df.at[i, headers[0]]
-                    dbrSubject1 = str(self.df.at[i, item])
-                    queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select distinct ?predicate where { \n { <" + dbrSubject + "> ?predicate <" + dbrSubject1 + ">} \n}"
-                    # print("-----------------------------------BeginQuery------------------------------------------")
-                    # print(queryString)
-                    # print("-----------------------------------EndQuery------------------------------------------")
-                    results = self.__executeSparqlQuery(queryString)
-                    ontologies = ""
-                    for result in results["results"]["bindings"]:
-                        predicate = result["predicate"]["value"]
-                        # print("predicate")
-                        # print(predicate)
-                        tmplistOntologies.append(str(predicate))
-                i = i + 1
-            listOntologies.append(tmplistOntologies)
-
-        # liste de toutes les ontologies
-        # print(listOntologies)
-
-        i = 0
-        # On pourrait réutiliser listOntologies a la place de finaListOntologies.
-        finalListOntologies = list()
-        while i < len(listOntologies):
-            most_common, num_most_common = Counter(listOntologies[i]).most_common(1)[0]
-            # print(most_common)
-            finalListOntologies.append(most_common)
-            i = i + 1
-
-        # print("ontologies gagnantes")
-        # print(finalListOntologies)
-        return finalListOntologies
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -273,8 +199,13 @@ class OntologyColumnsConverter:
 #Permet d'avoir les ontologies. ATTENTION! J'hard code le fait que la colonne sujet est la premiere colonne du df! Mais il se peut que ce ne soit pas tjrs le cas! Il faut trouver un moyen que lors de l'export de l'outil, il mette la colonne sujet en premier a chaque fois.
 class OntologyColumnsConverter:
 
+    __ontologiesTable = {}
+
     def __init__(self, df):
         self.df = df
+
+    def getOntologiesDict(self):
+        return self.__ontologiesTable
 
     def __executeSparqlQuery(self, query):
         sparql = SPARQLWrapper("http://dbpedia.org/sparql")
@@ -286,46 +217,48 @@ class OntologyColumnsConverter:
     def getCorrectOntologies(self):
         rowCount = len(self.df.index)
         headers = list(self.df.columns.values)
-        listOntologies = list()
-
+        #listOntologies = list()
+        listOntologies = {}
         # Temps log -> n^3 Je pense qu'on puisse faire moins! Je récupère la liste des ontlogies par colonnes.
         for item in headers:
             tmplistOntologies = list()
-            # print(int(item))
             i = 0
+
             while i < rowCount:
-                if (int(item) != 0):
+                if item != headers[0]:
                     #C'est ici que j'hardcode le fait qu'on prenne la première colonne.
                     dbrSubject = self.df.at[i, headers[0]]
                     dbrSubject1 = str(self.df.at[i, item])
                     queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select distinct ?predicate where { \n { <" + dbrSubject + "> ?predicate <" + dbrSubject1 + ">} \n}"
                     # print("-----------------------------------BeginQuery------------------------------------------")
-                    # print(queryString)
+                    print(queryString)
                     # print("-----------------------------------EndQuery------------------------------------------")
                     results = self.__executeSparqlQuery(queryString)
                     for result in results["results"]["bindings"]:
                         predicate = result["predicate"]["value"]
                         #print("predicate")
                         #print(predicate)
-                        tmplistOntologies.append(str(predicate))
+                        if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
+                            tmplistOntologies.append(str(predicate))
                 i = i + 1
-            listOntologies.append(tmplistOntologies)
+            #listOntologies.append(tmplistOntologies)
+            listOntologies[item] = tmplistOntologies
+        #print(listOntologies)
 
         # liste de toutes les ontologies
-        # print(listOntologies)
-
-        i = 0
-        # On pourrait réutiliser listOntologies a la place de finaListOntologies.
         finalListOntologies = list()
-        #print("Liste ontologies")
-        while i < len(listOntologies):
+        for key in listOntologies:
             most_common = ""
-            if listOntologies[i]:
-                most_common, num_most_common = Counter(listOntologies[i]).most_common(1)[0]
-            # print(most_common)
+            tmpList = listOntologies[key]
+            if tmpList:
+                most_common, num_most_common = Counter(tmpList).most_common(1)[0]
+                #print(most_common)
             finalListOntologies.append(most_common)
-            i = i + 1
+            self.__ontologiesTable[key] = most_common
 
-        # print("ontologies gagnantes")
-        # print(finalListOntologies)
+        #print("ontologies gagnantes")
+        #print(finalListOntologies)
+        #print("dict")
+        #print(self.__ontologiesTable)
+
         return finalListOntologies

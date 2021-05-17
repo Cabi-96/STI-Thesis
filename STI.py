@@ -1,7 +1,7 @@
 from DataIntoDF import DataInfoDF
-from collections import Counter
 from tabulate import tabulate
 import pandas as pd
+import numpy as np
 # Code SPARQL vient de : https://stackoverflow.com/questions/58519010/constructing-graph-using-rdflib-for-the-outputs-from-sparql-select-query-with
 from SPARQLWrapper import SPARQLWrapper, JSON
 
@@ -29,8 +29,8 @@ def executeSparqlQuery(query):
 
 
 # Va permettre d'insérer dans la colonne du dataframe, le resultat de la query SPARQL
-def insertDataDf(df, results, i, item):
-    itemOntology = cleanLastDigit(item)
+def insertDataDf(df, results, i, key, item):
+    itemOntology = cleanLastDigit(key)
     objectFilter = itemOntology.split(" ")
     stringFilter = ""
 
@@ -46,17 +46,24 @@ def insertDataDf(df, results, i, item):
 
         # Cette query va permettre de vérifier que l'entité qu'on va insérer dans le tableau possède dans son rdf type, les différentes ontologies de la colonne.
         queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> rdf:type ?object } \n FILTER (" + stringFilter + ")\n}"
+        print(queryString)
         resultsFilter = executeSparqlQuery(queryString)
-
         # print("FILTER")
         # print(queryString)
         if resultsFilter:
-
             # Faire disparaitre la valeur NaN avec fillna() mais pas réussi. df.fillna('') -> A AMELIORER!
             if len(str(df.at[i, item])) == 3:
-                df.at[i, item] = str(df.at[i, item]).replace("nan", "")
 
+                df.at[i, item] = str(df.at[i, item]).replace("nan", "")
             df.at[i, item] = str(df.at[i, item]) + str(predicate) + " "
+
+
+def insertColumnDf(df,column):
+    if column not in df:
+        df[column] = np.nan
+
+
+
 
 # -----------------------------------------------------------------
 #                           MAIN
@@ -67,7 +74,14 @@ def insertDataDf(df, results, i, item):
 dataInfoDF = DataInfoDF('annotations_CEA_12_05_2021(1).csv', 'cpa.csv')
 
 df1 = dataInfoDF.runTab1()
+dictDf1 = dataInfoDF.getOntologiesDictTable().copy()
 df2 = dataInfoDF.runTab2()
+dictDf2 = dataInfoDF.getOntologiesDictTable().copy()
+
+#print("Df1 dict")
+#print(dictDf1)
+#print("Df2 dict")
+#print(dictDf2)
 
 print("DataFrame 1")
 print(tabulate(df1, headers='keys', tablefmt='psql'))
@@ -93,7 +107,7 @@ for ontology in ontologies2:
 if (isSameColumn):
     # Je mélange les deux datasets avec le append
     df = df1.append(df2, ignore_index=True, sort=False)
-
+    dictDf = dictDf1 | dictDf2
     # print the list of all the column headers
     # print("The column headers :")
     headers = list(df.columns.values)
@@ -103,17 +117,17 @@ if (isSameColumn):
     headers = list(df.columns.values)
     # STI du premier cas.
     while i < rowCount:
-        for item in headers:
-            # print(item)
+        for key, item in dictDf.items():
             # Si l'item est null il faut le remplir.
-            if pd.isnull(df.at[i, item]):
+            if item and pd.isnull(df.at[i, item]):
                 # Ici je récupère la cellule de la colonne sujet.
                 dbrSubject = df.at[i, headers[0]]
+                #print("ITEM: "+item)
                 queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
-                # print(queryString)
+                #print(queryString)
                 results1 = executeSparqlQuery(queryString)
                 # J'écris les résultats trouvé grâce à la query au dessus.
-                insertDataDf(df, results1, i, item)
+                insertDataDf(df, results1, i, key, item)
         i = i + 1
     print("DataFrame Final")
 
@@ -123,4 +137,15 @@ if (isSameColumn):
             df.rename(columns={item: item[:-1]}, inplace=True)
     printDf(df)
 else:
-    print("test")
+    rowCount = len(df1.index)
+    headers = list(df2.columns.values)
+    i = 0
+    while i < rowCount:
+        for item in headers:
+            print("test")
+            dbrSubject = df1.at[i, headers[0]]
+            queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
+            results1 = executeSparqlQuery(queryString)
+            if results1:
+                insertColumnDf(df1,item)
+        i = i+1
