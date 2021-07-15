@@ -230,9 +230,9 @@ class OntologyColumnsConverter:
                     dbrSubject = self.df.at[i, headers[0]]
                     dbrSubject1 = str(self.df.at[i, item])
                     queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select distinct ?predicate where { \n { <" + dbrSubject + "> ?predicate <" + dbrSubject1 + ">} \n}"
-                    # print("-----------------------------------BeginQuery------------------------------------------")
+                    #print("-----------------------------------BeginQuery------------------------------------------")
                     #print(queryString)
-                    # print("-----------------------------------EndQuery------------------------------------------")
+                    #print("-----------------------------------EndQuery------------------------------------------")
                     results = self.__executeSparqlQuery(queryString)
                     for result in results["results"]["bindings"]:
                         predicate = result["predicate"]["value"]

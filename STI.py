@@ -47,6 +47,7 @@ def insertDataDf(df, results, i, key, item):
 
             # Cette query va permettre de vérifier que l'entité qu'on va insérer dans le tableau possède dans son rdf type, les différentes ontologies de la colonne.
             queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + predicate + "> rdf:type ?object } \n FILTER (" + stringFilter + ")\n}"
+            print(queryString)
             resultsFilter = executeSparqlQuery(queryString)
             # print("FILTER")
             #print(queryString)
@@ -58,7 +59,7 @@ def insertDataDf(df, results, i, key, item):
     else:
         for result in results["results"]["bindings"]:
             predicate = result["object"]["value"]
-            print(predicate)
+            #print(predicate)
             if len(str(df.at[i, item])) == 4:
                 df.at[i, item] = str(df.at[i, item]).replace("<NA>", "")
             df.at[i, item] = str(df.at[i, item]) + str(predicate) + " "
@@ -88,7 +89,7 @@ def insertColumnDf(df,column):
 
 # Create the dataFrames
 path = str(pathlib.Path().absolute())
-dataInfoDF = DataInfoDF(path+'/.idea/files/annotations_CEA_12_05_2021(3).csv', path+'/.idea/files/cpa(3).csv')
+dataInfoDF = DataInfoDF(path+'/.idea/files/annotations_CEA_12_05_2021.csv', path+'/.idea/files/cta.csv')
 
 df1 = dataInfoDF.runTab1()
 dictDf1 = dataInfoDF.getOntologiesDictTable().copy()
@@ -153,6 +154,7 @@ if (isSameColumn):
     #    if (item[-1].isdigit()):
     #        df.rename(columns={item: item[:-1]}, inplace=True)
     printDf(df)
+# Si les colonnes sujet ne correspondent pas.
 else:
     rowCountDf1 = len(df1.index)
     rowCountDf2 = len(df2.index)
@@ -165,6 +167,7 @@ else:
         for item in headers:
             dbrSubject = df1.at[i, headerSubjectTable1]
             queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
+            #print(queryString)
             results1 = executeSparqlQuery(queryString)
             if results1["results"]["bindings"]:
                 listSubjectOntology.append(item)
