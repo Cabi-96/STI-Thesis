@@ -1,10 +1,17 @@
+from collections import defaultdict
+from time import sleep
+
+from requests.exceptions import MissingSchema
+
 from DataIntoDF import DataInfoDF
 from tabulate import tabulate
 import pandas as pd
 import numpy as np
-# Code SPARQL vient de : https://stackoverflow.com/questions/58519010/constructing-graph-using-rdflib-for-the-outputs-from-sparql-select-query-with
 from SPARQLWrapper import SPARQLWrapper, JSON
 import pathlib
+import requests
+
+from MtabAnnotationApi import MtabAnnotationApi
 
 
 def printDf(df):
@@ -47,7 +54,7 @@ def insertDataDf(df, results, i, key, item):
 
             # Cette query va permettre de vérifier que l'entité qu'on va insérer dans le tableau possède dans son rdf type, les différentes ontologies de la colonne.
             queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + predicate + "> rdf:type ?object } \n FILTER (" + stringFilter + ")\n}"
-            print(queryString)
+            #print(queryString)
             resultsFilter = executeSparqlQuery(queryString)
             # print("FILTER")
             #print(queryString)
@@ -64,8 +71,8 @@ def insertDataDf(df, results, i, key, item):
                 df.at[i, item] = str(df.at[i, item]).replace("<NA>", "")
             df.at[i, item] = str(df.at[i, item]) + str(predicate) + " "
 
-
-def insertColumnDf(df,column):
+#Peut etre delete
+def insertColumnDf_OLD(df,column):
     index = column.rfind('/')
     tmpColumn = column[index+1:]
     listColumnName = list()
@@ -75,12 +82,104 @@ def insertColumnDf(df,column):
         item = item[index+1:]
         listColumnName.append(item)
 
+    print(tmpColumn)
+    print(listColumnName)
+
     if tmpColumn not in listColumnName:
-        df[column] = np.nan
-        df[column] = df[column].astype('string')
+        #Permet d'ajouter la colonne au df mais en com pour mettre les propositions.
+        #df[column] = np.nan
+        #df[column] = df[column].astype('string')
+        return column
 
 
+def insertColumnDf(listProposition,column):
+    index = column.rfind('/')
+    tmpColumn = column[index+1:]
+    listColumnName = list()
+    for proposition in listProposition:
+        index = proposition.rfind('/')
+        tmpproposition = proposition[index+1:]
+        listColumnName.append(tmpproposition)
+    if tmpColumn not in listColumnName:
+        return column
+"""
+@inproceedings{2019_mtab4dbpedia,
+                   author    = {Phuc Nguyen and
+                                     Natthawut Kertkeidkachorn and
+                                               Ryutaro Ichise and
+                                                       Hideaki Takeda},
+title     = {MTab: Matching Tabular Data to Knowledge Graph using Probability Models},
+            booktitle = {SemTab@ISWC 2019},
+volume    = {2553},
+            pages     = {7--14},
+                        publisher = {CEUR-WS.org},
+                                    year      = {2019},
+}
 
+def search_entity(query_value, limit=10):
+    entity_search = "https://dbpedia.mtab.app/api/v1/search"
+    query_args = {
+        "q": query_value,
+        "limit": limit,
+    }
+
+    if not query_value:
+        return []
+    responds = request(entity_search, query_args)
+
+    if responds and responds.get("hits"):
+        print(responds["hits"])
+        responds = [r["id"] for r in responds["hits"]]
+    else:
+        responds = []
+    return responds
+"""
+
+"""
+@inproceedings{2019_mtab4dbpedia,
+                   author    = {Phuc Nguyen and
+                                     Natthawut Kertkeidkachorn and
+                                               Ryutaro Ichise and
+                                                       Hideaki Takeda},
+title     = {MTab: Matching Tabular Data to Knowledge Graph using Probability Models},
+            booktitle = {SemTab@ISWC 2019},
+volume    = {2553},
+            pages     = {7--14},
+                        publisher = {CEUR-WS.org},
+                                    year      = {2019},
+}
+
+def request(func_name, query_args, retries=3, message=""):
+    responds = defaultdict()
+    if retries == 0:
+        print(message)
+        return responds
+    try:
+        # _responds = requests.post(func_name, json=query_args, timeout=7200)
+        responds = requests.session().post(func_name, json=query_args, timeout=7200)
+        if responds.status_code == 200:
+            responds = responds.json()
+            if not responds or (
+                    responds.get("status") == "Error" and not responds.get("message")
+            ):
+                sleep(300)
+                return request(
+                    func_name,
+                    query_args,
+                    retries - 1,
+                    message=f"Error: Retry {retries-1}",
+                    )
+    except Exception as message:
+        if func_name == "https://dbpedia.mtab.app/api/v1/mtab" and query_args.get("table_name"):
+            args_info = func_name + ": " + query_args.get("table_name")
+        else:
+            args_info = func_name
+        sleep(300)
+        return request(
+            func_name, query_args, retries - 1, message=f"\n{message} - {args_info}"
+        )
+    return responds
+"""
 
 # -----------------------------------------------------------------
 #                           MAIN
@@ -89,7 +188,7 @@ def insertColumnDf(df,column):
 
 # Create the dataFrames
 path = str(pathlib.Path().absolute())
-dataInfoDF = DataInfoDF(path+'/.idea/files/annotations_CEA_12_05_2021.csv', path+'/.idea/files/cta.csv')
+dataInfoDF = DataInfoDF(path+'/.idea/files/annotations_CEA_12_05_2021(3).csv', path+'/.idea/files/cta(3).csv')
 
 df1 = dataInfoDF.runTab1()
 dictDf1 = dataInfoDF.getOntologiesDictTable().copy()
@@ -162,6 +261,8 @@ else:
     headers = list(df2.columns.values)
     #Si on retrouve des dbo qui sont en lien avec notre dbr alors on en ressort des +
     listSubjectOntology = list()
+    #Liste contenant les propositions de colonnes. JE SUIS ICI. FAIRE UNE CONDITION POUR N AJOUTER QUE DES VALEURS UNIQUES.
+    listProposition = list()
     i = 0
     while i < rowCountDf1:
         for item in headers:
@@ -171,14 +272,16 @@ else:
             results1 = executeSparqlQuery(queryString)
             if results1["results"]["bindings"]:
                 listSubjectOntology.append(item)
-                insertColumnDf(df1,item)
+                resultInserCol = insertColumnDf(listProposition,item)
+                if resultInserCol and resultInserCol not in listProposition:
+                    listProposition.append(resultInserCol)
         i = i+1
 
     #Avec ça, on enlève les colonnes qui ont été insérées dans le df via le insert columnDf en haut.
     headers = set(headers) - set(listSubjectOntology)
     i = 0
     j = 0
-    #S'il y a encore des colonnes dans le headers, ca veut dire que toutes les colOn va faire une sorte de produit cartésien. On va prendre chaque cellule de la colonne sujet du df1 et voir si elle a un lien avec les cellules du df2. La perf est de n^4 pas terrible! Peut être moyen de descendre à n^3 mais je ne pense pas.
+    #S'il y a encore des colonnes dans le headers, ca veut dire que toutes les colonnes va faire une sorte de produit cartésien. On va prendre chaque cellule de la colonne sujet du df1 et voir si elle a un lien avec les cellules du df2. La perf est de n^4 pas terrible! Peut être moyen de descendre à n^3 mais je ne pense pas.
     if headers:
         while i < rowCountDf1:
             while j < rowCountDf2:
@@ -191,10 +294,117 @@ else:
                     for result in results1["results"]["bindings"]:
                         predicate = result["predicate"]["value"]
                         if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
-                            insertColumnDf(df1,predicate)
+                            #Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
+                            resultInserCol = insertColumnDf(listProposition,predicate)
+                            if resultInserCol and resultInserCol not in listProposition:
+                                listProposition.append(resultInserCol)
                 j = j+1
             i = i+1
+    i = 0
+    #Permet d'itérer sur un nombre de proposition. En donnant leur index dans la liste pour permettre de facilement les sélectionner.
+    #Question 1
+    listProposition.append('http://dbpedia.org/ontology/birthDate')
+    #listProposition.append('http://dbpedia.org/ontology/deathDate')
+    print("Propositions: ")
+    for proposition in listProposition:
+        print(str(i)+" "+proposition)
+        i = i + 1
+    choice = 0
+    while int(choice) != -1:
+        if len(listProposition) == 0:
+            print("Plus de choix dans la liste.")
+            break
+        choice = input("Sélectionner les propositions une par une en écrivant leurs numéros (-1 pour sortir de la question):")
+        if int(choice) == -1 or len(listProposition) == 0:
+            print(choice)
+            print("Tous les choix ont été enregistrés")
+            break
+        column = listProposition[int(choice)]
+        #print(choice+" "+column)
+        df1[column] = np.nan
+        df1[column] = df1[column].astype('string')
+        printDf(df1)
+        listProposition.remove(column)
+        print("Le choix "+column+" a été ajouté au dataframe")
 
+    #Question 2
+    listProposition.clear()
+    print("Voulez-vous proposer des colonnes à rajouter? Veuillez insérer la valeur. Exemple : birthPlace  ")
+    newColumn = input("Ecrivez votre choix :")
+    queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n SELECT ?predicate \nWHERE {\n?predicate a rdf:Property\nFILTER ( REGEX ( STR (?predicate), \"http://dbpedia.org/ontology/\", \"i\" ) )\nFILTER ( REGEX ( STR (?predicate), \""+newColumn+"\", \"i\" ) )\n}\nORDER BY ?predicate"
+    #print(queryString)
+    results1 = executeSparqlQuery(queryString)
+    for result in results1["results"]["bindings"]:
+        predicate = result["predicate"]["value"]
+        if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
+            #Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
+            resultInserCol = insertColumnDf(listProposition,predicate)
+            if resultInserCol and resultInserCol not in listProposition:
+                listProposition.append(resultInserCol)
+    i = 0
+    for proposition in listProposition:
+        print(str(i)+" "+proposition)
+        i = i + 1
+    choice = 0
+    while int(choice) != -1:
+        if len(listProposition) == 0:
+            print("Plus de choix dans la liste.")
+            break
+        choice = input("Sélectionner les propositions une par une en écrivant leurs numéros (-1 pour sortir de la question):")
+        if int(choice) == -1:
+            #print(choice)
+            print("Tous les choix ont été enregistrés")
+            break
+        column = listProposition[int(choice)]
+        #print(choice+" "+column)
+        df1[column] = np.nan
+        df1[column] = df1[column].astype('string')
+        listProposition.remove(column)
+        printDf(df1)
+
+    #Question 3
+    #Rajouter des colonnes que l'algorithme n'aura pas retrouver
+    print("Ce que vous cherchez n'a toujours pas été trouvé? Veuillez insérer l'URI de la colonne souhaitée. Exemple : http://dbpedia.org/ontology/deathDate  ")
+    newColumn = input("Ecrivez votre choix :")
+    newColumn = newColumn.strip()
+    try:
+        request = requests.get(newColumn)
+    except ConnectionError:
+        print('Link does not exist')
+    except MissingSchema:
+        print('Link does not exist')
+    else:
+        print('Link exists')
+        df1[newColumn] = np.nan
+        df1[newColumn] = df1[newColumn].astype('string')
+        printDf(df1)
+
+    """
+    api = MtabAnnotationApi("")
+    api.extract_entity(newColumn)
+    if newColumn != "":
+        resultsApi = search_entity(newColumn)
+    print("Voici les différents mots retrouver avec votre entrée: ")
+    i = 0
+    for resultApi in resultsApi:
+        print(str(i)+" "+resultApi)
+        i = i + 1
+    choice = input("Sélectionner la proposition en écrivant son numéro: ")
+    column = resultsApi[int(choice)]
+    """
+    """
+    Query pour les matchs.
+    SELECT ?pred 
+    WHERE
+     { 
+       ?pred a rdf:Property
+       FILTER ( REGEX ( STR (?pred), "http://dbpedia.org/ontology/", "i" ) )
+       FILTER ( REGEX ( STR (?pred), "birthdate", "i" ) )
+     }
+    ORDER BY ?pred 
+    """
+
+    print("Inserting values...")
     #Insert values.
     i = 0
     rowCount = len(df1.index)
@@ -214,3 +424,4 @@ else:
         i = i + 1
     print("DataFrame Final")
     printDf(df1)
+    print("Done")
