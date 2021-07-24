@@ -20,9 +20,9 @@ class MtabAnnotationApi:
       # open browser
       # L'option Headless permet d'éviter d'ouvrir une page web a chaque fois que l'algorithme est lancé. + performant
       options = Options()
-      #options.add_argument('--headless')
-      #driver = webdriver.Firefox(options=options,executable_path=r'C:/Program Files/Mozilla Firefox/geckodriver.exe')
-      driver = webdriver.Firefox(executable_path=r'C:/Program Files/Mozilla Firefox/geckodriver.exe')
+      options.add_argument('--headless')
+      driver = webdriver.Firefox(options=options,executable_path=r'C:/Program Files/Mozilla Firefox/geckodriver.exe')
+      #driver = webdriver.Firefox(executable_path=r'C:/Program Files/Mozilla Firefox/geckodriver.exe')
 
       # load page
       driver.get(url)
@@ -79,7 +79,6 @@ class MtabAnnotationApi:
          with open(filename, 'r', encoding='utf-8') as read_obj:
             # pass the file object to reader() to get the reader object
             csv_reader = reader(read_obj)
-            next(csv_reader, None)
             # Iterate over each row in the csv using reader object
             inputText =''
             for row in csv_reader:
@@ -130,7 +129,7 @@ class MtabAnnotationApi:
             links = row.find_elements_by_xpath("./a") #note: index start from 0, 1 is col 2
             #print('Col'+str(i))
             if(i > 0):
-               listCPA.insert(i-1,'')
+               listCPA.insert(i-1,'Column'+str(i))
                for link in links:
                   # print link href
                   #print(link.get_attribute("href")) #prints text from the element

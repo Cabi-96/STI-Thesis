@@ -52,7 +52,7 @@ def insertDataDf(df, results, i, key, item):
             # print(item)
             # print(predicate)
 
-            # Cette query va permettre de vérifier que l'entité qu'on va insérer dans le tableau possède dans son rdf type, les différentes ontologies de la colonne.
+            # Cette query va permettre de vérifier que l'entité qu'on va insérer dans le tableau possède dans son rdf type, les différentes ontologies de la colonne. A CHANGER ICI.
             queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + predicate + "> rdf:type ?object } \n FILTER (" + stringFilter + ")\n}"
             #print(queryString)
             resultsFilter = executeSparqlQuery(queryString)
@@ -69,6 +69,10 @@ def insertDataDf(df, results, i, key, item):
             #print(predicate)
             if len(str(df.at[i, item])) == 4:
                 df.at[i, item] = str(df.at[i, item]).replace("<NA>", "")
+            elif len(str(df.at[i, item])) == 3:
+                df.at[i, item] = str(df.at[i, item]).replace("nan", "")
+            #print(df.at[i, item])
+            #print(len(str(df.at[i, item])))
             df.at[i, item] = str(df.at[i, item]) + str(predicate) + " "
 
 #Peut etre delete
@@ -102,84 +106,7 @@ def insertColumnDf(listProposition,column):
         listColumnName.append(tmpproposition)
     if tmpColumn not in listColumnName:
         return column
-"""
-@inproceedings{2019_mtab4dbpedia,
-                   author    = {Phuc Nguyen and
-                                     Natthawut Kertkeidkachorn and
-                                               Ryutaro Ichise and
-                                                       Hideaki Takeda},
-title     = {MTab: Matching Tabular Data to Knowledge Graph using Probability Models},
-            booktitle = {SemTab@ISWC 2019},
-volume    = {2553},
-            pages     = {7--14},
-                        publisher = {CEUR-WS.org},
-                                    year      = {2019},
-}
 
-def search_entity(query_value, limit=10):
-    entity_search = "https://dbpedia.mtab.app/api/v1/search"
-    query_args = {
-        "q": query_value,
-        "limit": limit,
-    }
-
-    if not query_value:
-        return []
-    responds = request(entity_search, query_args)
-
-    if responds and responds.get("hits"):
-        print(responds["hits"])
-        responds = [r["id"] for r in responds["hits"]]
-    else:
-        responds = []
-    return responds
-"""
-
-"""
-@inproceedings{2019_mtab4dbpedia,
-                   author    = {Phuc Nguyen and
-                                     Natthawut Kertkeidkachorn and
-                                               Ryutaro Ichise and
-                                                       Hideaki Takeda},
-title     = {MTab: Matching Tabular Data to Knowledge Graph using Probability Models},
-            booktitle = {SemTab@ISWC 2019},
-volume    = {2553},
-            pages     = {7--14},
-                        publisher = {CEUR-WS.org},
-                                    year      = {2019},
-}
-
-def request(func_name, query_args, retries=3, message=""):
-    responds = defaultdict()
-    if retries == 0:
-        print(message)
-        return responds
-    try:
-        # _responds = requests.post(func_name, json=query_args, timeout=7200)
-        responds = requests.session().post(func_name, json=query_args, timeout=7200)
-        if responds.status_code == 200:
-            responds = responds.json()
-            if not responds or (
-                    responds.get("status") == "Error" and not responds.get("message")
-            ):
-                sleep(300)
-                return request(
-                    func_name,
-                    query_args,
-                    retries - 1,
-                    message=f"Error: Retry {retries-1}",
-                    )
-    except Exception as message:
-        if func_name == "https://dbpedia.mtab.app/api/v1/mtab" and query_args.get("table_name"):
-            args_info = func_name + ": " + query_args.get("table_name")
-        else:
-            args_info = func_name
-        sleep(300)
-        return request(
-            func_name, query_args, retries - 1, message=f"\n{message} - {args_info}"
-        )
-    return responds
-"""
 
 # -----------------------------------------------------------------
 #                           MAIN
@@ -188,7 +115,7 @@ def request(func_name, query_args, retries=3, message=""):
 
 # Create the dataFrames
 path = str(pathlib.Path().absolute())
-dataInfoDF = DataInfoDF(path+'/.idea/files/annotations_CEA_12_05_2021(3).csv', path+'/.idea/files/cta(3).csv')
+dataInfoDF = DataInfoDF(path+'/.idea/files/annotations_CEA_12_05_2021.csv', path+'/.idea/files/cta.csv')
 
 df1 = dataInfoDF.runTab1()
 dictDf1 = dataInfoDF.getOntologiesDictTable().copy()
@@ -224,7 +151,11 @@ for ontology in ontologies2:
 if (isSameColumn):
     # Je mélange les deux datasets avec le append
     df = df1.append(df2, ignore_index=True, sort=False)
+    print("DICTF1 ET DICTF2")
+    print(dictDf1)
+    print(dictDf2)
     dictDf = dictDf1 | dictDf2
+    print(dictDf)
     # print the list of all the column headers
     # print("The column headers :")
     headers = list(df.columns.values)
@@ -233,8 +164,12 @@ if (isSameColumn):
     rowCount = len(df.index)
     headers = list(df.columns.values)
     # STI du premier cas.
+    print(dictDf)
     while i < rowCount:
         for key, item in dictDf.items():
+            print("Dans la boucle key,item: ")
+            print(key)
+            print(item)
             # Si l'item est null il faut le remplir.
             if item and pd.isnull(df.at[i, item]):
                 # Ici je récupère la cellule de la colonne sujet.
@@ -378,6 +313,8 @@ else:
         df1[newColumn] = np.nan
         df1[newColumn] = df1[newColumn].astype('string')
         printDf(df1)
+    #A changer il faudrait directement utiliser df
+    df = df1
 
     """
     api = MtabAnnotationApi("")
@@ -404,24 +341,24 @@ else:
     ORDER BY ?pred 
     """
 
-    print("Inserting values...")
-    #Insert values.
-    i = 0
-    rowCount = len(df1.index)
-    headers = list(df1.columns.values)
-    # STI du deuxième cas. Très similaire sauf qu'on ne boucle pas sur la meme chose. Ici on boucle sur les colonnes du df. Dans le premier cas c'est via le dictionnaire. -> A améliorer. Créer une méthode pour éviter d'avoir 2 fois le meme code.
-    while i < rowCount:
-        for item in headers:
-            # Si l'item est null il faut le remplir. -> Faudrait changer le if. Ici le nan est en string via la fonction insertColumnDf il faudrait éviter de la mettre en string.
-            if  pd.isnull(df1.at[i, item]):
-                # Ici je récupère la cellule de la colonne sujet.
-                dbrSubject = df1.at[i, headers[0]]
-                queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
-                #print(queryString)
-                results1 = executeSparqlQuery(queryString)
-                # J'écris les résultats trouvés grâce à la query au dessus.
-                insertDataDf(df1, results1, i,None, item)
-        i = i + 1
-    print("DataFrame Final")
-    printDf(df1)
-    print("Done")
+print("Inserting values...")
+#Insert values.
+i = 0
+rowCount = len(df.index)
+headers = list(df.columns.values)
+# STI du deuxième cas. Très similaire sauf qu'on ne boucle pas sur la meme chose. Ici on boucle sur les colonnes du df. Dans le premier cas c'est via le dictionnaire. -> A améliorer. Créer une méthode pour éviter d'avoir 2 fois le meme code.
+while i < rowCount:
+    for item in headers:
+        # Si l'item est null il faut le remplir. -> Faudrait changer le if. Ici le nan est en string via la fonction insertColumnDf il faudrait éviter de la mettre en string.
+        if  pd.isnull(df.at[i, item]):
+            # Ici je récupère la cellule de la colonne sujet.
+            dbrSubject = df.at[i, headers[0]]
+            queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
+            #print(queryString)
+            results1 = executeSparqlQuery(queryString)
+            # J'écris les résultats trouvés grâce à la query au dessus.
+            insertDataDf(df, results1, i,None, item)
+    i = i + 1
+print("DataFrame Final")
+printDf(df)
+print("Done")
