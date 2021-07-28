@@ -116,10 +116,9 @@ def askQuestion1(df):
     choice = 0
     while int(choice) != -1:
         if len(listProposition) == 0:
-            print("Plus de choix dans la liste.")
+            print("Plus ou pas de choix dans la liste de propositions.")
             break
-        choice = input(
-            "Sélectionner les propositions une par une en écrivant leurs numéros (-1 pour sortir de la question):")
+        choice = input("Sélectionner les propositions une par une en écrivant leurs numéros (-1 pour sortir de la question):")
         if int(choice) == -1 or len(listProposition) == 0:
             print(choice)
             print("Tous les choix ont été enregistrés")
@@ -135,56 +134,64 @@ def askQuestion1(df):
 def askQuestion2(df):
     listProposition = list()
     print("Voulez-vous proposer des colonnes à rajouter? Veuillez insérer la valeur. Exemple : birthPlace  ")
-    newColumn = input("Ecrivez votre choix :")
-    queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n SELECT ?predicate \nWHERE {\n?predicate a rdf:Property\nFILTER ( REGEX ( STR (?predicate), \"http://dbpedia.org/ontology/\", \"i\" ) )\nFILTER ( REGEX ( STR (?predicate), \"" + newColumn + "\", \"i\" ) )\n}\nORDER BY ?predicate"
-    # print(queryString)
-    results1 = executeSparqlQuery(queryString)
-    for result in results1["results"]["bindings"]:
-        predicate = result["predicate"]["value"]
-        if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
-            # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
-            resultInserCol = insertColumnDf(listProposition, predicate)
-            if resultInserCol and resultInserCol not in listProposition and resultInserCol not in df.columns.values:
-                listProposition.append(resultInserCol)
-    i = 0
-    for proposition in listProposition:
-        print(str(i) + " " + proposition)
-        i = i + 1
-    choice = 0
-    while int(choice) != -1:
-        if len(listProposition) == 0:
-            print("Plus de choix dans la liste.")
+    newColumn = "0"
+    while newColumn != "-1":
+        newColumn = input("Ecrivez votre choix. Si vous n'avez plus de choix, écrivez -1:")
+        if(newColumn == "-1"):
             break
-        choice = input("Sélectionner les propositions une par une en écrivant leurs numéros (-1 pour sortir de la question):")
-        if int(choice) == -1:
-            # print(choice)
-            print("Tous les choix ont été enregistrés")
-            break
-        column = listProposition[int(choice)]
-        # print(choice+" "+column)
-        df[column] = np.nan
-        df[column] = df[column].astype('string')
-        listProposition.remove(column)
-        printDf(df)
+        queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n SELECT ?predicate \nWHERE {\n?predicate a rdf:Property\nFILTER ( REGEX ( STR (?predicate), \"http://dbpedia.org/ontology/\", \"i\" ) )\nFILTER ( REGEX ( STR (?predicate), \"" + newColumn + "\", \"i\" ) )\n}\nORDER BY ?predicate"
+        # print(queryString)
+        results1 = executeSparqlQuery(queryString)
+        for result in results1["results"]["bindings"]:
+            predicate = result["predicate"]["value"]
+            if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
+                # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
+                resultInserCol = insertColumnDf(listProposition, predicate)
+                if resultInserCol and resultInserCol not in listProposition and resultInserCol not in df.columns.values:
+                    listProposition.append(resultInserCol)
+        i = 0
+        for proposition in listProposition:
+            print(str(i) + " " + proposition)
+            i = i + 1
+        choice = 0
+        while int(choice) != -1:
+            if len(listProposition) == 0:
+                print("Plus ou pas de choix dans la liste.")
+                break
+            choice = input("Sélectionner les propositions une par une en écrivant leurs numéros (-1 pour sortir de la question):")
+            if int(choice) == -1:
+                # print(choice)
+                print("Tous les choix ont été enregistrés")
+                break
+            column = listProposition[int(choice)]
+            # print(choice+" "+column)
+            df[column] = np.nan
+            df[column] = df[column].astype('string')
+            listProposition.remove(column)
+            printDf(df)
     return df
 
 def askQuestion3(df):
     listProposition = list()
     print("Ce que vous cherchez n'a toujours pas été trouvé? Veuillez insérer l'URI de la colonne souhaitée. Exemple : http://dbpedia.org/ontology/deathDate  ")
-    newColumn = input("Ecrivez votre choix :")
-    newColumn = newColumn.strip()
-    try:
-        request = requests.get(newColumn)
-    except ConnectionError:
-        print('Link does not exist')
-    except MissingSchema:
-        print('Link does not exist')
-    else:
-        print('Link exists')
-        if newColumn and newColumn not in listProposition and newColumn not in df.columns.values:
-            df[newColumn] = np.nan
-            df[newColumn] = df[newColumn].astype('string')
-            printDf(df)
+    newColumn = "0"
+    while newColumn != "-1":
+        newColumn = input("Si vous avez un autre URI à ajouter ecrivez le. Si vous n'en avez plus, écrivez -1:")
+        newColumn = newColumn.strip()
+        try:
+            request = requests.get(newColumn)
+        except ConnectionError:
+            print('Le lien n existe pas')
+        except MissingSchema:
+            print('Le lien n existe pas')
+        else:
+            #print('Le lien existe')
+            if newColumn and newColumn not in listProposition and newColumn not in df.columns.values:
+                df[newColumn] = np.nan
+                df[newColumn] = df[newColumn].astype('string')
+                printDf(df)
+            else:
+                print("La colonne existe déjà dans le DF")
     return df
 
 # -----------------------------------------------------------------
