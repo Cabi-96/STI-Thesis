@@ -129,7 +129,7 @@ class MtabAnnotationApi:
             links = row.find_elements_by_xpath("./a") #note: index start from 0, 1 is col 2
             #print('Col'+str(i))
             if(i > 0):
-               listCPA.insert(i-1,'Column'+str(i))
+               listCPA.insert(i-1,'')
                for link in links:
                   # print link href
                   #print(link.get_attribute("href")) #prints text from the element
