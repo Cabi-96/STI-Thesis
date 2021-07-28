@@ -133,6 +133,7 @@ def askQuestion1(df):
 
 def askQuestion2(df):
     listProposition = list()
+    print("")
     print("Voulez-vous proposer des colonnes à rajouter? Veuillez insérer la valeur. Exemple : birthPlace  ")
     newColumn = "0"
     while newColumn != "-1":
@@ -173,6 +174,7 @@ def askQuestion2(df):
 
 def askQuestion3(df):
     listProposition = list()
+    print("")
     print("Ce que vous cherchez n'a toujours pas été trouvé? Veuillez insérer l'URI de la colonne souhaitée. Exemple : http://dbpedia.org/ontology/deathDate  ")
     newColumn = "0"
     while newColumn != "-1":
@@ -200,11 +202,11 @@ def askQuestion3(df):
 
 
 # Create the dataFrames
-# path = str(pathlib.Path().absolute())
+path = str(pathlib.Path().absolute())
 # dataInfoDF = DataInfoDF(path+'/.idea/files/annotations_CEA_12_05_2021.csv', path+'/.idea/files/cta.csv')
 
 
-api = MtabAnnotationApi("C:/Users/ANTHONY/Desktop/TestMtab/")
+api = MtabAnnotationApi(path+'/.idea/files/')
 api.post_request()
 
 cea = api.getList_CEA_Global()
