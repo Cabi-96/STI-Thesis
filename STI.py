@@ -105,16 +105,17 @@ def insertColumnDf(listProposition, column):
     if tmpColumn not in listColumnName:
         return column
 
-def askQuestion1(df):
-    listProposition = list()
+def askQuestion1(df,listProposition):
     #listProposition.append('http://dbpedia.org/ontology/birthDate')
     #listProposition.append('http://dbpedia.org/ontology/deathDate')
-    print("Propositions: ")
-    for proposition in listProposition:
-        print(str(i) + " " + proposition)
-        i = i + 1
+
     choice = 0
     while int(choice) != -1:
+        print("Propositions: ")
+        i = 0
+        for proposition in listProposition:
+            print(str(i) + " " + proposition)
+            i = i + 1
         if len(listProposition) == 0:
             print("Plus ou pas de choix dans la liste de propositions.")
             break
@@ -203,8 +204,6 @@ def askQuestion3(df):
 
 # Create the dataFrames
 path = str(pathlib.Path().absolute())
-# dataInfoDF = DataInfoDF(path+'/.idea/files/annotations_CEA_12_05_2021.csv', path+'/.idea/files/cta.csv')
-
 
 api = MtabAnnotationApi(path+'/.idea/files/')
 api.post_request()
@@ -231,7 +230,9 @@ for i in range(0, numberOfDf, 1):
                       dtype=str)
     df = df.iloc[1:, :]
     cta[i].pop(0)
-    df.drop(labels=[""], axis=1, inplace=True)
+    listCol = df.columns.values.tolist()
+    if "" in listCol:
+        df.drop(labels=[""], axis=1, inplace=True)
     df = df.loc[:, ~df.columns.duplicated()]
     df.reset_index(drop=True)
     print(tabulate(df, headers='keys', tablefmt='psql'))
@@ -312,7 +313,7 @@ for i in range(1, len(listDictDf), 1):
 
         # Question 3
         listDf[0] = askQuestion3(df)
-
+        x = 0
     # Si les colonnes sujet ne correspondent pas.
     elif choice == "2":
         rowCountDf1 = len(df1.index)
@@ -328,17 +329,20 @@ for i in range(1, len(listDictDf), 1):
         i = 1
         while i < rowCountDf1:
             for item in headers:
-                print("headerSubjectTable1")
-                print(headerSubjectTable1)
+                #print("headerSubjectTable1")
+                #print(headerSubjectTable1)
                 dbrSubject = df1.at[i, headerSubjectTable1]
-                print(dbrSubject+" "+item)
+                #print(dbrSubject+" "+item)
                 queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
                 # print(queryString)
                 results1 = executeSparqlQuery(queryString)
                 if results1["results"]["bindings"]:
                     listSubjectOntology.append(item)
                     resultInserCol = insertColumnDf(listProposition, item)
-                    if resultInserCol and resultInserCol not in listProposition and result["predicate"]["value"] not in df1.columns.values:
+                    #print(str(resultInserCol)+" in:")
+                    #print("Liste proposition :")
+                    #print(listProposition)
+                    if resultInserCol and resultInserCol not in listProposition and item not in df1.columns.values:
                         listProposition.append(resultInserCol)
             i = i + 1
 
@@ -365,10 +369,9 @@ for i in range(1, len(listDictDf), 1):
                                     listProposition.append(resultInserCol)
                     j = j + 1
                 i = i + 1
-        i = 0
         # Permet d'itérer sur un nombre de proposition. En donnant leur index dans la liste pour permettre de facilement les sélectionner.
         # Question 1
-        askQuestion1(df1)
+        askQuestion1(df1,listProposition)
 
         # Question 2
         askQuestion2(df1)
@@ -377,25 +380,26 @@ for i in range(1, len(listDictDf), 1):
         # Rajouter des colonnes que l'algorithme n'aura pas retrouver
         df = askQuestion3(df1)
         listDf[0] = df
-
+        x = 1
 print("Inserting values...")
 # Insert values. REPASSER A 0
-i = 1
+
+
 rowCount = len(df.index)
 headers = list(df.columns.values)
 # STI du deuxième cas. Très similaire sauf qu'on ne boucle pas sur la meme chose. Ici on boucle sur les colonnes du df. Dans le premier cas c'est via le dictionnaire. -> A améliorer. Créer une méthode pour éviter d'avoir 2 fois le meme code.
-while i < rowCount:
+while x < rowCount:
     for item in headers:
         # Si l'item est null il faut le remplir. -> Faudrait changer le if. Ici le nan est en string via la fonction insertColumnDf il faudrait éviter de la mettre en string.
-        if pd.isnull(df.at[i, item]):
+        if pd.isnull(df.at[x, item]):
             # Ici je récupère la cellule de la colonne sujet.
-            dbrSubject = df.at[i, headers[0]]
+            dbrSubject = df.at[x, headers[0]]
             queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
             # print(queryString)
             results1 = executeSparqlQuery(queryString)
             # J'écris les résultats trouvés grâce à la query au dessus.
-            insertDataDf(df, results1, i, item)
-    i = i + 1
+            insertDataDf(df, results1, x, item)
+    x = x + 1
 
 print("DataFrame Final")
 printDf(df)
