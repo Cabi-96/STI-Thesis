@@ -329,7 +329,7 @@ for i in range(1, len(listDictDf), 1):
         # Liste contenant les propositions de colonnes. JE SUIS ICI. FAIRE UNE CONDITION POUR N AJOUTER QUE DES VALEURS UNIQUES.
         listProposition = list()
         #REPASSER A 0
-        i = 1
+        i = 0
         while i < rowCountDf1:
             for item in headers:
                 #print("headerSubjectTable1")
