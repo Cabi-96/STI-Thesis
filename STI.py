@@ -1,7 +1,7 @@
 from collections import defaultdict
 from time import sleep
 
-from requests.exceptions import MissingSchema
+from requests.exceptions import MissingSchema, HTTPError
 
 from DataIntoDF import DataInfoDF
 from tabulate import tabulate
@@ -108,7 +108,7 @@ def insertColumnDf(listProposition, column):
 def askQuestion1(df,listProposition):
     #listProposition.append('http://dbpedia.org/ontology/birthDate')
     #listProposition.append('http://dbpedia.org/ontology/deathDate')
-
+    print("Question 1")
     choice = 0
     while int(choice) != -1:
         print("Propositions: ")
@@ -126,19 +126,18 @@ def askQuestion1(df,listProposition):
             break
         column = listProposition[int(choice)]
         # print(choice+" "+column)
-        df[column] = np.nan
-        df[column] = df[column].astype('string')
+        df[column] = 'nan'
+        #df[column] = df[column].astype('string')
         printDf(df)
         listProposition.remove(column)
         print("Le choix " + column + " a été ajouté au dataframe")
 
 def askQuestion2(df):
     listProposition = list()
-    print("")
-    print("Voulez-vous proposer des colonnes à rajouter? Veuillez insérer la valeur. Exemple : birthPlace  ")
+    print("Question 2")
     newColumn = "0"
     while newColumn != "-1":
-        newColumn = input("Ecrivez votre choix. Si vous n'avez plus de choix, écrivez -1:")
+        newColumn = input("Si vous avez une autre colonne à ajouter ecrivez le. Exemple : birthPlace. Si vous n'en avez plus, écrivez -1:")
         if(newColumn == "-1"):
             break
         queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n SELECT ?predicate \nWHERE {\n?predicate a rdf:Property\nFILTER ( REGEX ( STR (?predicate), \"http://dbpedia.org/ontology/\", \"i\" ) )\nFILTER ( REGEX ( STR (?predicate), \"" + newColumn + "\", \"i\" ) )\n}\nORDER BY ?predicate"
@@ -151,15 +150,15 @@ def askQuestion2(df):
                 resultInserCol = insertColumnDf(listProposition, predicate)
                 if resultInserCol and resultInserCol not in listProposition and resultInserCol not in df.columns.values:
                     listProposition.append(resultInserCol)
-        i = 0
-        for proposition in listProposition:
-            print(str(i) + " " + proposition)
-            i = i + 1
         choice = 0
         while int(choice) != -1:
             if len(listProposition) == 0:
                 print("Plus ou pas de choix dans la liste.")
                 break
+            i = 0
+            for proposition in listProposition:
+                print(str(i) + " " + proposition)
+                i = i + 1
             choice = input("Sélectionner les propositions une par une en écrivant leurs numéros (-1 pour sortir de la question):")
             if int(choice) == -1:
                 # print(choice)
@@ -167,15 +166,15 @@ def askQuestion2(df):
                 break
             column = listProposition[int(choice)]
             # print(choice+" "+column)
-            df[column] = np.nan
-            df[column] = df[column].astype('string')
+            df[column] = 'nan'
+            #df[column] = df[column].astype('string')
             listProposition.remove(column)
             printDf(df)
     return df
 
 def askQuestion3(df):
     listProposition = list()
-    print("")
+    print("Question 3")
     print("Ce que vous cherchez n'a toujours pas été trouvé? Veuillez insérer l'URI de la colonne souhaitée. Exemple : http://dbpedia.org/ontology/deathDate  ")
     newColumn = "0"
     while newColumn != "-1":
@@ -190,8 +189,9 @@ def askQuestion3(df):
         else:
             #print('Le lien existe')
             if newColumn and newColumn not in listProposition and newColumn not in df.columns.values:
-                df[newColumn] = np.nan
-                df[newColumn] = df[newColumn].astype('string')
+                df[newColumn] = 'nan'
+                #df[newColumn] = np.nan
+                #df[newColumn] = df[newColumn].astype('string')
                 printDf(df)
             else:
                 print("La colonne existe déjà dans le DF")
@@ -205,7 +205,7 @@ def askQuestion3(df):
 # Create the dataFrames
 path = str(pathlib.Path().absolute())
 
-api = MtabAnnotationApi(path+'/.idea/files/')
+api = MtabAnnotationApi(path+'/.idea/files/case_3')
 api.post_request()
 
 cea = api.getList_CEA_Global()
@@ -228,13 +228,17 @@ for i in range(0, numberOfDf, 1):
     df = pd.DataFrame(data=cea[i],
                       columns=cpa[i],
                       dtype=str)
-    df = df.iloc[1:, :]
+    print(tabulate(df, headers='keys', tablefmt='psql'))
+    #Supprime la premiere ligne du fichier en ajustant les indexes
+    df = df.reindex(df.index.drop(0)).reset_index(drop=True)
     cta[i].pop(0)
     listCol = df.columns.values.tolist()
+    #Supprime les colonnes qui n'ont pas été trouvées par Mtab
     if "" in listCol:
         df.drop(labels=[""], axis=1, inplace=True)
+    #Supprime les colonnes dupliquées
     df = df.loc[:, ~df.columns.duplicated()]
-    df.reset_index(drop=True)
+    #Affiche le tableau
     print(tabulate(df, headers='keys', tablefmt='psql'))
     listDf.append(df)
     j = 0
@@ -268,7 +272,7 @@ for i in range(1, len(listDictDf), 1):
         # DF1
 
         df = df1.append(df2, ignore_index=True, sort=False)
-        print(tabulate(listDf[0], headers='keys', tablefmt='psql'))
+        print(tabulate(df, headers='keys', tablefmt='psql'))
         """
         Implementation not finished with the dictionnary, it's possible to check the type of the data that has been inserted.
         dictDf1 = listDictDf[0]
@@ -313,7 +317,6 @@ for i in range(1, len(listDictDf), 1):
 
         # Question 3
         listDf[0] = askQuestion3(df)
-        x = 0
     # Si les colonnes sujet ne correspondent pas.
     elif choice == "2":
         rowCountDf1 = len(df1.index)
@@ -334,8 +337,11 @@ for i in range(1, len(listDictDf), 1):
                 dbrSubject = df1.at[i, headerSubjectTable1]
                 #print(dbrSubject+" "+item)
                 queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
-                # print(queryString)
-                results1 = executeSparqlQuery(queryString)
+                #print(queryString)
+                try:
+                    results1 = executeSparqlQuery(queryString)
+                except HTTPError:
+                    print("Problème Http avec l'application Mtab veuillez ressayer plus tard.")
                 if results1["results"]["bindings"]:
                     listSubjectOntology.append(item)
                     resultInserCol = insertColumnDf(listProposition, item)
@@ -349,17 +355,20 @@ for i in range(1, len(listDictDf), 1):
         # Avec ça, on enlève les colonnes qui ont été insérées dans le df via le insert columnDf en haut.
         headers = set(headers) - set(listSubjectOntology)
         i = 0
-        j = 0
         # S'il y a encore des colonnes dans le headers, ca veut dire que toutes les colonnes vont faire une sorte de produit cartésien. On va prendre chaque cellule de la colonne sujet du df1 et voir si elle a un lien avec les cellules du df2. La perf est de n^4 pas terrible! Peut être moyen de descendre à n^3 mais je ne pense pas.
         if headers:
             while i < rowCountDf1:
+                j = 0
                 while j < rowCountDf2:
                     for item in headers:
                         dbrSubject = df1.at[i, headerSubjectTable1]
                         dbrSubject1 = df2.at[j, item]
                         queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select distinct ?predicate where { \n { <" + dbrSubject + "> ?predicate <" + dbrSubject1 + ">} \n}"
-                        # print(queryString)
-                        results1 = executeSparqlQuery(queryString)
+                        #print(queryString)
+                        try:
+                            results1 = executeSparqlQuery(queryString)
+                        except HTTPError:
+                            print("Problème Http avec l'application Mtab veuillez ressayer plus tard.")
                         for result in results1["results"]["bindings"]:
                             predicate = result["predicate"]["value"]
                             if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
@@ -380,26 +389,26 @@ for i in range(1, len(listDictDf), 1):
         # Rajouter des colonnes que l'algorithme n'aura pas retrouver
         df = askQuestion3(df1)
         listDf[0] = df
-        x = 1
+
+
+
 print("Inserting values...")
-# Insert values. REPASSER A 0
-
-
 rowCount = len(df.index)
 headers = list(df.columns.values)
+i = 0
 # STI du deuxième cas. Très similaire sauf qu'on ne boucle pas sur la meme chose. Ici on boucle sur les colonnes du df. Dans le premier cas c'est via le dictionnaire. -> A améliorer. Créer une méthode pour éviter d'avoir 2 fois le meme code.
-while x < rowCount:
+while i < rowCount:
     for item in headers:
         # Si l'item est null il faut le remplir. -> Faudrait changer le if. Ici le nan est en string via la fonction insertColumnDf il faudrait éviter de la mettre en string.
-        if pd.isnull(df.at[x, item]):
+        if pd.isnull(df.at[i, item]) or df.at[i, item] == 'nan':
             # Ici je récupère la cellule de la colonne sujet.
-            dbrSubject = df.at[x, headers[0]]
+            dbrSubject = df.at[i, headers[0]]
             queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
-            # print(queryString)
+            #print(queryString)
             results1 = executeSparqlQuery(queryString)
             # J'écris les résultats trouvés grâce à la query au dessus.
-            insertDataDf(df, results1, x, item)
-    x = x + 1
+            insertDataDf(df, results1, i, item)
+    i = i + 1
 
 print("DataFrame Final")
 printDf(df)
