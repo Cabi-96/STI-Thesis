@@ -1,12 +1,8 @@
 from collections import defaultdict
-from time import sleep
-
 from requests.exceptions import MissingSchema, HTTPError
 
-from DataIntoDF import DataInfoDF
 from tabulate import tabulate
 import pandas as pd
-import numpy as np
 from SPARQLWrapper import SPARQLWrapper, JSON
 import pathlib
 import requests
@@ -94,15 +90,23 @@ def insertDataDf(df, results, i, item):
         df.at[i, item] = str(df.at[i, item]) + str(predicate) + " "
 
 
-def insertColumnDf(listProposition, column):
+def insertColumnDf(listProposition, column,columnValues):
     index = column.rfind('/')
     tmpColumn = column[index + 1:]
+
     listColumnName = list()
+    for columnValue in columnValues:
+        index = columnValue.rfind('/')
+        tmpcolumnValue = columnValue[index + 1:]
+        listColumnName.append(tmpcolumnValue)
+
+    listColumnNameProposition = list()
     for proposition in listProposition:
         index = proposition.rfind('/')
         tmpproposition = proposition[index + 1:]
-        listColumnName.append(tmpproposition)
-    if tmpColumn not in listColumnName:
+        listColumnNameProposition.append(tmpproposition)
+
+    if tmpColumn not in listColumnNameProposition and tmpColumn not in listColumnName:
         return column
 
 def askQuestion1(df,listProposition):
@@ -142,12 +146,15 @@ def askQuestion2(df):
             break
         queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n SELECT ?predicate \nWHERE {\n?predicate a rdf:Property\nFILTER ( REGEX ( STR (?predicate), \"http://dbpedia.org/ontology/\", \"i\" ) )\nFILTER ( REGEX ( STR (?predicate), \"" + newColumn + "\", \"i\" ) )\n}\nORDER BY ?predicate"
         # print(queryString)
-        results1 = executeSparqlQuery(queryString)
+        try:
+            results1 = executeSparqlQuery(queryString)
+        except HTTPError:
+            print("Problème Http dbpedia veuillez ressayer plus tard.")
         for result in results1["results"]["bindings"]:
             predicate = result["predicate"]["value"]
             if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
                 # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
-                resultInserCol = insertColumnDf(listProposition, predicate)
+                resultInserCol = insertColumnDf(listProposition, predicate,df.columns.values)
                 if resultInserCol and resultInserCol not in listProposition and resultInserCol not in df.columns.values:
                     listProposition.append(resultInserCol)
         choice = 0
@@ -228,7 +235,6 @@ for i in range(0, numberOfDf, 1):
     df = pd.DataFrame(data=cea[i],
                       columns=cpa[i],
                       dtype=str)
-    print(tabulate(df, headers='keys', tablefmt='psql'))
     #Supprime la premiere ligne du fichier en ajustant les indexes
     df = df.reindex(df.index.drop(0)).reset_index(drop=True)
     cta[i].pop(0)
@@ -341,14 +347,14 @@ for i in range(1, len(listDictDf), 1):
                 try:
                     results1 = executeSparqlQuery(queryString)
                 except HTTPError:
-                    print("Problème Http avec l'application Mtab veuillez ressayer plus tard.")
+                    print("Problème Http dbpedia veuillez ressayer plus tard.")
                 if results1["results"]["bindings"]:
                     listSubjectOntology.append(item)
-                    resultInserCol = insertColumnDf(listProposition, item)
+                    resultInserCol = insertColumnDf(listProposition, item,df.columns.values)
                     #print(str(resultInserCol)+" in:")
                     #print("Liste proposition :")
                     #print(listProposition)
-                    if resultInserCol and resultInserCol not in listProposition and item not in df1.columns.values:
+                    if resultInserCol:
                         listProposition.append(resultInserCol)
             i = i + 1
 
@@ -368,13 +374,13 @@ for i in range(1, len(listDictDf), 1):
                         try:
                             results1 = executeSparqlQuery(queryString)
                         except HTTPError:
-                            print("Problème Http avec l'application Mtab veuillez ressayer plus tard.")
+                            print("Problème Http avec dbpedia veuillez ressayer plus tard.")
                         for result in results1["results"]["bindings"]:
                             predicate = result["predicate"]["value"]
                             if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
                                 # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
-                                resultInserCol = insertColumnDf(listProposition, predicate)
-                                if resultInserCol and resultInserCol not in listProposition and predicate not in df1.columns.values:
+                                resultInserCol = insertColumnDf(listProposition, predicate,df1.columns.values)
+                                if resultInserCol:
                                     listProposition.append(resultInserCol)
                     j = j + 1
                 i = i + 1
@@ -405,7 +411,10 @@ while i < rowCount:
             dbrSubject = df.at[i, headers[0]]
             queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
             #print(queryString)
-            results1 = executeSparqlQuery(queryString)
+            try:
+                results1 = executeSparqlQuery(queryString)
+            except HTTPError:
+                print("Problème Http dbpedia veuillez ressayer plus tard.")
             # J'écris les résultats trouvés grâce à la query au dessus.
             insertDataDf(df, results1, i, item)
     i = i + 1

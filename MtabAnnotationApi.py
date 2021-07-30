@@ -71,7 +71,7 @@ class MtabAnnotationApi:
 
       # checking all the csv files in the
       # specified path
-      p = 0
+      p = 1
       for filename in files:
          print("Fichier"+str(p))
          print(filename)
