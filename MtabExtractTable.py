@@ -60,7 +60,7 @@ class MtabAnnotationApi:
    def getList_CEA_Global(self):
       return self.__list_CEA_Global
 
-   def post_request(self):
+   def extractTableHTML(self):
       url = 'https://dbpedia.mtab.app/mtab'
 
       driver = self.__load_page(url)

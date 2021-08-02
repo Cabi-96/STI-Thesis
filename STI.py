@@ -7,7 +7,7 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 import pathlib
 import requests
 
-from MtabAnnotationApi import MtabAnnotationApi
+from MtabExtractTable import MtabAnnotationApi
 
 
 def printDf(df):
@@ -212,8 +212,8 @@ def askQuestion3(df):
 # Create the dataFrames
 path = str(pathlib.Path().absolute())
 
-api = MtabAnnotationApi(path+'/.idea/files/case_3')
-api.post_request()
+api = MtabAnnotationApi(path+'/.idea/files/case_1')
+api.extractTableHTML()
 
 cea = api.getList_CEA_Global()
 print("CEA")
