@@ -1,3 +1,4 @@
+import pathlib
 from csv import reader
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -21,7 +22,8 @@ class MtabAnnotationApi:
       # L'option Headless permet d'éviter d'ouvrir une page web a chaque fois que l'algorithme est lancé. + performant
       options = Options()
       options.add_argument('--headless')
-      driver = webdriver.Firefox(options=options,executable_path=r'C:/Program Files/Mozilla Firefox/geckodriver.exe')
+      path = str(pathlib.Path().absolute())+'/.idea/plugin/geckodriver.exe'
+      driver = webdriver.Firefox(options=options,executable_path=path)
       #driver = webdriver.Firefox(executable_path=r'C:/Program Files/Mozilla Firefox/geckodriver.exe')
 
       # load page
