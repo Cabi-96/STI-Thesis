@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 import glob
+from urllib.parse import unquote
 
 class MtabAnnotationApi:
    __list_CTA_Global = []
@@ -112,7 +113,7 @@ class MtabAnnotationApi:
             ctaList = []
             for link in links:
                # print link href
-               ctaList.append(link.get_attribute("href"))
+               ctaList.append(unquote(link.get_attribute("href")))
                #print(link.get_attribute("href")) #prints text from the element
             listCTA.insert(i,ctaList)
             i = i+1
@@ -135,7 +136,7 @@ class MtabAnnotationApi:
                for link in links:
                   # print link href
                   #print(link.get_attribute("href")) #prints text from the element
-                  listCPA[i-1] = link.get_attribute("href")
+                  listCPA[i-1] = unquote(link.get_attribute("href"))
             i = i+1
 
          listCPA[0] = 'Core Attribute'
@@ -157,7 +158,9 @@ class MtabAnnotationApi:
             for link in links:
                # print link href
                #print(link.get_attribute("href")) #prints text from the element
-               listCEA[i] = link.get_attribute("href")
+               #linkString = str(link.get_attribute("href"))
+               #linkString = linkString.encode('utf8')
+               listCEA[i] = unquote(link.get_attribute("href"))
             i = i+1
 
          nbRow = int(len(listCEA)/nbColumn)

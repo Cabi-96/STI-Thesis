@@ -1,4 +1,3 @@
-from collections import defaultdict
 from requests.exceptions import MissingSchema, HTTPError
 
 from tabulate import tabulate
@@ -12,8 +11,8 @@ from MtabExtractTable import MtabAnnotationApi
 
 def printDf(df):
     print(tabulate(df, headers='keys', tablefmt='psql'))
-    # df.to_csv(r'File Name.csv',index=False)
-    df.to_excel(r'File Name.xlsx', index=False)
+    df.to_csv(r'Final Dataset.csv',index=False)
+    df.to_excel(r'Final Dataset.xlsx', index=False)
 
 
 def cleanLastDigit(item):
@@ -31,50 +30,6 @@ def executeSparqlQuery(query):
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
     return results
-
-
-# Va permettre d'insérer dans la colonne du dataframe, le resultat de la query SPARQL ici en fonction du cas passé en argument, on vérifie son rdf type ou pas.
-"""
-def insertDataDfOld(df, results, i, key, item):
-    print("InsertDataDF")
-    
-    if key is not None:
-        stringFilter = ""
-
-        # Ici on récupère toutes les ontologies de la colonne une par une.
-        for object in key:
-            stringFilter += "?object = <" + object + "> ||\n"
-        stringFilter = stringFilter[:-3]
-        print(stringFilter)
-
-        for result in results["results"]["bindings"]:
-            predicate = result["object"]["value"]
-            # print(item)
-            # print(predicate)
-
-            # Cette query va permettre de vérifier que l'entité qu'on va insérer dans le tableau possède dans son rdf type, les différentes ontologies de la colonne.
-            queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + predicate + "> rdf:type ?object } \n FILTER (" + stringFilter + ")\n}"
-            #print(queryString)
-            resultsFilter = executeSparqlQuery(queryString)
-            # print("FILTER")
-            print(queryString)
-            if resultsFilter["results"]["bindings"]:
-                # Faire disparaitre la valeur NaN avec fillna() mais pas réussi. df.fillna('') -> A AMELIORER! Créer une fonction c'est presque le meme code qu'en bas, sauf que le replace se fait sur le nan et le replace d'en dessous sur <NA>
-                if len(str(df.at[i, item])) == 3:
-                    df.at[i, item] = str(df.at[i, item]).replace("nan", "")
-                df.at[i, item] = str(df.at[i, item]) + str(predicate) + " "
-    else:
-        for result in results["results"]["bindings"]:
-            predicate = result["object"]["value"]
-            #print(predicate)
-            if len(str(df.at[i, item])) == 4:
-                df.at[i, item] = str(df.at[i, item]).replace("<NA>", "")
-            elif len(str(df.at[i, item])) == 3:
-                df.at[i, item] = str(df.at[i, item]).replace("nan", "")
-            #print(df.at[i, item])
-            #print(len(str(df.at[i, item])))
-            df.at[i, item] = str(df.at[i, item]) + str(predicate) + " "
-"""
 
 
 def insertDataDf(df, results, i, item):
@@ -275,8 +230,20 @@ for i in range(1, len(listDictDf), 1):
     df2 = listDf[i]
     if choice == "1":
         # DF1
+        df1.to_excel(r'Premier Dataset Tour'+str(i)+'.xlsx', index=False)
+        df2.to_excel(r'Deuxième Dataset Tour'+str(i)+'.xlsx', index=False)
 
-        df = df1.append(df2, ignore_index=True, sort=False)
+        df = pd.merge(df1,df2)
+        #Evite les doublons dans le tableau final pour l'étape append
+        df1 = df1[~df1.isin(df)].dropna()
+        df2 = df2[~df2.isin(df)].dropna()
+
+        df = df.append(df1, ignore_index=True, sort=False)
+        df = df.append(df2, ignore_index=True, sort=False)
+
+        #df = df.drop_duplicates(subset=['Core Attribute'], keep='first')
+        df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
+
         print(tabulate(df, headers='keys', tablefmt='psql'))
         """
         Implementation not finished with the dictionnary, it's possible to check the type of the data that has been inserted.
@@ -320,9 +287,13 @@ for i in range(1, len(listDictDf), 1):
 
         askQuestion2(df)
 
+        df.to_excel(r'Deuxième Question Tour'+str(i)+'.xlsx', index=False)
+
         # Question 3
         listDf[0] = askQuestion3(df)
-    # Si les colonnes sujet ne correspondent pas.
+        df.to_excel(r'Troisième Question Tour'+str(i)+'.xlsx', index=False)
+
+# Si les colonnes sujet ne correspondent pas.
     elif choice == "2":
         rowCountDf1 = len(df1.index)
         rowCountDf2 = len(df2.index)
@@ -386,13 +357,15 @@ for i in range(1, len(listDictDf), 1):
         # Permet d'itérer sur un nombre de proposition. En donnant leur index dans la liste pour permettre de facilement les sélectionner.
         # Question 1
         askQuestion1(df1,listProposition)
+        df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
 
         # Question 2
         askQuestion2(df1)
-
+        df.to_excel(r'Deuxième Question Tour'+str(i)+'.xlsx', index=False)
         # Question 3
         # Rajouter des colonnes que l'algorithme n'aura pas retrouver
         df = askQuestion3(df1)
+        df.to_excel(r'Troisième Question Tour'+str(i)+'.xlsx', index=False)
         listDf[0] = df
 
 
@@ -409,7 +382,7 @@ while i < rowCount:
             # Ici je récupère la cellule de la colonne sujet.
             dbrSubject = df.at[i, headers[0]]
             queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
-            #print(queryString)
+            print(queryString)
             try:
                 results1 = executeSparqlQuery(queryString)
             except HTTPError:
