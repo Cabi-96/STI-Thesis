@@ -16,6 +16,7 @@ root.resizable(0, 0)  # makes the root window fixed in size.
 f1 = Frame(root,width=1720, height=960)
 f2 = Frame(root,width=1720, height=960)
 
+listFrame = list()
 
 
 for frame in (f1, f2):
@@ -84,6 +85,10 @@ def Load_excel_data():
     """If the file selected is valid this will load the file into the Treeview"""
 
     directory = os.fsencode(label_file["text"])
+    #Changer l'init ici il faut transformer listFrame en variable globale.
+    global listFrame
+    for frame in listFrame:
+        frame.destroy()
     listFrame = list()
     #Compter
     rely = -0.30
@@ -92,20 +97,14 @@ def Load_excel_data():
     i = 0
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
-        frame = tk.LabelFrame(f1, text=filename)
-        print(filename)
+        listFrame.append(tk.LabelFrame(f1, text=filename))
         if i % 3 != 0 or i == 0:
-            print("if")
-            print(i)
             rely = rely + 0.30
-            frame.place(height=250, width=500,rely=rely, relx=relx)
+            listFrame[i].place(height=250, width=500,rely=rely, relx=relx)
         else:
-            print("else")
-            print(i)
             relx = relx + 0.30
             rely = 0.0
-            frame.place(height=250, width=500,rely=rely, relx=relx)
-        listFrame.append(frame)
+            listFrame[i].place(height=250, width=500,rely=rely, relx=relx)
 
 
         file_path = label_file["text"]+"/"+filename
