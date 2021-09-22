@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import *
 from tkinter import filedialog, messagebox, ttk
 from pathlib import Path
 
@@ -12,23 +13,38 @@ root.geometry("1720x960")  # set the root dimensions
 root.pack_propagate(False)  # tells the root to not let the widgets inside it determine its size.
 root.resizable(0, 0)  # makes the root window fixed in size.
 
+f1 = Frame(root,width=1720, height=960)
+f2 = Frame(root,width=1720, height=960)
+
+
+
+for frame in (f1, f2):
+    frame.grid(row=0, column=0, sticky='news')
+    frame.pack_propagate(0)
+
+
 # Frame for TreeView
-frame1 = tk.LabelFrame(root, text="Excel Data")
+frame1 = tk.LabelFrame(f1, text="Excel Data")
 frame1.place(height=250, width=500)
 
 # Frame for open file dialog
-file_frame = tk.LabelFrame(root, text="Open File")
+file_frame = tk.LabelFrame(f1, text="Open File")
 file_frame.place(height=100, width=400, rely=0.89, relx=0)
 
 # Buttons
-button1 = tk.Button(file_frame, text="Browse A File", command=lambda: File_dialog())
-button1.place(rely=0.65, relx=0.50)
+button1 = tk.Button(file_frame, text="Browse A Folder", command=lambda: File_dialog())
+button1.place(rely=0.65, relx=0.10)
 
-button2 = tk.Button(file_frame, text="Load File", command=lambda: Load_excel_data())
-button2.place(rely=0.65, relx=0.30)
+button2 = tk.Button(file_frame, text="Load Files", command=lambda: Load_excel_data())
+button2.place(rely=0.65, relx=0.40)
 
-button3 = tk.Button(file_frame, text="Next Page", command=lambda: nextPage())
-button3.place(rely=0.65, relx=0.80)
+button3 = tk.Button(file_frame, text="Next page", command=lambda:raise_frame(f2))
+button3.place(rely=0.65, relx=0.60)
+
+#Faire ce bouton comme les autres quand on aura commencer la deuxieme page.
+Button(f2, text='Previous page', command=lambda:raise_frame(f1)).pack()
+Label(f2, text='Page 2').pack()
+
 
 # The file/file path text
 label_file = ttk.Label(file_frame, text="No File Selected")
@@ -60,7 +76,7 @@ def File_dialog():
 
 
 def insert_treeview():
-    frame2 = tk.LabelFrame(root, text="Excel Data")
+    frame2 = tk.LabelFrame(f1, text="Excel Data")
     frame2.place(height=100, width=100)
 
 
@@ -76,7 +92,7 @@ def Load_excel_data():
     i = 0
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
-        frame = tk.LabelFrame(root, text=filename)
+        frame = tk.LabelFrame(f1, text=filename)
         print(filename)
         if i % 3 != 0 or i == 0:
             print("if")
@@ -143,8 +159,9 @@ def nextPage():
     root.destroy()
     import PageTwo
 
+def raise_frame(frame):
+    frame.tkraise()
 
 
-
-
+raise_frame(f1)
 root.mainloop()
