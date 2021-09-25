@@ -166,6 +166,8 @@ def askQuestion3(df):
 # Create the dataFrames
 path = str(pathlib.Path().absolute())
 
+print(path+'/.idea/files/case_1')
+
 api = MtabAnnotationApi(path+'/.idea/files/case_1')
 api.extractTableHTML()
 

@@ -24,6 +24,7 @@ class MtabAnnotationApi:
       options = Options()
       options.add_argument('--headless')
       path = str(pathlib.Path().absolute())+'/.idea/plugin/geckodriver.exe'
+      print(path)
       driver = webdriver.Firefox(options=options,executable_path=path)
       #driver = webdriver.Firefox(executable_path=r'C:/Program Files/Mozilla Firefox/geckodriver.exe')
 
