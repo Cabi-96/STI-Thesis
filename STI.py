@@ -5,9 +5,9 @@ import pandas as pd
 from SPARQLWrapper import SPARQLWrapper, JSON
 import pathlib
 import requests
-
+import certifi
+import ssl
 from MtabExtractTable import MtabAnnotationApi
-
 
 def printDf(df):
     print(tabulate(df, headers='keys', tablefmt='psql'))
@@ -29,6 +29,7 @@ def executeSparqlQuery(query):
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
+    print("RESULTS SPARQL QUERY")
     return results
 
 
@@ -99,7 +100,7 @@ def askQuestion2(df):
         if(newColumn == "-1"):
             break
         queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n SELECT ?predicate \nWHERE {\n?predicate a rdf:Property\nFILTER ( REGEX ( STR (?predicate), \"http://dbpedia.org/ontology/\", \"i\" ) )\nFILTER ( REGEX ( STR (?predicate), \"" + newColumn + "\", \"i\" ) )\n}\nORDER BY ?predicate"
-        # print(queryString)
+        print(queryString)
         try:
             results1 = executeSparqlQuery(queryString)
         except HTTPError:
@@ -110,6 +111,7 @@ def askQuestion2(df):
                 # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
                 resultInserCol = insertColumnDf(listProposition, predicate,df.columns.values)
                 if resultInserCol and resultInserCol not in listProposition and resultInserCol not in df.columns.values:
+                    print("Wesh")
                     listProposition.append(resultInserCol)
         choice = 0
         while int(choice) != -1:

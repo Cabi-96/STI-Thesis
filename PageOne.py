@@ -2,8 +2,6 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import filedialog, messagebox, ttk
-from pathlib import Path
-import pandas as pd
 import os
 
 #Algo Integration
@@ -11,10 +9,43 @@ from requests.exceptions import MissingSchema, HTTPError
 from tabulate import tabulate
 import pandas as pd
 from SPARQLWrapper import SPARQLWrapper, JSON
-import pathlib
-import requests
 
 from MtabExtractTable import MtabAnnotationApi
+
+#----------------------------BEGIN FUNCTION INTEGRATION--------------------------------------------------------------------------------------
+def executeSparqlQuery(query):
+    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    return results
+
+def insertColumnDf(listProposition, column,columnValues):
+    index = column.rfind('/')
+    tmpColumn = column[index + 1:]
+
+    listColumnName = list()
+    for columnValue in columnValues:
+        index = columnValue.rfind('/')
+        tmpcolumnValue = columnValue[index + 1:]
+        listColumnName.append(tmpcolumnValue)
+
+    listColumnNameProposition = list()
+    for proposition in listProposition:
+        index = proposition.rfind('/')
+        tmpproposition = proposition[index + 1:]
+        listColumnNameProposition.append(tmpproposition)
+    if tmpColumn not in listColumnNameProposition and tmpColumn not in listColumnName:
+        return column
+
+#-------------------------------------------------------END FUNCTION INTEGRATION-------------------------------------------------------------
+
+#bool URI loaded
+uriLoad = False
+listDf = list()
+listDictDf = list()
+cta = list()
+increment = 1
 
 # initalise the tkinter GUI
 root = tk.Tk()
@@ -50,12 +81,17 @@ file_frame.place(height=100, width=400, rely=0.89, relx=0)
 file_frame2 = tk.LabelFrame(f2, text="Options")
 file_frame2.place(height=100, width=400, rely=0.89, relx=0)
 
+question_frame2 = tk.LabelFrame(f2, text="Questions")
+question_frame2.place(height=700, width=700, rely=0.0, relx=0.6)
+
 # Buttons
 button1 = tk.Button(file_frame, text="Browse A Folder", command=lambda: File_dialog())
 button1.place(rely=0.65, relx=0.10)
 
 button2 = tk.Button(file_frame, text="Load Files", command=lambda: Load_excel_data())
 button2.place(rely=0.65, relx=0.40)
+
+
 
 def load_uri(frame):
     # Create the dataFrames
@@ -71,13 +107,16 @@ def load_uri(frame):
     print("CPA")
     print(cpa)
 
+    global cta
     cta = api.getList_CTA_Global()
     print("CTA")
     # Pour chaque CTA, le premier index est nul. Je l'ai enlevé dans le for juste en dessous.
     print(cta)
 
     numberOfDf = len(cpa)
+    global listDf
     listDf = list()
+    global listDictDf
     listDictDf = list()
 
     global listFrame2
@@ -141,6 +180,8 @@ def load_uri(frame):
             for row in df_rows:
                 tvI.insert("", "end",
                            values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
+    global uriLoad
+    uriLoad = True
     frame.tkraise()
 
 button3 = tk.Button(file_frame, text="Load URI", command=lambda: load_uri(f2))
@@ -153,16 +194,179 @@ button4.place(rely=0.65, relx=0.40)
 button5 = tk.Button(file_frame, text='Next Page', command=lambda:raise_frame(f2))
 button5.place(rely=0.65, relx=0.80)
 
+button6 = tk.Button(question_frame2, text='Ask Question', command=lambda:ask_question())
+button6.place(rely=0.90, relx=0.50)
+
 
 # The file/file path text
 label_file = ttk.Label(file_frame, text="No File Selected")
 label_file.place(rely=0, relx=0)
 
+#-----------------------------------------------------QUESTIONS PAGE 2----------------------------------------------------------------------------------------------------
+def ask_question():
+    global uriLoad
+    if uriLoad  == True:
+        global increment
+        common_element = set(cta[0][0]).intersection(cta[increment][0])
+        label_cta0 = ttk.Label(question_frame2, text="CTA from the first Dataset :" + str(cta[0][0]), wraplengt=750)
+        label_cta0.place(rely=0, relx=0)
+        label_ctaI = ttk.Label(question_frame2, text="CTA from the second Dataset :" + str(cta[increment][0]), wraplengt=750)
+        label_ctaI.place(rely=0.05, relx=0)
+        print(cta[0][0])
+        print(cta[increment][0])
+        label_file = ttk.Label(question_frame2, text="Voici les éléments en communs :" + str(common_element), wraplengt=750)
+        label_file.place(rely=0.15, relx=0)
+        #print("Voici les éléments en communs :" + str(common_element))
+        if len(common_element) == len(cta[0][0]):
+            label_Q1 = ttk.Label(question_frame2, text="Tous les types de la liste sujet se retrouvent dans la liste cible. Nous suggérons donc de choisir le premier choix d'intégration de dataset.", wraplengt=750)
+            label_Q1.place(rely=0.20, relx=0)
+        elif len(common_element) > 0:
+            label_Q1 = ttk.Label(question_frame2, text="Tous les types de la liste sujet ne se retrouvent pas dans la liste cible. Nous suggérons donc de choisir le deuxième choix d'intégration de dataset.", wraplengt=750)
+            label_Q1.place(rely=0.20, relx=0)
+        else:
+            label_Q1 = ttk.Label(question_frame2, text="Aucun type n'est retrouvé dans la liste cible. Le deuxième choix d'intégration sera utilisé.", wraplengt=750)
+            label_Q1.place(rely=0.20, relx=0)
+
+        label_rep_Q1 = ttk.Label(question_frame2, text="Pour choisir le premier choix taper 1 sinon taper 2:", wraplengt=750)
+        label_rep_Q1.place(rely=0.25, relx=0)
+        textBox_rep_Q1 = ttk.Entry(question_frame2)
+        textBox_rep_Q1.place(rely=0.28, relx=0)
+        button_Q1_OK = tk.Button(question_frame2, text='OK', command=lambda:question_2(textBox_rep_Q1))
+        button_Q1_OK.place(rely=0.28, relx=0.30)
+
+def question_2(textBox_rep_Q1):
+    choice = textBox_rep_Q1.get()
+    df1 = listDf[0]
+    df2 = listDf[increment]
+    if choice == "1":
+        df1.to_excel(r'Premier Dataset Tour'+str(increment)+'.xlsx', index=False)
+        df2.to_excel(r'Deuxième Dataset Tour'+str(increment)+'.xlsx', index=False)
+
+        df = pd.merge(df1,df2)
+        #Evite les doublons dans le tableau final pour l'étape append
+        df1 = df1[~df1.isin(df)].dropna()
+        df2 = df2[~df2.isin(df)].dropna()
+
+        df = df.append(df1, ignore_index=True, sort=False)
+        df = df.append(df2, ignore_index=True, sort=False)
+
+        #df = df.drop_duplicates(subset=['Core Attribute'], keep='first')
+        df.to_excel(r'Première Question Tour'+str(increment)+'.xlsx', index=False)
+
+        print(tabulate(df, headers='keys', tablefmt='psql'))
+
+        frameDf = tk.LabelFrame(f2, text='df resultat')
+        frameDf.place(height=250, width=500, rely=0.60, relx=0)
+
+        tvI = ttk.Treeview(frameDf)
+        tvI.place(relheight=1, relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
+
+        treescrolly = tk.Scrollbar(frameDf, orient="vertical",
+                                   command=tvI.yview)  # command means update the yaxis view of the widget
+        treescrollx = tk.Scrollbar(frameDf, orient="horizontal",
+                                   command=tvI.xview)  # command means update the xaxis view of the widget
+        tvI.configure(xscrollcommand=treescrollx.set,
+                      yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
+        treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
+        treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
+        tvI["column"] = list(df.columns)
+        tvI["show"] = "headings"
+
+        for column in tvI["columns"]:
+            tvI.heading(column, text=column)  # let the column heading = column name
+            df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
+            for row in df_rows:
+                tvI.insert("", "end",
+                           values=row)
+        askQuestion2(df)
+
+def askQuestion2(df):
+    print("Question 2")
+    label_Add_Column = ttk.Label(question_frame2, text="Si vous avez une autre colonne à ajouter ecrivez le. Exemple : birthPlace. Si vous n'en avez plus, écrivez -1:", wraplengt=750)
+    label_Add_Column.place(rely=0.25, relx=0)
+    textBox_rep_Q2 = ttk.Entry(question_frame2)
+    textBox_rep_Q2.place(rely=0.28, relx=0)
+    button_Q2_OK = tk.Button(question_frame2, text='OK', command=lambda:algo_question2(textBox_rep_Q2,df))
+    button_Q2_OK.place(rely=0.28, relx=0.30)
+
+
+def algo_question2(textBox_rep_Q2,df):
+    listProposition = list()
+    newColumn = str(textBox_rep_Q2.get())
+    if(newColumn == "-1"):
+        return
+    queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n SELECT ?predicate \nWHERE {\n?predicate a rdf:Property\nFILTER ( REGEX ( STR (?predicate), \"http://dbpedia.org/ontology/\", \"i\" ) )\nFILTER ( REGEX ( STR (?predicate), \"" + newColumn + "\", \"i\" ) )\n}\nORDER BY ?predicate"
+    # print(queryString)
+    try:
+        results1 = executeSparqlQuery(queryString)
+    except HTTPError:
+        print("Problème Http dbpedia veuillez ressayer plus tard.")
+    for result in results1["results"]["bindings"]:
+        predicate = result["predicate"]["value"]
+        if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
+            # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
+            resultInserCol = insertColumnDf(listProposition, predicate,df.columns.values)
+            if resultInserCol and resultInserCol not in listProposition and resultInserCol not in df.columns.values:
+                listProposition.append(resultInserCol)
+    print(listProposition)
+    #Show la liste de proposition
+    frameDf = tk.LabelFrame(f2, text='Liste proposition')
+    frameDf.place(height=250, width=500, rely=0.0, relx=0.30)
+
+    tvI = ttk.Treeview(frameDf)
+    tvI.place(relheight=1, relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
+
+    treescrolly = tk.Scrollbar(frameDf, orient="vertical",
+                               command=tvI.yview)  # command means update the yaxis view of the widget
+    treescrollx = tk.Scrollbar(frameDf, orient="horizontal",
+                               command=tvI.xview)  # command means update the xaxis view of the widget
+    tvI.configure(xscrollcommand=treescrollx.set,
+                  yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
+    treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
+    treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
+    tvI["column"] = ["Propositions"]
+    tvI["show"] = "headings"
+
+    for column in tvI["columns"]:
+        tvI.heading(column, text=column)  # let the column heading = column name
+        df_rows = listProposition  # turns the dataframe into a list of lists
+        for row in df_rows:
+            tvI.insert("", "end",values=row)
+    """    
+    CONTINUER A PARTIR D'ICI    
+    while int(choice) != -1:
+        if len(listProposition) == 0:
+            print("Plus ou pas de choix dans la liste.")
+            break
+        i = 0
+        for proposition in listProposition:
+            print(str(i) + " " + proposition)
+            i = i + 1
+        #choice = input("Sélectionner les propositions une par une en écrivant leurs numéros (-1 pour sortir de la question):")
+        if int(choice) == -1:
+            # print(choice)
+            print("Tous les choix ont été enregistrés")
+            break
+        column = listProposition[int(choice)]
+        # print(choice+" "+column)
+        df[column] = 'nan'
+        #df[column] = df[column].astype('string')
+        listProposition.remove(column)
+        #printDf(df)
+    return df
+    """
+
+
+
+
+
+#---------------------------------------------------------------Fonction premiere page-----------------------------------------------------------------------------------------------------
+
 def File_dialog():
     """This Function will open the file explorer and assign the chosen file path to label_file"""
     """filename = filedialog.askopenfilename(initialdir="/",
-                                          title="Select A File",
-                                          filetype=(("xlsx files", "*.xlsx"),("All Files", "*.*")))"""
+                                              title="Select A File",
+                                              filetype=(("xlsx files", "*.xlsx"),("All Files", "*.*")))"""
     krepertoire = filedialog.askdirectory(title="Sélectionnez un répertoire de destination ...", mustexist=True)
     label_file["text"] = krepertoire
     return None
@@ -246,10 +450,6 @@ def raise_frame(frame):
 
 raise_frame(f1)
 root.mainloop()
-
-#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#Integration Algo
-#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 

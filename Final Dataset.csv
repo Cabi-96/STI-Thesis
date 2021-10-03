@@ -1,4 +1,18 @@
-Core Attribute,http://dbpedia.org/ontology/arrondissement
-http://dbpedia.org/resource/Andenne,http://dbpedia.org/resource/Arrondissement_of_Namur 
-http://dbpedia.org/resource/Dinant,http://dbpedia.org/resource/Arrondissement_of_Dinant 
-http://dbpedia.org/resource/Anhée,http://dbpedia.org/resource/Arrondissement_of_Dinant 
+Core Attribute,http://dbpedia.org/ontology/deathPlace,http://dbpedia.org/ontology/parent,http://dbpedia.org/ontology/deathDate,http://dbpedia.org/ontology/birthDate,http://dbpedia.org/ontology/birthPlace
+http://dbpedia.org/resource/Giovanni_Francesco_Guidi_di_Bagno,http://dbpedia.org/resource/Rome,http://dbpedia.org/resource/Colonna_family,http://dbpedia.org/resource/1641,1578-10-04 ,http://dbpedia.org/resource/Florence http://dbpedia.org/resource/Grand_Duchy_of_Tuscany 
+http://dbpedia.org/resource/Giovanni_Doria,http://dbpedia.org/resource/Palermo,http://dbpedia.org/resource/Giovanni_Andrea_Doria,http://dbpedia.org/resource/1642,,
+http://dbpedia.org/resource/George_Murray_(bishop_of_Rochester),http://dbpedia.org/resource/Chester_Square,http://dbpedia.org/resource/Lord_George_Murray_(bishop),http://dbpedia.org/resource/1860,1784-01-12 ,http://dbpedia.org/resource/Farnham http://dbpedia.org/resource/Surrey 
+http://dbpedia.org/resource/Geoffrey_(archbishop_of_York),http://dbpedia.org/resource/Normandy,http://dbpedia.org/resource/Henry_II_of_England,http://dbpedia.org/resource/12-12-12,,
+http://dbpedia.org/resource/Ferdinand_III_of_Castile,http://dbpedia.org/resource/Crown_of_Castile,http://dbpedia.org/resource/Alfonso_IX_of_León,http://dbpedia.org/resource/1252,,
+http://dbpedia.org/resource/Erik_Benzelius_the_younger,http://dbpedia.org/resource/Linköping,http://dbpedia.org/resource/Erik_Benzelius_the_Elder,http://dbpedia.org/resource/1743,1675-01-27 ,http://dbpedia.org/resource/Uppsala http://dbpedia.org/resource/Sweden 
+http://dbpedia.org/resource/Edward_the_Confessor,http://dbpedia.org/resource/London,http://dbpedia.org/resource/Æthelred_the_Unready,http://dbpedia.org/resource/1066,,
+http://dbpedia.org/resource/Edward_William_Grinfield,http://dbpedia.org/resource/Brighton,http://dbpedia.org/resource/Thomas_Grinfield,http://dbpedia.org/resource/1864,,
+http://dbpedia.org/resource/Edward_Francis_Wilson,http://dbpedia.org/resource/Saltspring_Island,http://dbpedia.org/resource/Daniel_Wilson_(bishop),http://dbpedia.org/resource/1915,1844-12-07 ,http://dbpedia.org/resource/England http://dbpedia.org/resource/Islington 
+http://dbpedia.org/resource/Donald_Foster_Hudson,http://dbpedia.org/resource/England,http://dbpedia.org/resource/Father,http://dbpedia.org/resource/2003,1916-04-29 ,"http://dbpedia.org/resource/Halifax,_West_Yorkshire http://dbpedia.org/resource/England http://dbpedia.org/resource/West_Riding_of_Yorkshire "
+http://dbpedia.org/resource/Dick_Sheppard_(priest),http://dbpedia.org/resource/City_of_London ,http://dbpedia.org/resource/Edgar_Sheppard ,1937-10-31 ,http://dbpedia.org/resource/1880,http://dbpedia.org/resource/Windsor
+http://dbpedia.org/resource/Claus_Westermann,http://dbpedia.org/resource/Heidelberg http://dbpedia.org/resource/Germany ,http://dbpedia.org/resource/Mother http://dbpedia.org/resource/Father ,2000-06-11 ,http://dbpedia.org/resource/1909,http://dbpedia.org/resource/Berlin
+http://dbpedia.org/resource/Charles_Januarius_Acton,http://dbpedia.org/resource/Naples ,"http://dbpedia.org/resource/Sir_John_Acton,_6th_Baronet ",1847-06-23 ,http://dbpedia.org/resource/1803,http://dbpedia.org/resource/Naples
+http://dbpedia.org/resource/Carlo_Barberini,http://dbpedia.org/resource/Rome ,http://dbpedia.org/resource/Taddeo_Barberini http://dbpedia.org/resource/Anna_Colonna ,1704-10-02 ,http://dbpedia.org/resource/1630,http://dbpedia.org/resource/Rome
+http://dbpedia.org/resource/Cardinal_de_Bouillon,http://dbpedia.org/resource/Rome ,"http://dbpedia.org/resource/Frédéric_Maurice_de_La_Tour_d'Auvergne,_Duc_de_Bouillon ",1715-03-02 ,http://dbpedia.org/resource/1643,http://dbpedia.org/resource/France
+http://dbpedia.org/resource/Camillo_Francesco_Maria_Pamphili,http://dbpedia.org/resource/Rome ,http://dbpedia.org/resource/Olimpia_Maidalchini ,1666-07-26 ,http://dbpedia.org/resource/1622,http://dbpedia.org/resource/Naples
+http://dbpedia.org/resource/Benjamin_Hoadly,"http://dbpedia.org/resource/Middlesex http://dbpedia.org/resource/Great_Britain http://dbpedia.org/resource/Chelsea,_London ",http://dbpedia.org/resource/Samuel_Hoadly ,1761-04-17 ,http://dbpedia.org/resource/1676,http://dbpedia.org/resource/Kent
