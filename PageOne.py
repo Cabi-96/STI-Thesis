@@ -9,7 +9,6 @@ from requests.exceptions import MissingSchema, HTTPError
 from tabulate import tabulate
 import pandas as pd
 from SPARQLWrapper import SPARQLWrapper, JSON
-
 from MtabExtractTable import MtabAnnotationApi
 
 #----------------------------BEGIN FUNCTION INTEGRATION--------------------------------------------------------------------------------------
@@ -46,6 +45,12 @@ listDf = list()
 listDictDf = list()
 cta = list()
 increment = 1
+
+#variables
+isDebug = 1
+file_path_absolute = os.path.dirname(__file__)
+file_path_debug = os.path.join(file_path_absolute, ".idea\\files\\case_test")
+
 
 # initalise the tkinter GUI
 root = tk.Tk()
@@ -90,8 +95,6 @@ button1.place(rely=0.65, relx=0.10)
 
 button2 = tk.Button(file_frame, text="Load Files", command=lambda: Load_excel_data())
 button2.place(rely=0.65, relx=0.40)
-
-
 
 def load_uri(frame):
     # Create the dataFrames
@@ -308,10 +311,12 @@ def algo_question2(textBox_rep_Q2,df):
             resultInserCol = insertColumnDf(listProposition, predicate,df.columns.values)
             if resultInserCol and resultInserCol not in listProposition and resultInserCol not in df.columns.values:
                 listProposition.append(resultInserCol)
+
     print(listProposition)
     #Show la liste de proposition
     frameDf = tk.LabelFrame(f2, text='Liste proposition')
     frameDf.place(height=250, width=500, rely=0.0, relx=0.30)
+
 
     tvI = ttk.Treeview(frameDf)
     tvI.place(relheight=1, relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
@@ -332,30 +337,21 @@ def algo_question2(textBox_rep_Q2,df):
         df_rows = listProposition  # turns the dataframe into a list of lists
         for row in df_rows:
             tvI.insert("", "end",values=row)
-    """    
-    CONTINUER A PARTIR D'ICI    
-    while int(choice) != -1:
-        if len(listProposition) == 0:
-            print("Plus ou pas de choix dans la liste.")
-            break
-        i = 0
-        for proposition in listProposition:
-            print(str(i) + " " + proposition)
-            i = i + 1
-        #choice = input("Sélectionner les propositions une par une en écrivant leurs numéros (-1 pour sortir de la question):")
-        if int(choice) == -1:
-            # print(choice)
-            print("Tous les choix ont été enregistrés")
-            break
-        column = listProposition[int(choice)]
-        # print(choice+" "+column)
-        df[column] = 'nan'
-        #df[column] = df[column].astype('string')
-        listProposition.remove(column)
-        #printDf(df)
-    return df
-    """
 
+    #Show button selection
+    button_Q2_SelectProposition = tk.Button(f2, text='OK', command=lambda:algo_question2_proposition(tvI,df))
+    button_Q2_SelectProposition.place(rely=0, relx=0.30)
+
+
+
+def algo_question2_proposition(tvI,df):
+    #get items from proposition's list
+    for item in tvI.selection():
+        column = tvI.item(item,"values")
+        print(column)
+        df[column] = 'nan'
+
+    df.to_excel(r'Deuxième Question Tour'+str(increment)+'.xlsx', index=False)
 
 
 
@@ -445,8 +441,23 @@ def Load_excel_data():
     return None
 
 
+
+
 def raise_frame(frame):
     frame.tkraise()
+
+
+if(isDebug == 1) :
+    print("DEBUG MODE")
+    file_path = file_path_debug
+    label_file["text"] = file_path_debug
+
+    #Charge excel from file path debug
+    Load_excel_data()
+    #Load uri
+    load_uri(f2)
+    #Next Page
+    raise_frame(f2)
 
 raise_frame(f1)
 root.mainloop()
