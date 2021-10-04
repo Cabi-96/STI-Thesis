@@ -261,39 +261,44 @@ def question_2(textBox_rep_Q1):
         frameDf = tk.LabelFrame(f2, text='df resultat')
         frameDf.place(height=250, width=500, rely=0.60, relx=0)
 
-        tvI = ttk.Treeview(frameDf)
-        tvI.place(relheight=1, relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
+        tvResult = ttk.Treeview(frameDf)
+        tvResult.place(relheight=1, relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
 
         treescrolly = tk.Scrollbar(frameDf, orient="vertical",
-                                   command=tvI.yview)  # command means update the yaxis view of the widget
+                                   command=tvResult.yview)  # command means update the yaxis view of the widget
         treescrollx = tk.Scrollbar(frameDf, orient="horizontal",
-                                   command=tvI.xview)  # command means update the xaxis view of the widget
-        tvI.configure(xscrollcommand=treescrollx.set,
+                                   command=tvResult.xview)  # command means update the xaxis view of the widget
+        tvResult.configure(xscrollcommand=treescrollx.set,
                       yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
         treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
         treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
-        tvI["column"] = list(df.columns)
-        tvI["show"] = "headings"
+        tvResult["column"] = list(df.columns)
+        tvResult["show"] = "headings"
 
-        for column in tvI["columns"]:
-            tvI.heading(column, text=column)  # let the column heading = column name
+        for column in tvResult["columns"]:
+            tvResult.heading(column, text=column)  # let the column heading = column name
             df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
             for row in df_rows:
-                tvI.insert("", "end",
+                tvResult.insert("", "end",
                            values=row)
-        askQuestion2(df)
+        askQuestion2(df,tvResult)
 
-def askQuestion2(df):
+
+
+
+
+def askQuestion2(df,tvResult):
     print("Question 2")
     label_Add_Column = ttk.Label(question_frame2, text="Si vous avez une autre colonne à ajouter ecrivez le. Exemple : birthPlace. Si vous n'en avez plus, écrivez -1:", wraplengt=750)
     label_Add_Column.place(rely=0.25, relx=0)
     textBox_rep_Q2 = ttk.Entry(question_frame2)
     textBox_rep_Q2.place(rely=0.28, relx=0)
-    button_Q2_OK = tk.Button(question_frame2, text='OK', command=lambda:algo_question2(textBox_rep_Q2,df))
-    button_Q2_OK.place(rely=0.28, relx=0.30)
+    button_Q2_Proposition = tk.Button(question_frame2, text='Choisir', command=lambda:algo_question2(textBox_rep_Q2,df,tvResult))
+    button_Q2_Proposition.place(rely=0.28, relx=0.30)
+    button_Q2_Validation = tk.Button(question_frame2, text='Valider', command=lambda:algo_question2(textBox_rep_Q2,df,tvResult))
+    button_Q2_Validation.place(rely=0.28, relx=0.35)
 
-
-def algo_question2(textBox_rep_Q2,df):
+def algo_question2(textBox_rep_Q2,df,tvResult):
     listProposition = list()
     newColumn = str(textBox_rep_Q2.get())
     if(newColumn == "-1"):
@@ -339,19 +344,38 @@ def algo_question2(textBox_rep_Q2,df):
             tvI.insert("", "end",values=row)
 
     #Show button selection
-    button_Q2_SelectProposition = tk.Button(f2, text='OK', command=lambda:algo_question2_proposition(tvI,df))
+    button_Q2_SelectProposition = tk.Button(f2, text='OK', command=lambda:algo_question2_proposition(tvI,df,tvResult))
     button_Q2_SelectProposition.place(rely=0, relx=0.30)
 
 
 
-def algo_question2_proposition(tvI,df):
+def algo_question2_proposition(tvI,df,tvResult):
     #get items from proposition's list
     for item in tvI.selection():
-        column = tvI.item(item,"values")
-        print(column)
-        df[column] = 'nan'
+        columnAdd = tvI.item(item,"values")
+        print(columnAdd)
+        df[columnAdd] = 'nan'
+
 
     df.to_excel(r'Deuxième Question Tour'+str(increment)+'.xlsx', index=False)
+
+    tvResult
+    tvResult["column"] = list(df.columns)
+
+    # delete all records
+    for record in tvResult.get_children():
+        tvResult.delete(record)
+
+    # add records with new column(s)
+    for column in tvResult["columns"]:
+        tvResult.heading(column, text=column)  # let the column heading = column name
+        df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
+        for row in df_rows:
+            tvResult.insert("", "end",
+                            values=row)
+
+
+
 
 
 
