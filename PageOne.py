@@ -283,10 +283,6 @@ def question_2(textBox_rep_Q1):
                            values=row)
         askQuestion2(df,tvResult)
 
-
-
-
-
 def askQuestion2(df,tvResult):
     print("Question 2")
     label_Add_Column = ttk.Label(question_frame2, text="Si vous avez une autre colonne à ajouter ecrivez le. Exemple : birthPlace. Si vous n'en avez plus, écrivez -1:", wraplengt=750)
@@ -346,8 +342,6 @@ def algo_question2(textBox_rep_Q2,df,tvResult):
     #Show button selection
     button_Q2_SelectProposition = tk.Button(f2, text='OK', command=lambda:algo_question2_proposition(tvI,df,tvResult))
     button_Q2_SelectProposition.place(rely=0, relx=0.30)
-
-
 
 def algo_question2_proposition(tvI,df,tvResult):
     #get items from proposition's list
