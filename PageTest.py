@@ -64,13 +64,13 @@ container = tk.Frame(root)
 container.pack(side="top", fill="both", expand=True)
 
 ##### Frame data (first page)
-frame_data = Frame(root)
-frame_data.pack(fill="both",expand="yes")
-label_frame_data = tk.LabelFrame(frame_data, text="Excel Data")
+frame_pageOne = Frame(root)
+frame_pageOne.pack(fill="both", expand="yes")
+label_frame_data = tk.LabelFrame(frame_pageOne, text="Excel Data")
 label_frame_data.pack(fill="both",expand="yes")
 
 # Frame data : options
-Label_options = tk.LabelFrame(frame_data, text="Options")
+Label_options = tk.LabelFrame(frame_pageOne, text="Options")
 Label_options.pack(fill="both", pady=20, padx = 10, side='left')
 label_file = tk.Label(Label_options, text="No File Selected")
 label_file.pack(pady = 20)
@@ -86,31 +86,33 @@ button2.pack(side='left', padx = 5)
 if(file_path == ""):
     button2["state"] = "disable"
 
-button3 = tk.Button(Label_options, text="Load URI", state="disable", command=lambda: load_uri(frame_data2))
+button3 = tk.Button(Label_options, text="Load URI", state="disable", command=lambda: load_uri(frame_pageTwo))
 button3.pack(side='left', padx = 5)
 
-button5 = tk.Button(Label_options, text='Next Page', command=lambda:raise_frame(frame_data2))
+button5 = tk.Button(Label_options, text='Next Page', command=lambda:raise_frame(frame_pageTwo))
 button5.pack(side='left', padx = 5)
 
 
-######Frame data2 (second page)
-frame_data2 = Frame(root)
-#frame_data2.pack(fill="both",expand="yes")
-label_frame_data2 = tk.LabelFrame(frame_data2, text="Excel Data")
-label_frame_data2.pack(fill="both",expand="yes", side = "left")
+######Frame pagetwo  : two container one for result (frame_data2 and one for questions and choices frame_selection)
+frame_pageTwo = Frame(root)
+frame_pageOne.pack(fill="both", expand="yes")
 
-frame_questions = tk.LabelFrame(frame_data2, text="Questions")
-frame_questions.pack(fill="both",expand="yes", side = "right")
+## two frames
+label_frame_data2 = tk.LabelFrame(frame_pageTwo, text="Excel Data")
+label_frame_data2.pack(side="left", padx=2, pady=2,fill="both", expand="yes")
+label_frame_selection = tk.LabelFrame(frame_pageTwo, text="Selection", width = "400")
+label_frame_selection.pack(side="left", padx=2, pady=2, fill="y")
+
+frame_questions = tk.LabelFrame(label_frame_selection, text="Questions")
+frame_questions.pack(expand="no", fill="x",padx = 5)
+
 
 #Boutton pour revenir a la page précédente.
-button4 = tk.Button(frame_questions, text='Previous page', command=lambda:raise_frame(frame_data))
-button4.pack(side='left', padx = 5)
+button4 = tk.Button(frame_pageTwo, text='Previous page', command=lambda:raise_frame(frame_pageOne))
+button4.pack(side='bottom', padx = 5)
 
-button6 = tk.Button(frame_questions, text='Ask Question', command=lambda:ask_question())
-button6.pack(side='left', padx = 5)
-
-frame_data.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
-frame_data2.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+frame_pageOne.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+frame_pageTwo.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
 
 
 def File_dialog():
@@ -190,23 +192,23 @@ def Load_excel_data():
 
 def load_uri(frame):
     # Create the dataFrames
-    print(label_file["text"])
+    #print(label_file["text"])
     api = MtabAnnotationApi(label_file["text"])
     api.extractTableHTML()
 
     cea = api.getList_CEA_Global()
-    print("CEA")
-    print(cea)
+    #print("CEA")
+    #print(cea)
 
     cpa = api.getList_CPA_Global()
-    print("CPA")
-    print(cpa)
+    #print("CPA")
+    #print(cpa)
 
     global cta
     cta = api.getList_CTA_Global()
-    print("CTA")
+    #print("CTA")
     # Pour chaque CTA, le premier index est nul. Je l'ai enlevé dans le for juste en dessous.
-    print(cta)
+    #print(cta)
 
     numberOfDf = len(cpa)
     global listDf
@@ -235,7 +237,7 @@ def load_uri(frame):
         #Supprime les colonnes dupliquées
         df = df.loc[:, ~df.columns.duplicated()]
         #Affiche le tableau
-        print(tabulate(df, headers='keys', tablefmt='psql'))
+        #print(tabulate(df, headers='keys', tablefmt='psql'))
         listDf.append(df)
         j = 0
         dictDf = dict()
@@ -245,7 +247,7 @@ def load_uri(frame):
 
         ##--------------------------------------------Afficher dataFrames-------------------------------------------------------------------------
         listFrame2.append(tk.LabelFrame(label_frame_data2, text='df'))
-        listFrame2[i].pack(fill="x",expand="yes", pady = 10, padx = 10, side='left')
+        listFrame2[i].pack(fill="both",expand="yes", pady = 10, padx = 10)
 
 
         tvI = ttk.Treeview(listFrame2[i])
@@ -271,37 +273,38 @@ def load_uri(frame):
     global uriLoad
     uriLoad = True
     frame.tkraise()
+    ask_question()
 
 def ask_question():
     global uriLoad
     if uriLoad  == True:
         global increment
         common_element = set(cta[0][0]).intersection(cta[increment][0])
-        label_cta0 = ttk.Label(frame_questions, text="CTA from the first Dataset :" + str(cta[0][0]), wraplengt=750)
-        label_cta0.pack(side='top', padx = 5)
-        label_ctaI = ttk.Label(frame_questions, text="CTA from the second Dataset :" + str(cta[increment][0]), wraplengt=750)
-        label_ctaI.pack(side='top', padx = 5)
-        print(cta[0][0])
-        print(cta[increment][0])
-        label_file = ttk.Label(frame_questions, text="Voici les éléments en communs :" + str(common_element), wraplengt=750)
-        label_file.pack(side='top', padx = 5)
+        frame_text = "CTA from the first Dataset :" + str(cta[0][0]) + "\n" + "CTA from the second Dataset :" + str(cta[increment][0]) + "\n" + "Voici les éléments en communs :" + str(common_element)
+        label_cta = ttk.Label(frame_questions, text= frame_text, wraplengt=750)
+        label_cta.pack(padx = 5,fill="none",expand="false")
+
+        #print(frame_text)
+        #print(cta[0][0])
+        #print(cta[increment][0])
         #print("Voici les éléments en communs :" + str(common_element))
+
         if len(common_element) == len(cta[0][0]):
-            label_Q1 = ttk.Label(frame_questions, text="Tous les types de la liste sujet se retrouvent dans la liste cible. Nous suggérons donc de choisir le premier choix d'intégration de dataset.", wraplengt=750)
-            label_Q1.pack(side='top', padx = 5)
+            text_label_Q1="Tous les types de la liste sujet se retrouvent dans la liste cible. Nous suggérons donc de choisir le premier choix d'intégration de dataset."
         elif len(common_element) > 0:
-            label_Q1 = ttk.Label(frame_questions, text="Tous les types de la liste sujet ne se retrouvent pas dans la liste cible. Nous suggérons donc de choisir le deuxième choix d'intégration de dataset.", wraplengt=750)
-            label_Q1.pack(side='top', padx = 5)
+            text_label_Q1="Tous les types de la liste sujet ne se retrouvent pas dans la liste cible. Nous suggérons donc de choisir le deuxième choix d'intégration de dataset."
         else:
-            label_Q1 = ttk.Label(frame_questions, text="Aucun type n'est retrouvé dans la liste cible. Le deuxième choix d'intégration sera utilisé.", wraplengt=750)
-            label_Q1.pack(side='top', padx = 5)
+            text_label_Q1="Aucun type n'est retrouvé dans la liste cible. Le deuxième choix d'intégration sera utilisé."
+
+        label_Q1 = ttk.Label(frame_questions, text= text_label_Q1, wraplengt=750)
+        label_Q1.pack(padx = 5,fill="none",expand="false")
 
         label_rep_Q1 = ttk.Label(frame_questions, text="Pour choisir le premier choix taper 1 sinon taper 2:", wraplengt=750)
-        label_rep_Q1.pack(side='top', padx = 5)
+        label_rep_Q1.pack(padx = 5,fill="none",expand="false")
         textBox_rep_Q1 = ttk.Entry(frame_questions)
-        textBox_rep_Q1.pack(side='top', padx = 5)
+        textBox_rep_Q1.pack(padx = 5,fill="none",expand="false")
         button_Q1_OK = tk.Button(frame_questions, text='OK', command=lambda:question_2(textBox_rep_Q1))
-        button_Q1_OK.pack(side='top', padx = 5)
+        button_Q1_OK.pack(padx = 5,fill="none",expand="false")
 
 def question_2(textBox_rep_Q1):
     choice = textBox_rep_Q1.get()
@@ -322,17 +325,17 @@ def question_2(textBox_rep_Q1):
         #df = df.drop_duplicates(subset=['Core Attribute'], keep='first')
         df.to_excel(r'Première Question Tour'+str(increment)+'.xlsx', index=False)
 
-        print(tabulate(df, headers='keys', tablefmt='psql'))
+        #print(tabulate(df, headers='keys', tablefmt='psql'))
 
         frameDf = tk.LabelFrame(label_frame_data2, text='df resultat')
-        frameDf.pack(fill="x",expand="yes", pady = 10, padx = 10)
+        frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
 
         tvResult = ttk.Treeview(frameDf)
-        tvResult.pack(fill="x",expand="yes", pady = 10, padx = 10)   # set the height and width of the widget to 100% of its container (frame1).
+        tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)   # set the height and width of the widget to 100% of its container (frame1).
 
-        treescrolly = tk.Scrollbar(frameDf, orient="vertical",
+        treescrolly = tk.Scrollbar(tvResult, orient="vertical",
                                    command=tvResult.yview)  # command means update the yaxis view of the widget
-        treescrollx = tk.Scrollbar(frameDf, orient="horizontal",
+        treescrollx = tk.Scrollbar(tvResult, orient="horizontal",
                                    command=tvResult.xview)  # command means update the xaxis view of the widget
         tvResult.configure(xscrollcommand=treescrollx.set,
                            yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
@@ -347,20 +350,40 @@ def question_2(textBox_rep_Q1):
             for row in df_rows:
                 tvResult.insert("", "end",
                                 values=row)
-        askQuestion2(df,tvResult)
 
-def askQuestion2(df,tvResult):
-    print("Question 2")
-    label_Add_Column = ttk.Label(frame_questions, text="Si vous avez une autre colonne à ajouter ecrivez le. Exemple : birthPlace. Si vous n'en avez plus, écrivez -1:", wraplengt=750)
-    label_Add_Column.place(rely=0.25, relx=0)
-    textBox_rep_Q2 = ttk.Entry(frame_questions)
-    textBox_rep_Q2.place(rely=0.28, relx=0)
-    button_Q2_Proposition = tk.Button(frame_questions, text='Choisir', command=lambda:algo_question2(textBox_rep_Q2,df,tvResult))
-    button_Q2_Proposition.place(rely=0.28, relx=0.30)
-    button_Q2_Validation = tk.Button(frame_questions, text='Valider', command=lambda:algo_question2(textBox_rep_Q2,df,tvResult))
-    button_Q2_Validation.place(rely=0.28, relx=0.35)
+        #print("Question 2")
+        label_Add_Column = ttk.Label(frame_questions, text="Si vous avez une autre colonne à ajouter ecrivez le. Exemple : birthPlace. Si vous n'en avez plus, écrivez -1:", wraplengt=750)
+        label_Add_Column.pack(padx = 5,fill="none",expand="false", side = "top")
+        textBox_rep_Q2 = ttk.Entry(frame_questions)
+        textBox_rep_Q2.pack(padx = 5,fill="none",expand="false")
 
-def algo_question2(textBox_rep_Q2,df,tvResult):
+        #Show la liste de proposition
+        frameDf = tk.LabelFrame(label_frame_selection, text='Liste proposition')
+        frameDf.pack(padx = 5,expand="false", fill="x")
+
+        tvI = ttk.Treeview(frameDf)
+        tvI.pack(padx = 5,fill="x",expand="false")
+
+        treescrolly = tk.Scrollbar(frameDf, orient="vertical",
+                                   command=tvI.yview)  # command means update the yaxis view of the widget
+        treescrollx = tk.Scrollbar(frameDf, orient="horizontal",
+                                   command=tvI.xview)  # command means update the xaxis view of the widget
+        tvI.configure(xscrollcommand=treescrollx.set,
+                      yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
+        treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
+        treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
+
+        button_Q2_Proposition = tk.Button(frame_questions, text='Choisir', command=lambda:algo_question2(textBox_rep_Q2,df,tvI))
+        button_Q2_Proposition.pack(padx = 5,fill="none",expand="false")
+
+        #Show button selection
+        button_Q2_SelectProposition = tk.Button(label_frame_selection, text='Ajouter', command=lambda:algo_question2_proposition(tvI, df, tvResult))
+        button_Q2_SelectProposition.pack()
+        button_Q2_EndProposition = tk.Button(label_frame_selection, text='Terminer') #, command=lambda:algo_question2_proposition(tvI, df, tvResult))
+        button_Q2_EndProposition.pack()
+
+
+def algo_question2(textBox_rep_Q2,df,tvI):
     listProposition = list()
     newColumn = str(textBox_rep_Q2.get())
     if(newColumn == "-1"):
@@ -379,25 +402,13 @@ def algo_question2(textBox_rep_Q2,df,tvResult):
             if resultInserCol and resultInserCol not in listProposition and resultInserCol not in df.columns.values:
                 listProposition.append(resultInserCol)
 
-    print(listProposition)
-    #Show la liste de proposition
-    frameDf = tk.LabelFrame(frame_data2, text='Liste proposition')
-    frameDf.place(height=250, width=500, rely=0.0, relx=0.30)
+    #print(listProposition)
 
-
-    tvI = ttk.Treeview(frameDf)
-    tvI.place(relheight=1, relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
-
-    treescrolly = tk.Scrollbar(frameDf, orient="vertical",
-                               command=tvI.yview)  # command means update the yaxis view of the widget
-    treescrollx = tk.Scrollbar(frameDf, orient="horizontal",
-                               command=tvI.xview)  # command means update the xaxis view of the widget
-    tvI.configure(xscrollcommand=treescrollx.set,
-                  yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
-    treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
-    treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
     tvI["column"] = ["Propositions"]
     tvI["show"] = "headings"
+
+    for record in tvI.get_children():
+        tvI.delete(record)
 
     for column in tvI["columns"]:
         tvI.heading(column, text=column)  # let the column heading = column name
@@ -405,9 +416,6 @@ def algo_question2(textBox_rep_Q2,df,tvResult):
         for row in df_rows:
             tvI.insert("", "end",values=row)
 
-    #Show button selection
-    button_Q2_SelectProposition = tk.Button(frame_data2, text='OK', command=lambda:algo_question2_proposition(tvI,df,tvResult))
-    button_Q2_SelectProposition.place(rely=0, relx=0.30)
 
 def algo_question2_proposition(tvI,df,tvResult):
     #get items from proposition's list
@@ -416,16 +424,13 @@ def algo_question2_proposition(tvI,df,tvResult):
         print(columnAdd)
         df[columnAdd] = 'nan'
 
-
     df.to_excel(r'Deuxième Question Tour'+str(increment)+'.xlsx', index=False)
 
-    tvResult
+    #### refresh df resultat
     tvResult["column"] = list(df.columns)
-
     # delete all records
     for record in tvResult.get_children():
         tvResult.delete(record)
-
     # add records with new column(s)
     for column in tvResult["columns"]:
         tvResult.heading(column, text=column)  # let the column heading = column name
@@ -438,8 +443,7 @@ def raise_frame(frame):
     frame.tkraise()
 
 
-
-raise_frame(frame_data)
+raise_frame(frame_pageOne)
 
 if(isDebug == 1) :
     print("DEBUG MODE")
@@ -449,9 +453,9 @@ if(isDebug == 1) :
     #Charge excel from file path debug
     Load_excel_data()
     #Load uri
-    load_uri(frame_data2)
+    load_uri(label_frame_data2)
     #Next Page
-    raise_frame(frame_data2)
+    raise_frame(frame_pageTwo)
 
 root.mainloop()
 
