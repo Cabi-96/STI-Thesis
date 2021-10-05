@@ -48,7 +48,7 @@ increment = 1
 
 
 #variables
-isDebug = 1
+isDebug = 0
 file_path_absolute = os.path.dirname(__file__)
 file_path_debug = os.path.join(file_path_absolute, ".idea\\files\\case_test")
 listFrame1 = list()
@@ -65,7 +65,7 @@ container.pack(side="top", fill="both", expand=True)
 
 ##### Frame data (first page)
 frame_pageOne = Frame(root)
-frame_pageOne.pack(fill="both", expand="yes")
+#frame_pageOne.pack(fill="both", expand="yes")
 label_frame_data = tk.LabelFrame(frame_pageOne, text="Excel Data")
 label_frame_data.pack(fill="both",expand="yes")
 
@@ -95,7 +95,7 @@ button5.pack(side='left', padx = 5)
 
 ######Frame pagetwo  : two container one for result (frame_data2 and one for questions and choices frame_selection)
 frame_pageTwo = Frame(root)
-frame_pageOne.pack(fill="both", expand="yes")
+#frame_pageTwo.pack(fill="both", expand="yes")
 
 ## two frames
 label_frame_data2 = tk.LabelFrame(frame_pageTwo, text="Excel Data")
@@ -111,8 +111,17 @@ frame_questions.pack(expand="no", fill="x",padx = 5)
 button4 = tk.Button(frame_pageTwo, text='Previous page', command=lambda:raise_frame(frame_pageOne))
 button4.pack(side='bottom', padx = 5)
 
+
+
+##### Frame question 3 (third page)
+frame_pageThree = Frame(root)
+frame_pageThree.pack(fill="both", expand="yes")
+
+
+
 frame_pageOne.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
 frame_pageTwo.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+frame_pageThree.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
 
 
 def File_dialog():
@@ -379,7 +388,7 @@ def question_2(textBox_rep_Q1):
         #Show button selection
         button_Q2_SelectProposition = tk.Button(label_frame_selection, text='Ajouter', command=lambda:algo_question2_proposition(tvI, df, tvResult))
         button_Q2_SelectProposition.pack()
-        button_Q2_EndProposition = tk.Button(label_frame_selection, text='Terminer') #, command=lambda:algo_question2_proposition(tvI, df, tvResult))
+        button_Q2_EndProposition = tk.Button(label_frame_selection, text='Terminer', command=lambda:raise_frame(frame_pageThree))
         button_Q2_EndProposition.pack()
 
 
@@ -438,6 +447,34 @@ def algo_question2_proposition(tvI,df,tvResult):
         for row in df_rows:
             tvResult.insert("", "end",
                             values=row)
+
+
+
+def askQuestion3(df):
+    listProposition = list()
+    print("Question 3")
+    print("Ce que vous cherchez n'a toujours pas été trouvé? Veuillez insérer l'URI de la colonne souhaitée. Exemple : http://dbpedia.org/ontology/deathDate  ")
+    newColumn = "0"
+    while newColumn != "-1":
+        newColumn = input("Si vous avez un autre URI à ajouter ecrivez le. Si vous n'en avez plus, écrivez -1:")
+        newColumn = newColumn.strip()
+        try:
+            request = "" #requests.get(newColumn)
+        except ConnectionError:
+            print('Le lien n existe pas')
+        except MissingSchema:
+            print('Le lien n existe pas')
+        else:
+            #print('Le lien existe')
+            if newColumn and newColumn not in listProposition and newColumn not in df.columns.values:
+                df[newColumn] = 'nan'
+                #df[newColumn] = np.nan
+                #df[newColumn] = df[newColumn].astype('string')
+                #printDf(df)
+            else:
+                print("La colonne existe déjà dans le DF")
+    return df
+
 
 def raise_frame(frame):
     frame.tkraise()
