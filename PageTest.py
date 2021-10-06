@@ -378,6 +378,7 @@ def question_2(textBox_rep_Q1):
     df1 = listDf[0]
     df2 = listDf[increment]
     df = listDf[0]
+    frameProposition = None
     if choice == "1":
         df1.to_excel(r'Premier Dataset Tour'+str(increment)+'.xlsx', index=False)
         df2.to_excel(r'Deuxième Dataset Tour'+str(increment)+'.xlsx', index=False)
@@ -520,8 +521,9 @@ def question_2(textBox_rep_Q1):
 def algo_question2_begin(button_Q_SelectProposition,df,tvResult,frameProposition):
     #print("Question 2")
     button_Q_SelectProposition.destroy()
-    frameProposition[0].destroy()
-    frameProposition[1].destroy()
+    if frameProposition != None:
+        frameProposition[0].destroy()
+        frameProposition[1].destroy()
 
     label_Add_Column = ttk.Label(frame_questions, text="Si vous avez une autre colonne à ajouter ecrivez le. Exemple : birthPlace. Si vous n'en avez plus, écrivez -1:", wraplengt=750)
     label_Add_Column.pack(padx = 5,fill="none",expand="false", side = "top")
