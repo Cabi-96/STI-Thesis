@@ -67,6 +67,7 @@ listPropositionQ3 = list()
 listTvi = list()
 
 
+
 #variables
 isDebug = 0
 file_path_absolute = os.path.dirname(__file__)
@@ -74,6 +75,9 @@ file_path_debug = os.path.join(file_path_absolute, ".idea\\files\\case_test")
 listFrame1 = list()
 listFrame2 = list()
 file_path = ""
+label_cta = None
+tvResult = None
+frameDf = None
 
 # initalise the tkinter GUI
 root = tk.Tk()
@@ -109,8 +113,9 @@ if(file_path == ""):
 button3 = tk.Button(Label_options, text="Load URI", state="disable", command=lambda: load_uri(frame_pageTwo))
 button3.pack(side='left', padx = 5)
 
-button5 = tk.Button(Label_options, text='Next Page', command=lambda:raise_frame(frame_pageTwo))
+button5 = tk.Button(Label_options, text='Next Page', command=lambda:test_next(frame_pageTwo))
 button5.pack(side='left', padx = 5)
+
 
 
 ######Frame pagetwo  : two container one for result (frame_data2 and one for questions and choices frame_selection)
@@ -133,15 +138,11 @@ button4.pack(side='bottom', padx = 5)
 
 
 
-##### Frame question 3 (third page)
-frame_pageThree = Frame(root)
-frame_pageThree.pack(fill="both", expand="yes")
 
 
 
 frame_pageOne.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
 frame_pageTwo.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
-frame_pageThree.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
 
 
 def File_dialog():
@@ -220,9 +221,14 @@ def Load_excel_data():
     return None
 
 def load_uri(frame):
+    if label_cta != None:
+        label_cta.destroy()
     #Permet de pas se retrouver avec des propositions qui existe déjà pour la Q3
     global listPropositionQ3
     listPropositionQ3 = list()
+
+    global listTvi
+    listTvi = list()
     # Create the dataFrames
     #print(label_file["text"])
     api = MtabAnnotationApi(label_file["text"])
@@ -249,12 +255,16 @@ def load_uri(frame):
     listDictDf = list()
 
     global listFrame2
-    for frame in listFrame2:
-        frame.destroy()
+    for frame2 in listFrame2:
+        frame2.destroy()
     listFrame2 = list()
 
     #file_path = label_file["text"]
     i = 0
+    global label_frame_data2
+    label_frame_data2.destroy()
+    label_frame_data2 = tk.LabelFrame(frame_pageTwo, text="Excel Data")
+    label_frame_data2.pack(side="left", padx=2, pady=2,fill="both", expand="yes")
     for i in range(0, numberOfDf, 1):
         df = pd.DataFrame(data=cea[i],
                           columns=cpa[i],
@@ -270,6 +280,7 @@ def load_uri(frame):
         df = df.loc[:, ~df.columns.duplicated()]
         #Affiche le tableau
         #print(tabulate(df, headers='keys', tablefmt='psql'))
+
         listDf.append(df)
         j = 0
         dictDf = dict()
@@ -281,7 +292,6 @@ def load_uri(frame):
         listFrame2.append(tk.LabelFrame(label_frame_data2, text='df'))
         listFrame2[i].pack(fill="both",expand="yes", pady = 10, padx = 10)
 
-        global listTvi
         listTvi.append(ttk.Treeview(listFrame2[i]))
         listTvi[i].place(relheight=1, relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
 
@@ -304,8 +314,11 @@ def load_uri(frame):
                            values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
     global uriLoad
     uriLoad = True
-    frame.tkraise()
+    raise_frame(frame)
     ask_question()
+
+def test_next(frame):
+    raise_frame(frame)
 
 def ask_question():
     global uriLoad
@@ -313,6 +326,18 @@ def ask_question():
         global increment
         common_element = set(cta[0][0]).intersection(cta[increment][0])
         frame_text = "CTA from the first Dataset :" + str(cta[0][0]) + "\n" + "CTA from the second Dataset :" + str(cta[increment][0]) + "\n" + "Voici les éléments en communs :" + str(common_element)
+        global frame_questions
+        frame_questions.destroy()
+
+        #Régler ça
+        global label_frame_selection
+        label_frame_selection.destroy()
+        label_frame_selection = tk.LabelFrame(frame_pageTwo, text="Selection", width = "400")
+        label_frame_selection.pack(side="left", padx=2, pady=2, fill="y")
+
+        frame_questions = tk.LabelFrame(label_frame_selection, text="Questions")
+        frame_questions.pack(expand="no", fill="x",padx = 5)
+
         label_cta = ttk.Label(frame_questions, text= frame_text, wraplengt=750)
         label_cta.pack(padx = 5,fill="none",expand="false")
 
@@ -396,9 +421,15 @@ def question_2(textBox_rep_Q1):
 
         #print(tabulate(df, headers='keys', tablefmt='psql'))
 
+        global frameDf
+        if frameDf != None:
+            frameDf.destroy()
         frameDf = tk.LabelFrame(label_frame_data2, text='df resultat')
         frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
 
+        global tvResult
+        if tvResult != None:
+            tvResult.destroy()
         tvResult = ttk.Treeview(frameDf)
         tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)   # set the height and width of the widget to 100% of its container (frame1).
 
@@ -486,7 +517,8 @@ def question_2(textBox_rep_Q1):
         df.to_excel(r'Première Question Tour'+str(increment)+'.xlsx', index=False)
 
         #print(tabulate(df, headers='keys', tablefmt='psql'))
-
+        if frameDf != None:
+            frameDf.destroy()
         frameDf = tk.LabelFrame(label_frame_data2, text='df resultat')
         frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
 
@@ -556,10 +588,8 @@ def algo_question2_begin(button_Q_SelectProposition,df,tvResult,frameProposition
     button_Q2_EndProposition.pack()
 
 def algo_question2(textBox_rep_Q2,df,tvI):
-    print("algo_question2")
     listProposition = list()
     newColumn = str(textBox_rep_Q2.get())
-    print("newColumn: "+newColumn)
     if(newColumn == "-1"):
         return
     queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n SELECT ?predicate \nWHERE {\n?predicate a rdf:Property\nFILTER ( REGEX ( STR (?predicate), \"http://dbpedia.org/ontology/\", \"i\" ) )\nFILTER ( REGEX ( STR (?predicate), \"" + newColumn + "\", \"i\" ) )\n}\nORDER BY ?predicate"
@@ -573,7 +603,6 @@ def algo_question2(textBox_rep_Q2,df,tvI):
         print("predicate: "+predicate)
         if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
             # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
-            print(df.columns.values)
             resultInserCol = insertColumnDf(listProposition, predicate,df.columns.values)
             if resultInserCol and resultInserCol not in listProposition and resultInserCol not in df.columns.values:
                 listProposition.append(resultInserCol)
@@ -685,7 +714,7 @@ def show_df_result(df,tvResult):
                 # Ici je récupère la cellule de la colonne sujet.
                 dbrSubject = df.at[i, headers[0]]
                 queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + str(dbrSubject) + "> <" + str(item) + "> ?object } \n}"
-                print(queryString)
+                #print(queryString)
                 try:
                     results1 = executeSparqlQuery(queryString)
                 except HTTPError:

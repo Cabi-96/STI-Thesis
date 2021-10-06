@@ -10,12 +10,15 @@ import glob
 from urllib.parse import unquote
 
 class MtabAnnotationApi:
-   __list_CTA_Global = []
-   __list_CPA_Global = []
-   __list_CEA_Global = []
+   #__list_CTA_Global = []
+   #__list_CPA_Global = []
+   #__list_CEA_Global = []
 
    def __init__(self, pathCsvFiles):
       self.pathCsvFiles = pathCsvFiles
+      self.__list_CTA_Global = []
+      self.__list_CPA_Global = []
+      self.__list_CEA_Global = []
 
    def __load_page(self,url):
 
@@ -119,8 +122,14 @@ class MtabAnnotationApi:
             listCTA.insert(i,ctaList)
             i = i+1
 
+         print("self.__list_CTA_Global")
+         print(self.__list_CTA_Global)
          self.__list_CTA_Global.append(listCTA)
-         #print(listCTA)
+         print("listCTA")
+         print(self.__list_CTA_Global)
+         print("end")
+
+
 
          #CPA
          listCPA = []
@@ -141,6 +150,8 @@ class MtabAnnotationApi:
             i = i+1
 
          listCPA[0] = 'Core Attribute'
+         print("self.__list_CPA_Global")
+         print(self.__list_CPA_Global)
          self.__list_CPA_Global.append(listCPA)
          #print(listCPA)
 
@@ -173,7 +184,8 @@ class MtabAnnotationApi:
                dataCEA[i][j] = listCEA[z]
                z = z+1
 
-         #print(dataCEA)
+         print("self.__list_CEA_Global")
+         print(self.__list_CEA_Global)
          self.__list_CEA_Global.append(dataCEA)
 
          driver.get(url)
