@@ -170,7 +170,7 @@ path = str(pathlib.Path().absolute())
 
 print(path+'/.idea/files/case_1')
 
-api = MtabAnnotationApi(path+'/.idea/files/case_1')
+api = MtabAnnotationApi(path+'/.idea/files/case_2')
 api.extractTableHTML()
 
 cea = api.getList_CEA_Global()
