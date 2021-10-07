@@ -710,11 +710,12 @@ def show_df_result(df,tvResult):
     while i < rowCount:
         for item in headers:
             # Si l'item est null il faut le remplir. -> Faudrait changer le if. Ici le nan est en string via la fonction insertColumnDf il faudrait éviter de la mettre en string.
-            if pd.isnull(df.at[i, item]) or df.at[i, item] == 'nan':
+            print(df.at[i, item])
+            if pd.isnull(df.at[i, item]) or df.at[i, item] == 'nan' or df.at[i, item] == '':
                 # Ici je récupère la cellule de la colonne sujet.
                 dbrSubject = df.at[i, headers[0]]
                 queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + str(dbrSubject) + "> <" + str(item) + "> ?object } \n}"
-                #print(queryString)
+                print(queryString)
                 try:
                     results1 = executeSparqlQuery(queryString)
                 except HTTPError:
