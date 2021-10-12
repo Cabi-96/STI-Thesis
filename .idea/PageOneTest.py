@@ -12,11 +12,18 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from MtabExtractTable import MtabAnnotationApi
 
 
+#variables
+isDebug = 0
+file_path_absolute = os.path.dirname(__file__)
+file_path_debug = os.path.join(file_path_absolute, ".idea\\files\\case_test")
+listFrame1 = list()
+listFrame2 = list()
+file_path = ""
 
 class PageOneTest(Frame):
 
-    def __init__(self, root, file_path):
-        Frame.__init__(self, root)
+    def __init__(self, *args, **kwargs):
+        Frame.__init__(self, *args, **kwargs)
         self.label_frame_data = tk.LabelFrame(self, text="Excel Data")
         self.label_frame_data.pack(fill="both",expand="yes")
 
@@ -42,6 +49,9 @@ class PageOneTest(Frame):
 
         self.button5 = tk.Button(self.Label_options, text='Next Page', command=lambda:self.raise_frame(frame_pageTwo))
         self.button5.pack(side='left', padx = 5)
+
+    def show(self):
+        self.lift()
 
 
     def File_dialog(self):
