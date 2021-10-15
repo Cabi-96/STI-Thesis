@@ -5,6 +5,7 @@ from tkinter import filedialog, messagebox, ttk
 import os
 
 import utils
+import pandas as pd
 
 
 
@@ -13,6 +14,18 @@ class PageThreeTest(Frame):
 
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
+
+        self.tvResult = ttk.Treeview(self)
+        self.tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)   # set the height and width of the widget to 100% of its container (frame1).
+
+        treescrolly = tk.Scrollbar(self.tvResult, orient="vertical",
+                                   command=self.tvResult.yview)  # command means update the yaxis view of the widget
+        treescrollx = tk.Scrollbar(self.tvResult, orient="horizontal",
+                                   command=self.tvResult.xview)  # command means update the xaxis view of the widget
+        self.tvResult.configure(xscrollcommand=treescrollx.set,
+                           yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
+        treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
+        treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
 
 
 
@@ -23,7 +36,7 @@ class PageThreeTest(Frame):
 
 
 
-    def show_df_result(self,df,tvResult):
+    def show_df_result(self,df):
         rowCount = len(df.index)
         headers = list(df.columns.values)
         i = 0
@@ -42,28 +55,29 @@ class PageThreeTest(Frame):
                     except HTTPError:
                         print("Problème Http dbpedia veuillez réessayer plus tard.")
                     # J'écris les résultats trouvés grâce à la query au dessus.
-                    df = insertDataDf(df, results1, i, item)
+                    df = utils.insertDataDf(df, results1, i, item)
             i = i + 1
 
-        printDf(df)
-        label_frame_selection.destroy()
+        utils.printDf(df)
+        #label_frame_selection.destroy()
         global listTvi
+        listTvi = list()
         for i in range(0, len(listTvi), 1):
             listTvi[i].destroy()
             listFrame2[i].destroy()
 
-        tvResult["column"] = list(df.columns)
+        self.tvResult["column"] = list(df.columns)
         # delete all records
-        for record in tvResult.get_children():
-            tvResult.delete(record)
+        for record in self.tvResult.get_children():
+            self.tvResult.delete(record)
 
         # add records with new column(s)
-        for column in tvResult["columns"]:
-            tvResult.heading(column, text=column)  # let the column heading = column name
+        for column in self.tvResult["columns"]:
+            self.tvResult.heading(column, text=column)  # let the column heading = column name
             df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
 
         for row in df_rows:
-            tvResult.insert("", "end",
+            self.tvResult.insert("", "end",
                             values=row)
 
         self.show()

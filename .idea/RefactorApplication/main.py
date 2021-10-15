@@ -46,16 +46,20 @@ class Container(tk.Frame):
         #page 2
         p2 = PageTwoTest(self)
         p2.button4 =  tk.Button(p2, text='Previous page', command=lambda:p1.show())
+        p2.button5 =  tk.Button(p2, text='Next page', command=lambda:p3.show())
         p2.button4.pack(side='bottom', padx = 5)
+        p2.button5.pack(side='bottom', padx = 5)
 
 
         #button terminer pour aller page 3
-        p2.button_Q3_SelectProposition = tk.Button(p2.frame_questions, text='Terminer', command=lambda:p3.show_df_result(df,tvResult))
+        p2.button_Q3_SelectProposition = tk.Button(p2.frame_questions, text='Terminer', command=lambda:p3.show_df_result(p2.df))
         p2.button_Q3_SelectProposition.pack()
 
 
         #page 3
         p3 = PageThreeTest(self)
+        p3.button4 =  tk.Button(p3, text='Previous page', command=lambda:p2.show())
+        p3.button4.pack()
 
 
         p1.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
@@ -70,10 +74,9 @@ class Container(tk.Frame):
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Tk")
-    root.geometry('370x340')
 
     main = Container(root)
     main.pack(side="top", fill="both", expand=True)
 
-    root.wm_geometry("400x400")
+    root.wm_geometry("500x500")
     root.mainloop()

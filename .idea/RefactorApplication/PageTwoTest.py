@@ -26,17 +26,33 @@ class PageTwoTest(Frame):
         self.increment = 1
         self.uriLoad = False
 
-        ## two frames: data2 and selection (questions)
+        #### two frames: data2 and selection (questions)
+        ## data
         self.label_frame_data = tk.LabelFrame(self, text="Excel Data")
         self.label_frame_data.pack(side="left", padx=2, pady=2,fill="both", expand="yes")
         self.label_frame_selection = tk.LabelFrame(self, text="Selection", width = "400")
         self.label_frame_selection.pack(side="left", padx=2, pady=2, fill="y")
 
+        #frame result
+        self.frameDf = tk.LabelFrame(self.label_frame_data, text='df resultat')
+        self.tvResult = ttk.Treeview(self.frameDf)
+        treescrolly = tk.Scrollbar(self.tvResult, orient="vertical",
+                                   command=self.tvResult.yview)  # command means update the yaxis view of the widget
+        treescrollx = tk.Scrollbar(self.tvResult, orient="horizontal",
+                                   command=self.tvResult.xview)  # command means update the xaxis view of the widget
+        self.tvResult.configure(xscrollcommand=treescrollx.set,
+                                yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
+        treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
+        treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
+
+
+        ##questions
         self.frame_questions = tk.LabelFrame(self.label_frame_selection, text="Questions")
         self.frame_questions.pack(expand="no", fill="x",padx = 5)
 
         self.listDf = list()
         self.numberOfDf = 0
+        self.df = None
 
 
 
@@ -74,21 +90,21 @@ class PageTwoTest(Frame):
         #file_path = label_file["text"]
         i = 0
         for i in range(0, self.numberOfDf, 1):
-            df = pd.DataFrame(data=cea[i],
+            self.df = pd.DataFrame(data=cea[i],
                               columns=cpa[i],
                               dtype=str)
             #Supprime la premiere ligne du fichier en ajustant les indexes
-            df = df.reindex(df.index.drop(0)).reset_index(drop=True)
+            self.df = self.df.reindex(self.df.index.drop(0)).reset_index(drop=True)
             cta[i].pop(0)
-            listCol = df.columns.values.tolist()
+            listCol = self.df.columns.values.tolist()
             #Supprime les colonnes qui n'ont pas été trouvées par Mtab
             if "" in listCol:
-                df.drop(labels=[""], axis=1, inplace=True)
+                self.df.drop(labels=[""], axis=1, inplace=True)
             #Supprime les colonnes dupliquées
-            df = df.loc[:, ~df.columns.duplicated()]
+            self.df = self.df.loc[:, ~self.df.columns.duplicated()]
             #Affiche le tableau
-            #print(tabulate(df, headers='keys', tablefmt='psql'))
-            self.listDf.append(df)
+            #print(tabulate(self.df, headers='keys', tablefmt='psql'))
+            self.listDf.append(self.df)
             j = 0
             dictDf = dict()
             for j in range(0, len(cpa[i]), 1):
@@ -111,12 +127,12 @@ class PageTwoTest(Frame):
                           yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
             treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
             treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
-            tvI["column"] = list(df.columns)
+            tvI["column"] = list(self.df.columns)
             tvI["show"] = "headings"
 
             for column in tvI["columns"]:
                 tvI.heading(column, text=column)  # let the column heading = column name
-                df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
+                df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
 
             for row in df_rows:
                 tvI.insert("", "end",
@@ -165,54 +181,44 @@ class PageTwoTest(Frame):
         choice = self.textBox_rep_Q1.get()
         df1 = self.listDf[0]
         df2 = self.listDf[self.increment]
-        df = self.listDf[0]
+        self.df = self.listDf[0]
         frameProposition = None
         if choice == "1":
             df1.to_excel(r'Premier Dataset Tour'+str(self.increment)+'.xlsx', index=False)
             df2.to_excel(r'Deuxième Dataset Tour'+str(self.increment)+'.xlsx', index=False)
 
-            df = pd.merge(df1,df2)
+            self.df = pd.merge(df1,df2)
             #Evite les doublons dans le tableau final pour l'étape append
-            df1 = df1[~df1.isin(df)].dropna()
-            df2 = df2[~df2.isin(df)].dropna()
+            df1 = df1[~df1.isin(self.df)].dropna()
+            df2 = df2[~df2.isin(self.df)].dropna()
 
-            df = df.append(df1, ignore_index=True, sort=False)
-            df = df.append(df2, ignore_index=True, sort=False)
+            self.df = self.df.append(df1, ignore_index=True, sort=False)
+            self.df = self.df.append(df2, ignore_index=True, sort=False)
 
             #df = df.drop_duplicates(subset=['Core Attribute'], keep='first')
-            df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
+            self.df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
 
             #print(tabulate(df, headers='keys', tablefmt='psql'))
 
-            #self.frameDf
-            #if self.frameDf != None:
-            #    self.frameDf.destroy()
-            frameDf = tk.LabelFrame(self.label_frame_data, text='df resultat')
-            frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
+            self.frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
+            self.tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)
 
-            #global tvResult
-            #if tvResult != None:
-            #    tvResult.destroy()
-            tvResult = ttk.Treeview(frameDf)
-            tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)   # set the height and width of the widget to 100% of its container (frame1).
+            self.tvResult["column"] = list(self.df.columns)
+            self.tvResult["show"] = "headings"
 
-            treescrolly = tk.Scrollbar(tvResult, orient="vertical",
-                                       command=tvResult.yview)  # command means update the yaxis view of the widget
-            treescrollx = tk.Scrollbar(tvResult, orient="horizontal",
-                                       command=tvResult.xview)  # command means update the xaxis view of the widget
-            tvResult.configure(xscrollcommand=treescrollx.set,
-                               yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
-            treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
-            treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
-            tvResult["column"] = list(df.columns)
-            tvResult["show"] = "headings"
-
-            for column in tvResult["columns"]:
-                tvResult.heading(column, text=column)  # let the column heading = column name
-                df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
+            incrementRVE = 0
+            for column in self.tvResult["columns"]:
+                incrementRVE += 1
+                self.tvResult.heading(column, text=column)  # let the column heading = column name
+                df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
                 for row in df_rows:
-                    tvResult.insert("", "end",
+                    self.tvResult.insert("", "end",
                                     values=row)
+            # RVE
+            for i in range(incrementRVE):
+                self.tvResult.column('#' + str(i), minwidth=300, stretch=0)
+                #tvResult.heading(i, text="Column {}".format(i))
+                self.tvResult.column('#0', stretch=0)
 
         elif choice == "2":
             rowCountDf1 = len(df1.index)
@@ -275,43 +281,44 @@ class PageTwoTest(Frame):
                                         listProposition.append(resultInserCol)
                         j = j + 1
                     i = i + 1
-            df = df1
+            self.df = df1
             #df = df.drop_duplicates(subset=['Core Attribute'], keep='first')
-            df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
+            self.df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
 
             #print(tabulate(df, headers='keys', tablefmt='psql'))
-            if frameDf != None:
-                frameDf.destroy()
-            frameDf = tk.LabelFrame(self.label_frame_data, text='df resultat')
-            frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
+           #if self.frameDf != None:
+           #    self.frameDf.destroy()
+           #frameDf = tk.LabelFrame(self.label_frame_data, text='df resultat')
+           #frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
 
-            tvResult = ttk.Treeview(frameDf)
-            tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)   # set the height and width of the widget to 100% of its container (frame1).
+            #tvResult = ttk.Treeview(frameDf)
+            #tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)   # set the height and width of the widget to 100% of its container (frame1).
+#
+            #treescrolly = tk.Scrollbar(frameDf, orient="vertical",
+            #                           command=tvResult.yview)  # command means update the yaxis view of the widget
+            #treescrollx = tk.Scrollbar(frameDf, orient="horizontal",
+            #                           command=tvResult.xview)  # command means update the xaxis view of the widget
+            #tvResult.configure(xscrollcommand=treescrollx.set,
+            #                   yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
+            #treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
+            #treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
+            self.tvResult["column"] = list(self.df.columns)
+            self.tvResult["show"] = "headings"
 
-            treescrolly = tk.Scrollbar(tvResult, orient="vertical",
-                                       command=tvResult.yview)  # command means update the yaxis view of the widget
-            treescrollx = tk.Scrollbar(tvResult, orient="horizontal",
-                                       command=tvResult.xview)  # command means update the xaxis view of the widget
-            tvResult.configure(xscrollcommand=treescrollx.set,
-                               yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
-            treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
-            treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
-            tvResult["column"] = list(df.columns)
-            tvResult["show"] = "headings"
-
-            for column in tvResult["columns"]:
-                tvResult.heading(column, text=column)  # let the column heading = column name
-                df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
+            for column in self.tvResult["columns"]:
+                self.tvResult.heading(column, text=column)  # let the column heading = column name
+                df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
                 for row in df_rows:
-                    tvResult.insert("", "end",
+                    self.tvResult.insert("", "end",
                                     values=row)
-            frameProposition = askQuestion1(listProposition,tvResult,df)
-            df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
+            frameProposition = askQuestion1(listProposition)
+            self.df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
 
-        button_Q_SelectProposition = tk.Button(self.label_frame_selection, text='Questions', command=lambda:self.algo_question2_begin(button_Q_SelectProposition,df,tvResult,frameProposition))
+        button_Q_SelectProposition = tk.Button(self.label_frame_selection, text='Questions', command=lambda:self.algo_question2_begin(button_Q_SelectProposition,frameProposition))
         button_Q_SelectProposition.pack()
 
-    def algo_question2_begin(self,button_Q_SelectProposition,df,tvResult,frameProposition):
+
+    def algo_question2_begin(self,button_Q_SelectProposition,frameProposition):
         #print("Question 2")
         button_Q_SelectProposition.destroy()
         if frameProposition != None:
@@ -324,32 +331,32 @@ class PageTwoTest(Frame):
         textBox_rep_Q2.pack(padx = 5,fill="none",expand="false")
 
         #Show la liste de proposition
-        frameDf = tk.LabelFrame(self.label_frame_selection, text='Liste proposition')
-        frameDf.pack(padx = 5,expand="false", fill="x")
+        frameListProposition = tk.LabelFrame(self.label_frame_selection, text='Liste proposition')
+        frameListProposition.pack(padx = 5,expand="false", fill="x")
 
-        tvI = ttk.Treeview(frameDf)
+        tvI = ttk.Treeview(frameListProposition)
         tvI.pack(padx = 5,fill="x",expand="false")
 
-        treescrolly = tk.Scrollbar(frameDf, orient="vertical",
+        treescrolly = tk.Scrollbar(frameListProposition, orient="vertical",
                                    command=tvI.yview)  # command means update the yaxis view of the widget
-        treescrollx = tk.Scrollbar(frameDf, orient="horizontal",
+        treescrollx = tk.Scrollbar(frameListProposition, orient="horizontal",
                                    command=tvI.xview)  # command means update the xaxis view of the widget
         tvI.configure(xscrollcommand=treescrollx.set,
                       yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
         treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
         treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
 
-        button_Q2_Proposition = tk.Button(self.frame_questions, text='Choisir', command=lambda:self.algo_question2(textBox_rep_Q2,df,tvI))
+        button_Q2_Proposition = tk.Button(self.frame_questions, text='Choisir', command=lambda:self.algo_question2(textBox_rep_Q2,tvI))
         button_Q2_Proposition.pack(padx = 5,fill="none",expand="false")
 
         #Show button selection
-        button_Q2_SelectProposition = tk.Button(self.label_frame_selection, text='Ajouter', command=lambda:self.algo_question_proposition(tvI, df, tvResult))
+        button_Q2_SelectProposition = tk.Button(self.label_frame_selection, text='Ajouter', command=lambda:self.algo_question_proposition(tvI))
         button_Q2_SelectProposition.pack()
 
 
 
 
-    def algo_question2(self,textBox_rep_Q2,df,tvI):
+    def algo_question2(self,textBox_rep_Q2,tvI):
         listProposition = list()
         newColumn = str(textBox_rep_Q2.get())
         if(newColumn == "-1"):
@@ -365,8 +372,8 @@ class PageTwoTest(Frame):
             print("predicate: "+predicate)
             if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
                 # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
-                resultInserCol = utils.insertColumnDf(listProposition, predicate,df.columns.values)
-                if resultInserCol and resultInserCol not in listProposition and resultInserCol not in df.columns.values:
+                resultInserCol = utils.insertColumnDf(listProposition, predicate,self.df.columns.values)
+                if resultInserCol and resultInserCol not in listProposition and resultInserCol not in self.df.columns.values:
                     listProposition.append(resultInserCol)
 
         #print(listProposition)
@@ -384,7 +391,7 @@ class PageTwoTest(Frame):
                 tvI.insert("", "end",values=row)
 
 
-    def algo_question_proposition(self,tvI, df, tvResult):
+    def algo_question_proposition(self,tvI):
         #get items from proposition's list
         for item in tvI.selection():
             columnAdd = tvI.item(item,"values")
@@ -393,25 +400,25 @@ class PageTwoTest(Frame):
                 columnAdd = columnAdd[2:]
                 columnAdd = columnAdd[:-3]
             print(columnAdd)
-            df[columnAdd] = 'nan'
+            self.df[columnAdd] = 'nan'
 
-        df.to_excel(r'Deuxième Question Tour'+str(self.increment)+'.xlsx', index=False)
+        self.df.to_excel(r'Deuxième Question Tour'+str(self.increment)+'.xlsx', index=False)
 
         #### refresh df resultat
-        tvResult["column"] = list(df.columns)
+        self.tvResult["column"] = list(self.df.columns)
         # delete all records
-        for record in tvResult.get_children():
-            tvResult.delete(record)
+        for record in self.tvResult.get_children():
+            self.tvResult.delete(record)
         # add records with new column(s)
-        for column in tvResult["columns"]:
-            tvResult.heading(column, text=column)  # let the column heading = column name
-            df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
+        for column in self.tvResult["columns"]:
+            self.tvResult.heading(column, text=column)  # let the column heading = column name
+            df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
             for row in df_rows:
-                tvResult.insert("", "end",
+                self.tvResult.insert("", "end",
                                 values=row)
 
 
-    def askQuestion3(self,df,tvI_Q2,frameDfQ2,button_Q2_Proposition,button_Q2_SelectProposition,button_Q2_EndProposition,label_Add_Column,textBox_rep_Q2,tvResult):
+    def askQuestion3(self,tvI_Q2,frameDfQ2,button_Q2_Proposition,button_Q2_SelectProposition,button_Q2_EndProposition,label_Add_Column,textBox_rep_Q2):
         #DESTUCTION DES OBJETS. Il faudrait peut etre pas detruire label_Add_Column mais plutot changer son text.
         #label_frame_selection.destroy()
         tvI_Q2.destroy()
@@ -426,14 +433,14 @@ class PageTwoTest(Frame):
         label_Add_Column_Q3.pack(padx = 5,fill="none",expand="false", side = "top")
         textBox_rep_Q3 = ttk.Entry(self.frame_questions)
         textBox_rep_Q3.pack(padx = 5,fill="none",expand="false")
-        button_Q3_SelectProposition = tk.Button(self.frame_questions, text='Ajouter', command=lambda:self.algo_question3_proposition(df, str(textBox_rep_Q3.get()),tvResult))
+        button_Q3_SelectProposition = tk.Button(self.frame_questions, text='Ajouter', command=lambda:self.algo_question3_proposition(str(textBox_rep_Q3.get())))
         button_Q3_SelectProposition.pack()
-        button_Q3_SelectProposition = tk.Button(self.frame_questions, text='Terminer', command=lambda:show_df_result(df,tvResult))
+        button_Q3_SelectProposition = tk.Button(self.frame_questions, text='Terminer', command=lambda:show_df_result())
         button_Q3_SelectProposition.pack()
 
 
 
-    def algo_question3_proposition(self,df,textQ3,tvResult):
+    def algo_question3_proposition(self,textQ3):
         newColumn = textQ3.strip()
         global listPropositionQ3
         try:
@@ -444,8 +451,8 @@ class PageTwoTest(Frame):
             print('Le lien n existe pas')
         else:
             #print('Le lien existe')
-            if newColumn and newColumn not in listPropositionQ3 and newColumn not in df.columns.values:
-                df[newColumn] = 'nan'
+            if newColumn and newColumn not in listPropositionQ3 and newColumn not in self.df.columns.values:
+                self.df[newColumn] = 'nan'
                 listPropositionQ3.append(newColumn)
                 #df[newColumn] = np.nan
                 #df[newColumn] = df[newColumn].astype('string')
@@ -453,14 +460,18 @@ class PageTwoTest(Frame):
             else:
                 print("La colonne existe déjà dans le DF")
 
-        tvResult["column"] = list(df.columns)
+        self.tvResult["column"] = list(self.df.columns)
         # delete all records
-        for record in tvResult.get_children():
-            tvResult.delete(record)
+        for record in self.tvResult.get_children():
+            self.tvResult.delete(record)
         # add records with new column(s)
-        for column in tvResult["columns"]:
-            tvResult.heading(column, text=column)  # let the column heading = column name
-            df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
+        for column in self.tvResult["columns"]:
+            self.tvResult.heading(column, text=column)  # let the column heading = column name
+            df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
             for row in df_rows:
-                tvResult.insert("", "end",
+                self.tvResult.insert("", "end",
                                 values=row)
+        for i in range(3):
+            self.tvResult.column('#' + str(i), minwidth=300, stretch=0)
+            #tvResult.heading(i, text="Column {}".format(i))
+            self.tvResult.column('#0', stretch=0)
