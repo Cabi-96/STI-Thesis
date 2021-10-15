@@ -147,7 +147,6 @@ class PageTwoTest(Frame):
             common_element = set(cta[0][0]).intersection(cta[self.increment][0])
             frame_text = "CTA from the first Dataset :" + str(cta[0][0]) + "\n" + "CTA from the second Dataset :" + str(cta[self.increment][0]) + "\n" + "Voici les éléments en communs :" + str(common_element)
 
-
             self.frame_questions = tk.LabelFrame(self.label_frame_selection, text="Questions")
             self.frame_questions.pack(expand="no", fill="x",padx = 5)
 
@@ -176,6 +175,24 @@ class PageTwoTest(Frame):
             self.button_Q1_OK = tk.Button(self.frame_questions, text='OK', command=lambda:self.question_2())
             self.button_Q1_OK.pack(padx = 5,fill="none",expand="false")
 
+    def refreshTvResult(self):
+        self.tvResult["column"] = list(self.df.columns)
+        self.tvResult["show"] = "headings"
+
+        incrementRVE = 0
+        for column in self.tvResult["columns"]:
+            incrementRVE += 1
+            self.tvResult.heading(column, text=column)  # let the column heading = column name
+            df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
+            for row in df_rows:
+                self.tvResult.insert("", "end",
+                                     values=row)
+        # RVE
+        for i in range(incrementRVE):
+            self.tvResult.column('#' + str(i), minwidth=300, stretch=0)
+            #tvResult.heading(i, text="Column {}".format(i))
+            self.tvResult.column('#0', stretch=0)
+
 
     def question_2(self):
         choice = self.textBox_rep_Q1.get()
@@ -203,22 +220,7 @@ class PageTwoTest(Frame):
             self.frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
             self.tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)
 
-            self.tvResult["column"] = list(self.df.columns)
-            self.tvResult["show"] = "headings"
-
-            incrementRVE = 0
-            for column in self.tvResult["columns"]:
-                incrementRVE += 1
-                self.tvResult.heading(column, text=column)  # let the column heading = column name
-                df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
-                for row in df_rows:
-                    self.tvResult.insert("", "end",
-                                    values=row)
-            # RVE
-            for i in range(incrementRVE):
-                self.tvResult.column('#' + str(i), minwidth=300, stretch=0)
-                #tvResult.heading(i, text="Column {}".format(i))
-                self.tvResult.column('#0', stretch=0)
+            self.refreshTvResult()
 
         elif choice == "2":
             rowCountDf1 = len(df1.index)
@@ -288,29 +290,9 @@ class PageTwoTest(Frame):
             #print(tabulate(df, headers='keys', tablefmt='psql'))
            #if self.frameDf != None:
            #    self.frameDf.destroy()
-           #frameDf = tk.LabelFrame(self.label_frame_data, text='df resultat')
-           #frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
 
-            #tvResult = ttk.Treeview(frameDf)
-            #tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)   # set the height and width of the widget to 100% of its container (frame1).
-#
-            #treescrolly = tk.Scrollbar(frameDf, orient="vertical",
-            #                           command=tvResult.yview)  # command means update the yaxis view of the widget
-            #treescrollx = tk.Scrollbar(frameDf, orient="horizontal",
-            #                           command=tvResult.xview)  # command means update the xaxis view of the widget
-            #tvResult.configure(xscrollcommand=treescrollx.set,
-            #                   yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
-            #treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
-            #treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
-            self.tvResult["column"] = list(self.df.columns)
-            self.tvResult["show"] = "headings"
+            self.refreshTvResult()
 
-            for column in self.tvResult["columns"]:
-                self.tvResult.heading(column, text=column)  # let the column heading = column name
-                df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
-                for row in df_rows:
-                    self.tvResult.insert("", "end",
-                                    values=row)
             frameProposition = askQuestion1(listProposition)
             self.df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
 
@@ -387,8 +369,9 @@ class PageTwoTest(Frame):
         for column in tvI["columns"]:
             tvI.heading(column, text=column)  # let the column heading = column name
             df_rows = listProposition  # turns the dataframe into a list of lists
-            for row in df_rows:
-                tvI.insert("", "end",values=row)
+
+        for row in df_rows:
+            tvI.insert("", "end",values=row)
 
 
     def algo_question_proposition(self,tvI):
@@ -405,17 +388,7 @@ class PageTwoTest(Frame):
         self.df.to_excel(r'Deuxième Question Tour'+str(self.increment)+'.xlsx', index=False)
 
         #### refresh df resultat
-        self.tvResult["column"] = list(self.df.columns)
-        # delete all records
-        for record in self.tvResult.get_children():
-            self.tvResult.delete(record)
-        # add records with new column(s)
-        for column in self.tvResult["columns"]:
-            self.tvResult.heading(column, text=column)  # let the column heading = column name
-            df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
-            for row in df_rows:
-                self.tvResult.insert("", "end",
-                                values=row)
+        self.refreshTvResult()
 
 
     def askQuestion3(self,tvI_Q2,frameDfQ2,button_Q2_Proposition,button_Q2_SelectProposition,button_Q2_EndProposition,label_Add_Column,textBox_rep_Q2):
@@ -460,18 +433,4 @@ class PageTwoTest(Frame):
             else:
                 print("La colonne existe déjà dans le DF")
 
-        self.tvResult["column"] = list(self.df.columns)
-        # delete all records
-        for record in self.tvResult.get_children():
-            self.tvResult.delete(record)
-        # add records with new column(s)
-        for column in self.tvResult["columns"]:
-            self.tvResult.heading(column, text=column)  # let the column heading = column name
-            df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
-            for row in df_rows:
-                self.tvResult.insert("", "end",
-                                values=row)
-        for i in range(3):
-            self.tvResult.column('#' + str(i), minwidth=300, stretch=0)
-            #tvResult.heading(i, text="Column {}".format(i))
-            self.tvResult.column('#0', stretch=0)
+        self.refreshTvResult()
