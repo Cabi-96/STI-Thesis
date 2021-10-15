@@ -32,13 +32,13 @@ class PageTwo(Frame):
 
         #### two frames: data and selection (questions)
         ## data
-        self.label_frame_data = tk.LabelFrame(self, text="Excel Data",width=700)
+        self.label_frame_data = tk.LabelFrame(self, text="Excel Data",width=700,bg='white')
         #self.label_frame_data.pack(side="left", padx=2, pady=2,fill="both", expand="yes")
         self.label_frame_data.pack(side='left',expand="no", fill="y")
 
         ## selection
         #self.label_frame_selection = tk.LabelFrame(self, text="Selection", width = "400")
-        self.label_frame_selection = Frame(self,bg='orange',width=50)
+        self.label_frame_selection = Frame(self,bg='white',width=50)
         #self.label_frame_selection.pack(side="left", padx=2, pady=2,fill="both", expand="no")
         self.label_frame_selection.pack(fill="both", expand="yes", side='left')
 
@@ -46,7 +46,7 @@ class PageTwo(Frame):
         self.label_frame_data.propagate(0)
 
         #frame result
-        self.frameDf = tk.LabelFrame(self.label_frame_data, text='df resultat')
+        self.frameDf = tk.LabelFrame(self.label_frame_data, text='df resultat',bg='white')
         self.tvResult = ttk.Treeview(self.frameDf)
         treescrolly = tk.Scrollbar(self.tvResult, orient="vertical",
                                    command=self.tvResult.yview)  # command means update the yaxis view of the widget
@@ -59,7 +59,7 @@ class PageTwo(Frame):
 
 
         ##frame questions in frame selection
-        self.frame_questions = tk.LabelFrame(self.label_frame_selection, text="Questions")
+        self.frame_questions = tk.LabelFrame(self.label_frame_selection, text="Questions",bg='white')
         self.frame_questions.pack(expand="yes", fill="both",padx = 5)
 
         self.listDf = list()
