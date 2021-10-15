@@ -8,14 +8,13 @@ import os
 from requests.exceptions import MissingSchema, HTTPError
 from tabulate import tabulate
 import pandas as pd
-from SPARQLWrapper import SPARQLWrapper, JSON
 from MtabExtractTable import MtabAnnotationApi
 
 import utils
 
 
 
-class PageTwoTest(Frame):
+class PageTwo(Frame):
 
     def __init__(self, *args, **kwargs):
         ######Frame pagetwo  : two container one for result (frame_data2 and one for questions and choices frame_selection)
@@ -26,12 +25,25 @@ class PageTwoTest(Frame):
         self.increment = 1
         self.uriLoad = False
 
-        #### two frames: data2 and selection (questions)
+        #frame = Frame(root,bg='orange',width=400)
+        #frame2 = Frame(root,bg='white')
+        #frame.pack(side='left',expand="no", fill="y")
+        #frame2.pack(fill="both", expand="yes", side='left')
+
+        #### two frames: data and selection (questions)
         ## data
-        self.label_frame_data = tk.LabelFrame(self, text="Excel Data")
-        self.label_frame_data.pack(side="left", padx=2, pady=2,fill="both", expand="yes")
-        self.label_frame_selection = tk.LabelFrame(self, text="Selection", width = "400")
-        self.label_frame_selection.pack(side="left", padx=2, pady=2, fill="y")
+        self.label_frame_data = tk.LabelFrame(self, text="Excel Data",width=700)
+        #self.label_frame_data.pack(side="left", padx=2, pady=2,fill="both", expand="yes")
+        self.label_frame_data.pack(side='left',expand="no", fill="y")
+
+        ## selection
+        #self.label_frame_selection = tk.LabelFrame(self, text="Selection", width = "400")
+        self.label_frame_selection = Frame(self,bg='orange',width=50)
+        #self.label_frame_selection.pack(side="left", padx=2, pady=2,fill="both", expand="no")
+        self.label_frame_selection.pack(fill="both", expand="yes", side='left')
+
+        self.label_frame_selection.propagate(0)
+        self.label_frame_data.propagate(0)
 
         #frame result
         self.frameDf = tk.LabelFrame(self.label_frame_data, text='df resultat')
@@ -46,9 +58,9 @@ class PageTwoTest(Frame):
         treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
 
 
-        ##questions
+        ##frame questions in frame selection
         self.frame_questions = tk.LabelFrame(self.label_frame_selection, text="Questions")
-        self.frame_questions.pack(expand="no", fill="x",padx = 5)
+        self.frame_questions.pack(expand="yes", fill="both",padx = 5)
 
         self.listDf = list()
         self.numberOfDf = 0
@@ -147,10 +159,7 @@ class PageTwoTest(Frame):
             common_element = set(cta[0][0]).intersection(cta[self.increment][0])
             frame_text = "CTA from the first Dataset :" + str(cta[0][0]) + "\n" + "CTA from the second Dataset :" + str(cta[self.increment][0]) + "\n" + "Voici les éléments en communs :" + str(common_element)
 
-            self.frame_questions = tk.LabelFrame(self.label_frame_selection, text="Questions")
-            self.frame_questions.pack(expand="no", fill="x",padx = 5)
-
-            self.label_cta = ttk.Label(self.frame_questions, text= frame_text, wraplengt=750)
+            self.label_cta = ttk.Label(self.frame_questions, text= frame_text) #, wraplengt=750)
             self.label_cta.pack(padx = 5,fill="none",expand="false")
 
             #print(frame_text)
@@ -179,17 +188,17 @@ class PageTwoTest(Frame):
         self.tvResult["column"] = list(self.df.columns)
         self.tvResult["show"] = "headings"
 
-        incrementRVE = 0
+        nbrColumn = 0
         for column in self.tvResult["columns"]:
-            incrementRVE += 1
+            nbrColumn += 1
             self.tvResult.heading(column, text=column)  # let the column heading = column name
             df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
-            for row in df_rows:
-                self.tvResult.insert("", "end",
-                                     values=row)
-        # RVE
-        for i in range(incrementRVE):
-            self.tvResult.column('#' + str(i), minwidth=300, stretch=0)
+        for row in df_rows:
+            self.tvResult.insert("", "end", values=row)
+
+        # Set minimum size for columns
+        for i in range(nbrColumn):
+            self.tvResult.column('#' + str(nbrColumn), minwidth=300, stretch=0)
             #tvResult.heading(i, text="Column {}".format(i))
             self.tvResult.column('#0', stretch=0)
 
@@ -296,7 +305,7 @@ class PageTwoTest(Frame):
             frameProposition = askQuestion1(listProposition)
             self.df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
 
-        button_Q_SelectProposition = tk.Button(self.label_frame_selection, text='Questions', command=lambda:self.algo_question2_begin(button_Q_SelectProposition,frameProposition))
+        button_Q_SelectProposition = tk.Button(self.frame_questions, text='Questions', command=lambda:self.algo_question2_begin(button_Q_SelectProposition,frameProposition))
         button_Q_SelectProposition.pack()
 
 

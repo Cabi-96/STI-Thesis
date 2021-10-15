@@ -13,24 +13,22 @@ from MtabExtractTable import MtabAnnotationApi
 
 
 #variables
-isDebug = 0
-file_path_absolute = os.path.dirname(__file__)
-file_path_debug = os.path.join(file_path_absolute, ".idea\\files\\case_test")
-listFrame1 = list()
-listFrame2 = list()
 file_path = ""
 
-class PageOneTest(Frame):
+class PageOne(Frame):
 
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
-        self.label_frame_data = tk.LabelFrame(self, text="Excel Data")
+        self.label_frame_data = tk.LabelFrame(self, text="Excel Data",bg='white')
         self.label_frame_data.pack(fill="both",expand="yes")
 
+        self.listFrame1 = list()
+        self.listFrame2 = list()
+
         # Frame data : options
-        self.Label_options = tk.LabelFrame(self, text="Options")
+        self.Label_options = tk.LabelFrame(self, text="Options",bg='white')
         self.Label_options.pack(fill="both", pady=20, padx = 10, side='left')
-        self.label_file = tk.Label(self.Label_options, text="No File Selected")
+        self.label_file = tk.Label(self.Label_options, text="No File Selected",bg='white')
         self.label_file.pack(pady = 20)
 
         # Frame data : Buttons
@@ -78,7 +76,7 @@ class PageOneTest(Frame):
         i = 0
         for file in os.listdir(directory):
             filename = os.fsdecode(file)
-            listFrame1.append(tk.LabelFrame(self.label_frame_data, text=filename))
+            listFrame1.append(tk.LabelFrame(self.label_frame_data, text=filename, bg='white'))
             listFrame1[i].pack(fill="both",expand="yes", pady = 10, padx = 10)
 
             global file_path

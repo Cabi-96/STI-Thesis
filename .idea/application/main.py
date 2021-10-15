@@ -3,27 +3,18 @@ import tkinter as tk
 from tkinter import *
 from tkinter import filedialog, messagebox, ttk
 import os
-from PageOneTest import PageOneTest
-from PageTwoTest import PageTwoTest
-from PageThreeTest import PageThreeTest
-
-
-#bool URI loaded
-uriLoad = False
-listDf = list()
-listDictDf = list()
-cta = list()
-increment = 1
+from PageOne import PageOne
+from PageTwo import PageTwo
+from PageThree import PageThree
 
 
 #variables
 isDebug = 0
 file_path_absolute = os.path.dirname(__file__)
 file_path_debug = os.path.join(file_path_absolute, ".idea\\files\\case_test")
-listFrame1 = list()
-listFrame2 = list()
-file_path = ""
 
+# TODO : désactiver le bouton next page si uri chargées
+isLoadedURI = False
 
 class Container(tk.Frame):
 
@@ -35,7 +26,7 @@ class Container(tk.Frame):
 
 
         #page 1
-        p1 = PageOneTest(self)
+        p1 = PageOne(self, bg='white')
 
         p1.button3 = tk.Button(p1.Label_options, text="Load URI", state="disable", command=lambda:p2.load_uri(p1))
         p1.button3.pack(side='left', padx = 5)
@@ -44,20 +35,20 @@ class Container(tk.Frame):
         p1.button5.pack(side='left', padx = 5)
 
         #page 2
-        p2 = PageTwoTest(self)
-        p2.button4 =  tk.Button(p2, text='Previous page', command=lambda:p1.show())
-        p2.button5 =  tk.Button(p2, text='Next page', command=lambda:p3.show())
+        p2 = PageTwo(self, bg='white')
+        p2.button4 =  tk.Button(p2.label_frame_selection, text='Previous page', command=lambda:p1.show())
+        p2.button5 =  tk.Button(p2.label_frame_selection, text='Next page', command=lambda:p3.show())
         p2.button4.pack(side='bottom', padx = 5)
         p2.button5.pack(side='bottom', padx = 5)
 
 
         #button terminer pour aller page 3
         p2.button_Q3_SelectProposition = tk.Button(p2.frame_questions, text='Terminer', command=lambda:p3.show_df_result(p2.df))
-        p2.button_Q3_SelectProposition.pack()
+        p2.button_Q3_SelectProposition.pack(side='bottom', padx = 5)
 
 
         #page 3
-        p3 = PageThreeTest(self)
+        p3 = PageThree(self, bg='white')
         p3.button4 =  tk.Button(p3, text='Previous page', command=lambda:p2.show())
         p3.button4.pack()
 
@@ -78,5 +69,5 @@ if __name__ == "__main__":
     main = Container(root)
     main.pack(side="top", fill="both", expand=True)
 
-    root.wm_geometry("500x500")
+    root.wm_geometry("600x600")
     root.mainloop()

@@ -10,7 +10,7 @@ import pandas as pd
 
 
 
-class PageThreeTest(Frame):
+class PageThree(Frame):
 
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
@@ -26,9 +26,6 @@ class PageThreeTest(Frame):
                            yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
         treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
         treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
-
-
-
 
 
     def show(self):
