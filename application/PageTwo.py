@@ -28,11 +28,11 @@ class PageTwo(Frame):
         #### two frames: data and selection (questions)
         ## data
         self.label_frame_data = tk.LabelFrame(self, text="Excel Data",width=500,bg='white')
-        self.label_frame_data.pack(side='left',expand="no", fill="y")
+        self.label_frame_data.pack(side='left',expand="yes", fill="both")
 
         ## selection
-        self.label_frame_selection = Frame(self,bg='white',width=50)
-        self.label_frame_selection.pack(fill="both", expand="yes", side='left')
+        self.label_frame_selection = Frame(self,bg='white',width=350)
+        self.label_frame_selection.pack(fill="y", expand="no", side='left')
 
         self.label_frame_selection.propagate(0)
         self.label_frame_data.propagate(0)
