@@ -29,7 +29,7 @@ class MtabAnnotationApi:
       options.add_argument('--headless')
       path = str(pathlib.Path().absolute())+'/.idea/plugin/geckodriver.exe'
       driver = webdriver.Firefox(options=options,executable_path=path)
-      #driver = webdriver.Firefox(executable_path=r'C:/Program Files/Mozilla Firefox/geckodriver.exe')
+      #driver = webdriver.Firefox(executable_path=path)
 
       # load page
       driver.get(url)
@@ -210,3 +210,4 @@ class MtabAnnotationApi:
 
          driver.get(url)
          driver.refresh()
+      driver.close()
