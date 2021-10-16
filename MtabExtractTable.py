@@ -27,7 +27,8 @@ class MtabAnnotationApi:
       # L'option Headless permet d'éviter d'ouvrir une page web a chaque fois que l'algorithme est lancé. + performant
       options = Options()
       options.add_argument('--headless')
-      path = str(pathlib.Path().absolute())+'/.idea/plugin/geckodriver.exe'
+      path = str(pathlib.Path().absolute())+'/plugin/geckodriver.exe'
+      #print(path)
       driver = webdriver.Firefox(options=options,executable_path=path)
       #driver = webdriver.Firefox(executable_path=path)
 
@@ -80,8 +81,8 @@ class MtabAnnotationApi:
       # specified path
       p = 1
       for filename in files:
-         print("Fichier"+str(p))
-         print(filename)
+         #print("Fichier"+str(p))
+         #print(filename)
          p = p+1
          with open(filename, 'r', encoding='utf-8') as read_obj:
             # pass the file object to reader() to get the reader object
@@ -91,7 +92,7 @@ class MtabAnnotationApi:
             inputText =''
             for row in csv_reader:
                # row variable is a list that represents a row in csv
-               print(row)
+               #print(row)
                #rowFinal = str(row)[1:]
                #rowFinal = rowFinal[:-1]
                #inputText = inputText + rowFinal + '\r'
@@ -104,7 +105,7 @@ class MtabAnnotationApi:
                   else:
                      inputText = inputText+','+rowWord
                      #print(inputText)
-         print(inputText)
+         #print(inputText)
 
          self.__interactPage(driver,inputText,'table_text_content','annotation1','table-info')
 
@@ -126,12 +127,12 @@ class MtabAnnotationApi:
             listCTA.insert(i,ctaList)
             i = i+1
 
-         print("self.__list_CTA_Global")
-         print(self.__list_CTA_Global)
+         #print("self.__list_CTA_Global")
+         #print(self.__list_CTA_Global)
          self.__list_CTA_Global.append(listCTA)
-         print("listCTA")
-         print(self.__list_CTA_Global)
-         print("end")
+         #print("listCTA")
+         #print(self.__list_CTA_Global)
+         #print("end")
 
 
 
@@ -161,8 +162,8 @@ class MtabAnnotationApi:
 
          listCPA[0] = 'Core Attribute'
          self.__list_CPA_Global.append(listCPA)
-         print("listCPA")
-         print(listCPA)
+         #print("listCPA")
+         #print(listCPA)
 
 
          #CEA
@@ -182,7 +183,7 @@ class MtabAnnotationApi:
             else :
                #print(links)
                for link in links:
-                  print(link)
+                 # print(link)
                   #print(link.get_attribute("href")) #prints text from the element
                   #linkString = str(link.get_attribute("href"))
                   #linkString = linkString.encode('utf8')
@@ -194,11 +195,11 @@ class MtabAnnotationApi:
          nbRow = int(len(listCEA)/nbColumn)
          dataCEA = [[0 for x in range(int(nbColumn))] for y in range(int(nbRow))]
 
-         print("Begin")
-         print(nbColumn)
-         print(listCEA)
-         print(nbRow)
-         print("End")
+         #print("Begin")
+         #print(nbColumn)
+         #print(listCEA)
+         #print(nbRow)
+         #print("End")
 
          z = 0
          for i in range(0,nbRow,1):

@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import filedialog, messagebox, ttk
 import os
+import copy
 
 #Algo Integration
 from requests.exceptions import MissingSchema, HTTPError
@@ -24,6 +25,8 @@ class PageTwo(Frame):
         self.listFrame2 = list()
         self.increment = 1
         self.uriLoad = False
+        self.isNbFilesSup = False
+        self.listTvi = list()
 
         #### two frames: data and selection (questions)
         ## data
@@ -92,7 +95,6 @@ class PageTwo(Frame):
         self.listFrame2 = list()
 
         #file_path = label_file["text"]
-        i = 0
         for i in range(0, self.numberOfDf, 1):
             self.df = pd.DataFrame(data=cea[i],
                               columns=cpa[i],
@@ -117,10 +119,14 @@ class PageTwo(Frame):
 
             ##--------------------------------------------Afficher dataFrames-------------------------------------------------------------------------
             self.listFrame2.append(tk.LabelFrame(self.label_frame_data, text='df'))
-            self.listFrame2[i].pack(fill="both",expand="yes", pady = 10, padx = 10)
+            #On affiche que les deux premiers DF frames
+            if i < 2:
+                self.isNbFilesSup = True
+                self.listFrame2[i].pack(fill="both",expand="yes", pady = 10, padx = 10)
 
 
             tvI = ttk.Treeview(self.listFrame2[i])
+            self.listTvi.append(tvI)
             tvI.place(relheight=1, relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
 
             treescrolly = tk.Scrollbar(self.listFrame2[i], orient="vertical",
@@ -176,7 +182,8 @@ class PageTwo(Frame):
             self.button_Q1_OK = tk.Button(self.frame_questions, text='OK', command=lambda:self.question_2())
             self.button_Q1_OK.pack(padx = 5,fill="none",expand="false")
 
-    def refreshTvResult(self):
+    def refreshTvResult(self, isLastQuestion):
+        print(isLastQuestion)
         self.tvResult["column"] = list(self.df.columns)
         self.tvResult["show"] = "headings"
 
@@ -193,6 +200,53 @@ class PageTwo(Frame):
             self.tvResult.column('#' + str(nbrColumn), minwidth=300, stretch=0)
             #tvResult.heading(i, text="Column {}".format(i))
             self.tvResult.column('#0', stretch=0)
+
+        self.tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)
+
+        if self.increment == self.numberOfDf:
+            self.isNbFilesSup = False
+
+
+        if self.isNbFilesSup == True and isLastQuestion == True:
+            self.increment = self.increment + 1
+            if self.increment < len(self.listFrame2):
+                self.listDf[0] = self.df
+                self.listFrame2[self.increment].pack(fill="both",expand="yes", pady = 10, padx = 10)
+
+                for widgets in self.listFrame2[0].winfo_children():
+                    widgets.destroy()
+
+                self.listFrame2[self.increment-1].pack_forget()
+                self.frameDf.pack_forget()
+
+                tvI = ttk.Treeview(self.listFrame2[0])
+                self.listTvi[0] = tvI
+                self.listTvi[0].place(relheight=1, relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
+
+                treescrolly = tk.Scrollbar(self.listFrame2[0], orient="vertical",
+                                           command=tvI.yview)  # command means update the yaxis view of the widget
+                treescrollx = tk.Scrollbar(self.listFrame2[0], orient="horizontal",
+                                           command=tvI.xview)  # command means update the xaxis view of the widget
+                tvI.configure(xscrollcommand=treescrollx.set,
+                              yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
+                treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
+                treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
+                tvI["column"] = list(self.df.columns)
+                tvI["show"] = "headings"
+
+                for column in tvI["columns"]:
+                    tvI.heading(column, text=column)  # let the column heading = column name
+                    df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
+
+                for row in df_rows:
+                    tvI.insert("", "end",
+                               values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
+
+                for widgets in self.frame_questions.winfo_children():
+                    if widgets['text'] != 'Terminer':
+                        widgets.destroy()
+                self.ask_question()
+
 
 
     def question_2(self):
@@ -221,7 +275,7 @@ class PageTwo(Frame):
             self.frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
             self.tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)
 
-            self.refreshTvResult()
+            self.refreshTvResult(False)
 
         elif choice == "2":
             rowCountDf1 = len(df1.index)
@@ -292,7 +346,7 @@ class PageTwo(Frame):
            #if self.frameDf != None:
            #    self.frameDf.destroy()
 
-            self.refreshTvResult()
+            self.refreshTvResult(False)
 
             frameProposition = askQuestion1(listProposition)
             self.df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
@@ -389,7 +443,7 @@ class PageTwo(Frame):
         self.df.to_excel(r'Deuxième Question Tour'+str(self.increment)+'.xlsx', index=False)
 
         #### refresh df resultat
-        self.refreshTvResult()
+        self.refreshTvResult(False)
 
 
     def askQuestion3(self,tvI_Q2,frameDfQ2,button_Q2_Proposition,button_Q2_SelectProposition,button_Q2_EndProposition,label_Add_Column,textBox_rep_Q2):
@@ -434,4 +488,4 @@ class PageTwo(Frame):
             else:
                 print("La colonne existe déjà dans le DF")
 
-        self.refreshTvResult()
+        self.refreshTvResult(False)

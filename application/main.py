@@ -45,7 +45,7 @@ class Container(tk.Frame):
 
 
         #button terminer pour aller page 3
-        p2.button_Q3_SelectProposition = tk.Button(p2.frame_questions, text='Terminer', command=lambda:p3.show_df_result(p2.df))
+        p2.button_Q3_SelectProposition = tk.Button(p2.frame_questions, text='Terminer', command=lambda:[p3.show_df_result(p2.df),p2.refreshTvResult(p2.isNbFilesSup)])
         p2.button_Q3_SelectProposition.pack(side='bottom', padx = 5)
 
 
