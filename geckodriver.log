@@ -10086,7 +10086,8 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1633602809280	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileHmy9Tw"
+Exiting due to channel error.
+--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileHmy9Tw"
 *** You are running in headless mode.
 1633603005998	Marionette	INFO	Marionette enabled
 [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
@@ -10095,7 +10096,8 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1633603007251	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-1633610934322	geckodriver	INFO	Listening on 127.0.0.1:58050
+Exiting due to channel error.
+Listening on 127.0.0.1:58050
 1633610937378	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileJyk4ea"
 *** You are running in headless mode.
 1633610937641	Marionette	INFO	Marionette enabled
@@ -10125,11 +10127,11 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1633611540138	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileEnGzeH"
-1633611668313	Marionette	INFO	Marionette enabled
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileEnGzeH\\search.json.mozlz4", (void 0)))
-1633611669945	Marionette	INFO	Listening on port 64255
-1633611670087	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633612799544	Marionette	INFO	Stopped listening on port 64057
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+[Parent 21216, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+ certificate errors will be ignored for this session
 1633611964479	Marionette	INFO	Stopped listening on port 64255
 JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
 console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
@@ -10151,12 +10153,15 @@ console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkErr
 console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileA8R92A\\search.json.mozlz4", (void 0)))
 1633611976160	Marionette	INFO	Listening on port 64549
 1633611976480	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
-1633612147742	geckodriver	INFO	Listening on 127.0.0.1:64782
-1633612150806	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilelvW56b"
-*** You are running in headless mode.
-1633612151080	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilelvW56b\\search.json.mozlz4", (void 0)))
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1633612797164	Marionette	INFO	Stopped listening on port 64549
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+\rust_mozprofilelvW56b\\search.json.mozlz4", (void 0)))
 1633612151972	Marionette	INFO	Listening on port 64790
 1633612152341	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 1633612269779	geckodriver	INFO	Listening on 127.0.0.1:64870
@@ -10168,3 +10173,230 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1633612299205	Marionette	INFO	Stopped listening on port 64878
 JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
 console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+1633612495895	geckodriver	INFO	Listening on 127.0.0.1:65023
+1633612498982	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileeqQI0u"
+*** You are running in headless mode.
+1633612499254	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileeqQI0u\\search.json.mozlz4", (void 0)))
+1633612500088	Marionette	INFO	Listening on port 65031
+1633612500530	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+Exiting due to channel error.
+Listening on 127.0.0.1:65371
+1633613353577	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileUx0N10"
+*** You are running in headless mode.
+1633613353850	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileUx0N10\\search.json.mozlz4", (void 0)))
+1633613354641	Marionette	INFO	Listening on port 65380
+1633613355118	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633613530816	geckodriver	INFO	Listening on 127.0.0.1:65459
+1633613533893	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilembAu8B"
+*** You are running in headless mode.
+1633613534159	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilembAu8B\\search.json.mozlz4", (void 0)))
+1633613534970	Marionette	INFO	Listening on port 65467
+1633613535433	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633613670184	geckodriver	INFO	Listening on 127.0.0.1:49175
+1633613673308	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileQtT9aT"
+*** You are running in headless mode.
+1633613673583	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileQtT9aT\\search.json.mozlz4", (void 0)))
+1633613674344	Marionette	INFO	Listening on port 49183
+1633613674845	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633613888428	geckodriver	INFO	Listening on 127.0.0.1:49270
+1633613891490	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileaBZXJh"
+*** You are running in headless mode.
+1633613891760	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileaBZXJh\\search.json.mozlz4", (void 0)))
+1633613892519	Marionette	INFO	Listening on port 49278
+1633613892532	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633613983352	geckodriver	INFO	Listening on 127.0.0.1:49337
+1633613986414	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileir3JhD"
+*** You are running in headless mode.
+1633613986678	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileir3JhD\\search.json.mozlz4", (void 0)))
+1633613987502	Marionette	INFO	Listening on port 49345
+1633613987957	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633614163562	geckodriver	INFO	Listening on 127.0.0.1:49445
+1633614166674	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileqwNA0D"
+*** You are running in headless mode.
+1633614166941	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileqwNA0D\\search.json.mozlz4", (void 0)))
+1633614167746	Marionette	INFO	Listening on port 49453
+1633614168229	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633614227757	geckodriver	INFO	Listening on 127.0.0.1:49527
+1633614230881	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilerlsN3x"
+*** You are running in headless mode.
+1633614231152	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilerlsN3x\\search.json.mozlz4", (void 0)))
+1633614231942	Marionette	INFO	Listening on port 49535
+1633614232430	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+Exiting due to channel error.
+--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileCtZCr7"
+*** You are running in headless mode.
+1633614391930	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileCtZCr7\\search.json.mozlz4", (void 0)))
+1633614392789	Marionette	INFO	Listening on port 49634
+1633614393194	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633614816703	geckodriver	INFO	Listening on 127.0.0.1:49760
+1633614819816	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilekXWHMJ"
+*** You are running in headless mode.
+1633614820080	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilekXWHMJ\\search.json.mozlz4", (void 0)))
+1633614820834	Marionette	INFO	Listening on port 49768
+1633614820867	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633615052046	geckodriver	INFO	Listening on 127.0.0.1:49866
+1633615055141	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileOWyyZH"
+*** You are running in headless mode.
+1633615055406	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileOWyyZH\\search.json.mozlz4", (void 0)))
+1633615056154	Marionette	INFO	Listening on port 49874
+1633615056173	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633615283253	geckodriver	INFO	Listening on 127.0.0.1:55336
+1633615286333	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilesN3X3h"
+*** You are running in headless mode.
+1633615286599	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilesN3X3h\\search.json.mozlz4", (void 0)))
+1633615287390	Marionette	INFO	Listening on port 55344
+1633615287884	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633678974634	geckodriver	INFO	Listening on 127.0.0.1:49834
+1633678977698	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilemPouXO"
+*** You are running in headless mode.
+1633678977997	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilemPouXO\\search.json.mozlz4", (void 0)))
+1633678978888	Marionette	INFO	Listening on port 49860
+1633678979247	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+Exiting due to channel error.
+--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileUY3ljF"
+*** You are running in headless mode.
+1633679063600	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileUY3ljF\\search.json.mozlz4", (void 0)))
+1633679064455	Marionette	INFO	Listening on port 53290
+1633679064845	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633679298535	geckodriver	INFO	Listening on 127.0.0.1:53509
+1633679301610	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileZQhXAR"
+1633679301886	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileZQhXAR\\search.json.mozlz4", (void 0)))
+1633679303464	Marionette	INFO	Listening on port 53517
+1633679303642	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633679312406	Marionette	INFO	Stopped listening on port 53517
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+JavaScript error: chrome://remote/content/marionette/cert.js, line 55: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]
+[Parent 21044, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+1633679431776	geckodriver	INFO	Listening on 127.0.0.1:53605
+1633679434823	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileB4INiP"
+1633679435127	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileB4INiP\\search.json.mozlz4", (void 0)))
+1633679436744	Marionette	INFO	Listening on port 53613
+1633679436867	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633679531810	geckodriver	INFO	Listening on 127.0.0.1:53701
+1633679534862	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofile8soD4v"
+1633679535135	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofile8soD4v\\search.json.mozlz4", (void 0)))
+1633679536653	Marionette	INFO	Listening on port 53709
+1633679536935	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633679852214	geckodriver	INFO	Listening on 127.0.0.1:53947
+1633679855261	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilexAqEBM"
+1633679855538	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilexAqEBM\\search.json.mozlz4", (void 0)))
+1633679857078	Marionette	INFO	Listening on port 53955
+1633679857296	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633679905509	geckodriver	INFO	Listening on 127.0.0.1:54014
+1633679908553	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileXG1TV0"
+1633679908843	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileXG1TV0\\search.json.mozlz4", (void 0)))
+1633679910461	Marionette	INFO	Listening on port 54022
+1633679910641	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633679930037	geckodriver	INFO	Listening on 127.0.0.1:54127
+1633679933070	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileT7grj3"
+1633679933352	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileT7grj3\\search.json.mozlz4", (void 0)))
+1633679934820	Marionette	INFO	Listening on port 54135
+1633679935110	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633679952419	Marionette	INFO	Stopped listening on port 54135
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+JavaScript error: chrome://remote/content/marionette/cert.js, line 55: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]
+1633680033957	geckodriver	INFO	Listening on 127.0.0.1:54196
+1633680037035	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilexQVDJY"
+1633680037305	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilexQVDJY\\search.json.mozlz4", (void 0)))
+1633680038817	Marionette	INFO	Listening on port 54204
+1633680039103	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633680185782	geckodriver	INFO	Listening on 127.0.0.1:54307
+1633680188853	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileRj0jTq"
+1633680189126	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileRj0jTq\\search.json.mozlz4", (void 0)))
+1633680190590	Marionette	INFO	Listening on port 54316
+1633680190917	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633680410986	Marionette	INFO	Stopped listening on port 54316
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+Y\\AppData\\Local\\Temp\\rust_mozprofileBWS5MD\\search.json.mozlz4", (void 0)))
+1633680345569	Marionette	INFO	Listening on port 54434
+1633680345962	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633680409212	Marionette	INFO	Stopped listening on port 54434
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1633680581748	geckodriver	INFO	Listening on 127.0.0.1:54533
+1633680584825	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileBF0IH6"
+1633680585103	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileBF0IH6\\search.json.mozlz4", (void 0)))
+1633680586610	Marionette	INFO	Listening on port 54541
+1633680586866	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633680756607	geckodriver	INFO	Listening on 127.0.0.1:54630
+1633680759677	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilerJrQAp"
+1633680759956	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilerJrQAp\\search.json.mozlz4", (void 0)))
+1633680761428	Marionette	INFO	Listening on port 54638
+1633680761728	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633681099448	geckodriver	INFO	Listening on 127.0.0.1:54772
+1633681102492	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofile7r68Ya"
+1633681102775	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofile7r68Ya\\search.json.mozlz4", (void 0)))
+1633681104282	Marionette	INFO	Listening on port 54780
+1633681104556	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633681395235	Marionette	INFO	Stopped listening on port 54780
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1633682486981	geckodriver	INFO	Listening on 127.0.0.1:61081
+1633682490049	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilerzKLWb"
+1633682490316	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilerzKLWb\\search.json.mozlz4", (void 0)))
+1633682491890	Marionette	INFO	Listening on port 61089
+1633682492090	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633682809165	Marionette	INFO	Stopped listening on port 61089
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+

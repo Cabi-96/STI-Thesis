@@ -1,8 +1,8 @@
-Core Attribute,http://dbpedia.org/ontology/birthYear,http://dbpedia.org/ontology/deathYear
-http://dbpedia.org/resource/John_Belushi,1949 ,1982 
-http://dbpedia.org/resource/Ingmar_Bergman,1918 ,2007 
-http://dbpedia.org/resource/Ingrid_Bergman,1915 ,1982 
-http://dbpedia.org/resource/Humphrey_Bogart,1899 ,1957 
-http://dbpedia.org/resource/Marlon_Brando,1924 ,2004 
-http://dbpedia.org/resource/Richard_Burton,1925 ,1984 
-http://dbpedia.org/resource/James_Cagney,1899 ,1986 
+Core Attribute,File1.csv-COL2,http://dbpedia.org/ontology/birthYear,http://dbpedia.org/ontology/deathYear,File1.csv-COL5,File1.csv-COL6,File1.csv-COL7,File1.csv-COL8,http://purl.org/linguistics/gold/hypernym
+http://dbpedia.org/resource/John_Belushi,nm0000004,1949,1982,http://dbpedia.org/resource/Actor,http://dbpedia.org/resource/Soundtrack,http://dbpedia.org/resource/Writer,"tt0080455,tt0078723,tt0077975,tt0072562",http://dbpedia.org/resource/Comedian 
+http://dbpedia.org/resource/Ingmar_Bergman,nm0000005,1918,2007,http://dbpedia.org/resource/Writer,http://dbpedia.org/resource/Director,http://dbpedia.org/resource/Actor,"tt0050986,tt0050976,tt0083922,tt0060827",http://dbpedia.org/resource/Director 
+http://dbpedia.org/resource/Ingrid_Bergman,nm0000006,1915,1982,http://dbpedia.org/resource/Actress_(film),http://dbpedia.org/resource/Soundtrack,http://dbpedia.org/resource/Producer,"tt0034583,tt0077711,tt0038109,tt0036855",http://dbpedia.org/resource/Actress 
+http://dbpedia.org/resource/Humphrey_Bogart,nm0000007,1899,1957,http://dbpedia.org/resource/Actor,http://dbpedia.org/resource/Soundtrack,http://dbpedia.org/resource/Producer,"tt0033870,tt0034583,tt0042593,tt0043265",http://dbpedia.org/resource/Actor 
+http://dbpedia.org/resource/Marlon_Brando,nm0000008,1924,2004,http://dbpedia.org/resource/Actor,http://dbpedia.org/resource/Soundtrack,http://dbpedia.org/resource/Director,"tt0078788,tt0070849,tt0068646,tt0047296",nan
+http://dbpedia.org/resource/Richard_Burton,nm0000009,1925,1984,http://dbpedia.org/resource/Actor,http://dbpedia.org/resource/Soundtrack,http://dbpedia.org/resource/Producer,"tt0061184,tt0059749,tt0087803,tt0057877",http://dbpedia.org/resource/Stage 
+http://dbpedia.org/resource/James_Cagney,nm0000010,1899,1986,http://dbpedia.org/resource/Actor,http://dbpedia.org/resource/Soundtrack,http://dbpedia.org/resource/Director,"tt0042041,tt0029870,tt0031867,tt0035575",nan

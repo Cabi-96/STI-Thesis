@@ -1,3 +1,4 @@
+import csv
 import pathlib
 from csv import reader
 from selenium import webdriver
@@ -28,8 +29,8 @@ class MtabAnnotationApi:
       options.add_argument('--headless')
       path = str(pathlib.Path().absolute())+'/.idea/plugin/geckodriver.exe'
       print(path)
-      driver = webdriver.Firefox(options=options,executable_path=path)
-      #driver = webdriver.Firefox(executable_path=r'C:/Program Files/Mozilla Firefox/geckodriver.exe')
+      #driver = webdriver.Firefox(options=options,executable_path=path)
+      driver = webdriver.Firefox(executable_path=r'C:/Program Files/Mozilla Firefox/geckodriver.exe')
 
       # load page
       driver.get(url)
@@ -85,14 +86,18 @@ class MtabAnnotationApi:
          p = p+1
          with open(filename, 'r', encoding='utf-8') as read_obj:
             # pass the file object to reader() to get the reader object
-            csv_reader = reader(read_obj)
+            csv_reader = csv.reader(read_obj, quotechar='\'', delimiter=',',
+                                    quoting=csv.QUOTE_ALL, skipinitialspace=True)
             # Iterate over each row in the csv using reader object
             inputText =''
             for row in csv_reader:
                # row variable is a list that represents a row in csv
+               print(row)
+               #rowFinal = str(row)[1:]
+               #rowFinal = rowFinal[:-1]
+               #inputText = inputText + rowFinal + '\r'
                firstWordLine = True
                for rowWord in row:
-                  #print(rowWord)
                   if firstWordLine == True:
                      inputText = inputText+'\r'+rowWord
                      firstWordLine = False
@@ -100,7 +105,7 @@ class MtabAnnotationApi:
                   else:
                      inputText = inputText+','+rowWord
                      #print(inputText)
-         inputText = inputText[1:]
+         print(inputText)
 
          self.__interactPage(driver,inputText,'table_text_content','annotation1','table-info')
 
@@ -140,20 +145,26 @@ class MtabAnnotationApi:
          for row in rows:
             # Get the columns (all the column 2)
             links = row.find_elements_by_xpath("./a") #note: index start from 0, 1 is col 2
-            #print('Col'+str(i))
-            if(i > 0):
-               listCPA.insert(i-1,'')
-               for link in links:
-                  # print link href
-                  #print(link.get_attribute("href")) #prints text from the element
-                  listCPA[i-1] = unquote(link.get_attribute("href"))
-            i = i+1
+            if links == []:
+               if(i > 0):
+                  listCPA.insert(i-1,'')
+                  listCPA[i-1] = filename[filename.rfind("\\")+1:]+"-COL"+str(i)
+               i = i+1
+            else:
+               #print('Col'+str(i))
+               if(i > 0):
+                  listCPA.insert(i-1,'')
+                  for link in links:
+                     # print link href
+                     #print(link.get_attribute("href")) #prints text from the element
+                     listCPA[i-1] = unquote(link.get_attribute("href"))
+               i = i+1
 
          listCPA[0] = 'Core Attribute'
-         print("self.__list_CPA_Global")
-         print(self.__list_CPA_Global)
          self.__list_CPA_Global.append(listCPA)
-         #print(listCPA)
+         print("listCPA")
+         print(listCPA)
+
 
          #CEA
          listCEA = []
@@ -167,16 +178,28 @@ class MtabAnnotationApi:
             links = row.find_elements_by_xpath("./a") #note: index start from 0, 1 is col 2
             #print('Col'+str(i))
             listCEA.insert(i,'')
-            for link in links:
-               # print link href
-               #print(link.get_attribute("href")) #prints text from the element
-               #linkString = str(link.get_attribute("href"))
-               #linkString = linkString.encode('utf8')
-               listCEA[i] = unquote(link.get_attribute("href"))
+            if links == []:
+               listCEA[i] = row.text
+            else :
+               #print(links)
+               for link in links:
+                  print(link)
+                  #print(link.get_attribute("href")) #prints text from the element
+                  #linkString = str(link.get_attribute("href"))
+                  #linkString = linkString.encode('utf8')
+                  if link.get_attribute("href") != None:
+                     listCEA[i] = unquote(link.get_attribute("href"))
             i = i+1
 
+         #Ca déconne
          nbRow = int(len(listCEA)/nbColumn)
          dataCEA = [[0 for x in range(int(nbColumn))] for y in range(int(nbRow))]
+
+         print("Begin")
+         print(nbColumn)
+         print(listCEA)
+         print(nbRow)
+         print("End")
 
          z = 0
          for i in range(0,nbRow,1):
@@ -184,8 +207,6 @@ class MtabAnnotationApi:
                dataCEA[i][j] = listCEA[z]
                z = z+1
 
-         print("self.__list_CEA_Global")
-         print(self.__list_CEA_Global)
          self.__list_CEA_Global.append(dataCEA)
 
          driver.get(url)
