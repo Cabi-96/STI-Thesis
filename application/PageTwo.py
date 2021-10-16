@@ -25,21 +25,13 @@ class PageTwo(Frame):
         self.increment = 1
         self.uriLoad = False
 
-        #frame = Frame(root,bg='orange',width=400)
-        #frame2 = Frame(root,bg='white')
-        #frame.pack(side='left',expand="no", fill="y")
-        #frame2.pack(fill="both", expand="yes", side='left')
-
         #### two frames: data and selection (questions)
         ## data
         self.label_frame_data = tk.LabelFrame(self, text="Excel Data",width=500,bg='white')
-        #self.label_frame_data.pack(side="left", padx=2, pady=2,fill="both", expand="yes")
         self.label_frame_data.pack(side='left',expand="no", fill="y")
 
         ## selection
-        #self.label_frame_selection = tk.LabelFrame(self, text="Selection", width = "400")
         self.label_frame_selection = Frame(self,bg='white',width=50)
-        #self.label_frame_selection.pack(side="left", padx=2, pady=2,fill="both", expand="no")
         self.label_frame_selection.pack(fill="both", expand="yes", side='left')
 
         self.label_frame_selection.propagate(0)

@@ -10893,16 +10893,16 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1634317791305	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileWJ3ajc"
-*** You are running in headless mode.
-1634318135745	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileWJ3ajc\\search.json.mozlz4", (void 0)))
-1634318138548	Marionette	INFO	Listening on port 1090
-1634318138792	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
-console.log: WebExtensions: reset-default-search: starting.
-console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-JavaScript error: , line 0: NotFoundError: Could not move source file(D:\Users\rve\AppData\Local\Temp\rust_mozprofileWJ3ajc\bookmarkbackups\bookmarks-2021-10-15_11_FO0G76M2zkk0oQFVHoYzyA==.jsonlz4) because it does not exist
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393921259	Marionette	INFO	Stopped listening on port 26575
+[Parent 19136, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 19136, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource://gre/modules/CrashMonitor.jsm, line 201: AbortError: IOUtils: Shutting down and refusing additional I/O tasks
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+ipt error: , line 0: NotFoundError: Could not move source file(D:\Users\rve\AppData\Local\Temp\rust_mozprofileWJ3ajc\bookmarkbackups\bookmarks-2021-10-15_11_FO0G76M2zkk0oQFVHoYzyA==.jsonlz4) because it does not exist
 bled
 [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
 console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofilePvTpGw\\search.json.mozlz4", (void 0)))
@@ -10912,13 +10912,14 @@ console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "res
 1634318278608	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofile53XcON"
-*** You are running in headless mode.
-1634318492079	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofile53XcON\\search.json.mozlz4", (void 0)))
-1634318494172	Marionette	INFO	Listening on port 1791
-1634318494272	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390145,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393907275	Marionette	INFO	Stopped listening on port 1091
+[Parent 27212, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+8494272	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
 \\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofile9cszxW"
@@ -10930,13 +10931,12 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1634318612843	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileC0X6cq"
-*** You are running in headless mode.
-1634318722373	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileC0X6cq\\search.json.mozlz4", (void 0)))
-1634318724570	Marionette	INFO	Listening on port 3497
-1634318724997	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393926885	Marionette	INFO	Stopped listening on port 26217
+[Parent 37320, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 37320, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+4318724997	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
 \\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileapYedx"
@@ -10957,25 +10957,27 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1634319014609	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileHNsmc4"
-*** You are running in headless mode.
-1634319077825	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileHNsmc4\\search.json.mozlz4", (void 0)))
-1634319080168	Marionette	INFO	Listening on port 20212
-1634319080577	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
-console.log: WebExtensions: reset-default-search: starting.
-console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-JavaScript error: , line 0: NotFoundError: Could not move source file(D:\Users\rve\AppData\Local\Temp\rust_mozprofileHNsmc4\bookmarkbackups\bookmarks-2021-10-15_11_1G++KAUayfRiu0e1Z4CScQ==.jsonlz4) because it does not exist
-bled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileYa1XUu\\search.json.mozlz4", (void 0)))
-1634319189780	Marionette	INFO	Listening on port 1139
-1634319190023	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
-console.log: WebExtensions: reset-default-search: starting.
-console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-JavaScript error: , line 0: NotFoundError: Could not move source file(D:\Users\rve\AppData\Local\Temp\rust_mozprofileYa1XUu\bookmarkbackups\bookmarks-2021-10-15_11_uVxGAS9HVf0p7S26d2-5IQ==.jsonlz4) because it does not exist
-le" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileiAqPcm"
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390145,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393908447	Marionette	INFO	Stopped listening on port 1111
+[Parent 1452, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 1452, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource://gre/modules/CrashMonitor.jsm, line 201: AbortError: IOUtils: Shutting down and refusing additional I/O tasks
+ NotFoundError: Could not move source file(D:\Users\rve\AppData\Local\Temp\rust_mozprofileHNsmc4\bookmarkbackups\bookmarks-2021-10-15_11_1G++KAUayfRiu0e1Z4CScQ==.jsonlz4) because it does not exist
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390145,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393919512	Marionette	INFO	Stopped listening on port 20212
+[Parent 19732, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 19732, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+a1XUu\bookmarkbackups\bookmarks-2021-10-15_11_uVxGAS9HVf0p7S26d2-5IQ==.jsonlz4) because it does not exist
+Exiting due to channel error.
+ocal\\Temp\\rust_mozprofileiAqPcm"
 *** You are running in headless mode.
 1634322348708	Marionette	INFO	Marionette enabled
 [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
@@ -11018,14 +11020,15 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1634322899927	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofile1Y2Yxr"
-*** You are running in headless mode.
-1634323018943	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofile1Y2Yxr\\search.json.mozlz4", (void 0)))
-1634323021409	Marionette	INFO	Listening on port 1087
-1634323021635	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
-console.log: WebExtensions: reset-default-search: starting.
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390145,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393909632	Marionette	INFO	Stopped listening on port 14037
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 27008, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+[Parent 27008, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
 \\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofilebMM2CQ"
 *** You are running in headless mode.
@@ -11038,13 +11041,12 @@ console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "res
 1634323101606	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofilew8d8ZU"
-*** You are running in headless mode.
-1634323281234	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofilew8d8ZU\\search.json.mozlz4", (void 0)))
-1634323283547	Marionette	INFO	Listening on port 1149
-1634323283995	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393927999	Marionette	INFO	Stopped listening on port 22107
+[Parent 26492, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 26492, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+4323283995	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 1634323316707	geckodriver	INFO	Listening on 127.0.0.1:18693
 1634323319785	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileWjZhCj"
 *** You are running in headless mode.
@@ -11069,7 +11071,8 @@ console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resour
 console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
 console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
 console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
-rchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileeJ3SYN\\search.json.mozlz4", (void 0)))
+Exiting due to channel error.
+file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileeJ3SYN\\search.json.mozlz4", (void 0)))
 1634323918162	Marionette	INFO	Listening on port 1160
 1634323918427	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
@@ -11083,12 +11086,12 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1634324167407	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileZL6LIh"
-*** You are running in headless mode.
-1634324267247	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileZL6LIh\\search.json.mozlz4", (void 0)))
-console.error: Region.jsm: "Error fetching region" (new AbortError("The operation was aborted. ", (void 0), 770))
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393928747	Marionette	INFO	Stopped listening on port 1154
+[Parent 26664, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 26664, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+AbortError("The operation was aborted. ", (void 0), 770))
 console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
 1634324282185	Marionette	INFO	Listening on port 1136
 1634324283164	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
@@ -11136,15 +11139,18 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1634325635956	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileLMvD4s"
-*** You are running in headless mode.
-1634325708253	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileLMvD4s\\search.json.mozlz4", (void 0)))
-1634325710496	Marionette	INFO	Listening on port 8057
-1634325710924	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
-1634325742048	geckodriver	INFO	Listening on 127.0.0.1:5182
-1634325745120	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileOShyuE"
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390145,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393901435	Marionette	INFO	Stopped listening on port 18520
+[Parent 18172, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 18172, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+efox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileOShyuE"
 *** You are running in headless mode.
 1634325745604	Marionette	INFO	Marionette enabled
 [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
@@ -11193,13 +11199,12 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1634326059424	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileMchmar"
-*** You are running in headless mode.
-1634326086089	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileMchmar\\search.json.mozlz4", (void 0)))
-1634326088564	Marionette	INFO	Listening on port 1266
-1634326088805	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393900268	Marionette	INFO	Stopped listening on port 1178
+[Parent 34076, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 34076, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+34326088805	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 1634326117390	geckodriver	INFO	Listening on 127.0.0.1:14105
 1634326120455	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofile0BYD1g"
 *** You are running in headless mode.
@@ -11279,15 +11284,16 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1634368761724	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileBhAgea"
-*** You are running in headless mode.
-1634368829970	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileBhAgea\\search.json.mozlz4", (void 0)))
-console.error: Region.jsm: "Error fetching region" (new AbortError("The operation was aborted. ", (void 0), 770))
-console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
-1634368842828	Marionette	INFO	Listening on port 12095
-1634368842864	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390145,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393903419	Marionette	INFO	Stopped listening on port 1077
+[Parent 40976, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 40976, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource://gre/modules/CrashMonitor.jsm, line 201: AbortError: IOUtils: Shutting down and refusing additional I/O tasks
+TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
 1634374771902	geckodriver	INFO	Listening on 127.0.0.1:1060
@@ -11300,3 +11306,73 @@ console.error: Region.jsm: "Error fetching region" (new AbortError("The operatio
 console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
 1634374786324	Marionette	INFO	Listening on port 1082
 1634374786643	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileWqjxL4"
+*** You are running in headless mode.
+1634374891214	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileWqjxL4\\search.json.mozlz4", (void 0)))
+1634374893478	Marionette	INFO	Listening on port 2201
+1634374893951	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileLO5j8R"
+*** You are running in headless mode.
+1634375045155	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileLO5j8R\\search.json.mozlz4", (void 0)))
+1634375053874	Marionette	INFO	Listening on port 27153
+1634375054327	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1634375676722	geckodriver	INFO	Listening on 127.0.0.1:1050
+1634375680049	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileEgJR8Y"
+*** You are running in headless mode.
+1634375680994	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileEgJR8Y\\search.json.mozlz4", (void 0)))
+console.error: Region.jsm: "Error fetching region" (new AbortError("The operation was aborted. ", (void 0), 770))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+1634375694730	Marionette	INFO	Listening on port 1069
+1634375694977	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileKOJdDF"
+*** You are running in headless mode.
+1634376041814	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileKOJdDF\\search.json.mozlz4", (void 0)))
+1634376043976	Marionette	INFO	Listening on port 1192
+1634376044354	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390145,name=PContent::Msg_AsyncMessage) Channel error: cannot send/recv
+
+A content process crashed and MOZ_CRASHREPORTER_SHUTDOWN is set, shutting down
+1634393904645	Marionette	INFO	Stopped listening on port 1192
+[Parent 30788, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 30788, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+1634393980661	geckodriver	INFO	Listening on 127.0.0.1:13393
+1634393983661	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofilex4aPt3"
+*** You are running in headless mode.
+1634393984881	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofilex4aPt3\\search.json.mozlz4", (void 0)))
+console.error: Region.jsm: "Error fetching region" (new AbortError("The operation was aborted. ", (void 0), 770))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+1634393995714	Marionette	INFO	Listening on port 13401
+1634393995978	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileJjhP39"
+*** You are running in headless mode.
+1634394441234	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileJjhP39\\search.json.mozlz4", (void 0)))
+1634394443576	Marionette	INFO	Listening on port 28779
+1634394444004	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.

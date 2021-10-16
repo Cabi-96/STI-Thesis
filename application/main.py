@@ -68,6 +68,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Semantic Table Intepreter")
 
+    # menu tutorial https://www.delftstack.com/fr/tutorial/tkinter-tutorial/tkinter-menubar/
     main = Container(root)
     main.pack(side="top", fill="both", expand=True)
 
