@@ -10902,9 +10902,8 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1634318138792	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofilePvTpGw"
-*** You are running in headless mode.
-1634318269033	Marionette	INFO	Marionette enabled
+JavaScript error: , line 0: NotFoundError: Could not move source file(D:\Users\rve\AppData\Local\Temp\rust_mozprofileWJ3ajc\bookmarkbackups\bookmarks-2021-10-15_11_FO0G76M2zkk0oQFVHoYzyA==.jsonlz4) because it does not exist
+bled
 [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
 console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofilePvTpGw\\search.json.mozlz4", (void 0)))
 console.error: Region.jsm: "Error fetching region" (new AbortError("The operation was aborted. ", (void 0), 770))
@@ -10967,17 +10966,16 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1634319080577	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileYa1XUu"
-*** You are running in headless mode.
-1634319187371	Marionette	INFO	Marionette enabled
+JavaScript error: , line 0: NotFoundError: Could not move source file(D:\Users\rve\AppData\Local\Temp\rust_mozprofileHNsmc4\bookmarkbackups\bookmarks-2021-10-15_11_1G++KAUayfRiu0e1Z4CScQ==.jsonlz4) because it does not exist
+bled
 [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
 console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileYa1XUu\\search.json.mozlz4", (void 0)))
 1634319189780	Marionette	INFO	Listening on port 1139
 1634319190023	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-1634322344633	geckodriver	INFO	Listening on 127.0.0.1:1085
-1634322347724	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileiAqPcm"
+JavaScript error: , line 0: NotFoundError: Could not move source file(D:\Users\rve\AppData\Local\Temp\rust_mozprofileYa1XUu\bookmarkbackups\bookmarks-2021-10-15_11_uVxGAS9HVf0p7S26d2-5IQ==.jsonlz4) because it does not exist
+le" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileiAqPcm"
 *** You are running in headless mode.
 1634322348708	Marionette	INFO	Marionette enabled
 [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
@@ -11067,12 +11065,11 @@ console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "res
 1634323404448	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
-1634323912221	geckodriver	INFO	Listening on 127.0.0.1:1138
-1634323915225	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileeJ3SYN"
-*** You are running in headless mode.
-1634323915670	Marionette	INFO	Marionette enabled
-[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
-console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileeJ3SYN\\search.json.mozlz4", (void 0)))
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+console.error: Region.jsm: "Error fetching region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 772))
+console.error: Region.jsm: "Failed to fetch region" (new Error("TIMEOUT", "resource://gre/modules/Region.jsm", 419))
+rchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileeJ3SYN\\search.json.mozlz4", (void 0)))
 1634323918162	Marionette	INFO	Listening on port 1160
 1634323918427	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
@@ -11262,3 +11259,44 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofilemBlxMQ\\search.json.mozlz4", (void 0)))
 1634326587826	Marionette	INFO	Listening on port 19442
 1634326588075	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofiledNWYtG"
+*** You are running in headless mode.
+1634326836648	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofiledNWYtG\\search.json.mozlz4", (void 0)))
+1634326839380	Marionette	INFO	Listening on port 18354
+1634326839702	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileaIXp7z"
+*** You are running in headless mode.
+1634368756241	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileaIXp7z\\search.json.mozlz4", (void 0)))
+1634368761318	Marionette	INFO	Listening on port 1077
+1634368761724	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileBhAgea"
+*** You are running in headless mode.
+1634368829970	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileBhAgea\\search.json.mozlz4", (void 0)))
+console.error: Region.jsm: "Error fetching region" (new AbortError("The operation was aborted. ", (void 0), 770))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+1634368842828	Marionette	INFO	Listening on port 12095
+1634368842864	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1634374771902	geckodriver	INFO	Listening on 127.0.0.1:1060
+1634374774935	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileP4dcER"
+*** You are running in headless mode.
+1634374775558	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileP4dcER\\search.json.mozlz4", (void 0)))
+console.error: Region.jsm: "Error fetching region" (new AbortError("The operation was aborted. ", (void 0), 770))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+1634374786324	Marionette	INFO	Listening on port 1082
+1634374786643	RemoteAgent	WARN	TLS certificate errors will be ignored for this session

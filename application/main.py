@@ -25,6 +25,8 @@ class Container(tk.Frame):
         container.pack(side="top", fill="both", expand=True)
 
 
+
+
         #page 1
         p1 = PageOne(self, bg='white')
 
@@ -64,10 +66,19 @@ class Container(tk.Frame):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Tk")
+    root.title("Semantic Table Intepreter")
 
     main = Container(root)
     main.pack(side="top", fill="both", expand=True)
 
-    root.wm_geometry("600x600")
+    menubar = tk.Menu(root)
+    filemenu = tk.Menu(menubar)
+    filemenu.add_command(label="Open")
+    filemenu.add_command(label="Save")
+    filemenu.add_command(label="Exit")
+    menubar.add_cascade(label="File", menu=filemenu)
+
+    root.config(menu=menubar)
+
+    root.wm_geometry("800x600")
     root.mainloop()
