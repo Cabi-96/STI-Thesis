@@ -54,7 +54,7 @@ class MtabAnnotationApi:
       item.click()
 
       #J'ai mis un wait de 2 minutes sinon, l'algorithme ne laisse pas le temps au site de faire les annotations. La durée de 120 secondes peut être changée.
-      wait = WebDriverWait(driver, 120)
+      wait = WebDriverWait(driver, 1200)
       #men_menu = wait.until(ec.visibility_of_element_located((By.CLASS_NAME, 'table-info')))
       men_menu = wait.until(ec.visibility_of_element_located((By.CLASS_NAME, tableElementClass)))
       ActionChains(driver).move_to_element(men_menu).perform()
