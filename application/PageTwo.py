@@ -66,10 +66,27 @@ class PageTwo(Frame):
     def show(self):
         self.lift()
 
+    def initObject(self):
+        self.increment = 1
+        self.uriLoad = False
+        self.isNbFilesSup = False
+        self.listTvi = list()
+        self.frameDf.pack_forget()
+        self.listDf = list()
+        self.numberOfDf = 0
+        self.df = None
+        for i in range(0, len(self.listFrame2), 1):
+            self.listFrame2[i].destroy()
+        self.listFrame2.clear()
 
     def load_uri(self, p1):
         # Create the dataFrames
-        #print(label_file["text"])
+        self.initObject()
+
+        for record in self.tvResult.get_children():
+            self.tvResult.delete(record)
+
+
         api = MtabAnnotationApi(p1.label_file["text"])
         api.extractTableHTML()
 
@@ -153,17 +170,15 @@ class PageTwo(Frame):
         self.show()
 
     def ask_question(self):
+        for widgets in self.frame_questions.winfo_children():
+            widgets.destroy()
+
         if self.uriLoad  == True:
             common_element = set(cta[0][0]).intersection(cta[self.increment][0])
             frame_text = "CTA from the first Dataset :" + str(cta[0][0]) + "\n" + "CTA from the second Dataset :" + str(cta[self.increment][0]) + "\n" + "Voici les éléments en communs :" + str(common_element)
 
             self.label_cta = ttk.Label(self.frame_questions, text= frame_text) #, wraplengt=750)
             self.label_cta.pack(padx = 5,fill="none",expand="false")
-
-            #print(frame_text)
-            #print(cta[0][0])
-            #print(cta[self.increment][0])
-            #print("Voici les éléments en communs :" + str(common_element))
 
             if len(common_element) == len(cta[0][0]):
                 text_label_Q1="Tous les types de la liste sujet se retrouvent dans la liste cible. Nous suggérons donc de choisir le premier choix d'intégration de dataset."
@@ -183,7 +198,10 @@ class PageTwo(Frame):
             self.button_Q1_OK.pack(padx = 5,fill="none",expand="false")
 
     def refreshTvResult(self, isLastQuestion):
-        print(isLastQuestion)
+
+        for record in self.tvResult.get_children():
+            self.tvResult.delete(record)
+
         self.tvResult["column"] = list(self.df.columns)
         self.tvResult["show"] = "headings"
 
@@ -206,6 +224,9 @@ class PageTwo(Frame):
         if self.increment == self.numberOfDf:
             self.isNbFilesSup = False
 
+        print("PAGE TWO"+str(self.increment))
+        utils.printDf(self.df)
+        print("END PAGE TWO")
 
         if self.isNbFilesSup == True and isLastQuestion == True:
             self.increment = self.increment + 1
@@ -243,27 +264,65 @@ class PageTwo(Frame):
                                values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
 
                 for widgets in self.frame_questions.winfo_children():
-                    if widgets['text'] != 'Terminer':
+                    #if widgets['text'] != 'Terminer':
                         widgets.destroy()
                 self.ask_question()
 
+    def askQuestion1(self,listProposition):
+        frameDf = tk.LabelFrame(self.frame_questions, text='Liste proposition')
+        frameDf.pack(padx = 5,expand="false", fill="x")
 
+        tvI = ttk.Treeview(frameDf)
+        tvI.pack(padx = 5,fill="x",expand="false")
+
+        treescrolly = tk.Scrollbar(frameDf, orient="vertical",
+                                   command=tvI.yview)  # command means update the yaxis view of the widget
+        treescrollx = tk.Scrollbar(frameDf, orient="horizontal",
+                                   command=tvI.xview)  # command means update the xaxis view of the widget
+        tvI.configure(xscrollcommand=treescrollx.set,
+                      yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
+        treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
+        treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
+
+        tvI["column"] = ["Propositions"]
+        tvI["show"] = "headings"
+
+        for record in tvI.get_children():
+            tvI.delete(record)
+
+        for column in tvI["columns"]:
+            tvI.heading(column, text=column)  # let the column heading = column name
+            df_rows = listProposition  # turns the dataframe into a list of lists
+            for row in df_rows:
+                tvI.insert("", "end",values=row)
+
+        button_Q_SelectProposition = tk.Button(self.frame_questions, text='Ajouter', command=lambda:self.algo_question_proposition(tvI))
+        button_Q_SelectProposition.pack()
+        #listComponentDestroy = list()
+        #listComponentDestroy.append(button_Q_SelectProposition)
+        #listComponentDestroy.append(frameDf)
+        #return listComponentDestroy
 
     def question_2(self):
         choice = self.textBox_rep_Q1.get()
         df1 = self.listDf[0]
+
+        print("Question 2"+str(self.increment))
+        utils.printDf(df1)
+        print("End Question 2")
         df2 = self.listDf[self.increment]
         self.df = self.listDf[0]
         frameProposition = None
         if choice == "1":
-            df1.to_excel(r'Premier Dataset Tour'+str(self.increment)+'.xlsx', index=False)
-            df2.to_excel(r'Deuxième Dataset Tour'+str(self.increment)+'.xlsx', index=False)
+            #df1.to_excel(r'Premier Dataset Tour'+str(self.increment)+'.xlsx', index=False)
+            #df2.to_excel(r'Deuxième Dataset Tour'+str(self.increment)+'.xlsx', index=False)
 
             self.df = pd.merge(df1,df2)
             #Evite les doublons dans le tableau final pour l'étape append
-            df1 = df1[~df1.isin(self.df)].dropna()
-            df2 = df2[~df2.isin(self.df)].dropna()
+            if self.increment == 1:
+                df1 = df1[~df1.isin(self.df)].dropna()
 
+            df2 = df2[~df2.isin(self.df)].dropna()
             self.df = self.df.append(df1, ignore_index=True, sort=False)
             self.df = self.df.append(df2, ignore_index=True, sort=False)
 
@@ -338,22 +397,24 @@ class PageTwo(Frame):
                                         listProposition.append(resultInserCol)
                         j = j + 1
                     i = i + 1
-            self.df = df1
+
             #df = df.drop_duplicates(subset=['Core Attribute'], keep='first')
-            self.df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
+            #self.df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
 
             #print(tabulate(df, headers='keys', tablefmt='psql'))
            #if self.frameDf != None:
            #    self.frameDf.destroy()
+            self.df = df1
 
+            self.frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
+            self.tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)
             self.refreshTvResult(False)
 
-            frameProposition = askQuestion1(listProposition)
-            self.df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
+            self.askQuestion1(listProposition)
+            #self.df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
 
         button_Q_SelectProposition = tk.Button(self.frame_questions, text='Questions', command=lambda:self.algo_question2_begin(button_Q_SelectProposition,frameProposition))
         button_Q_SelectProposition.pack()
-
 
     def algo_question2_begin(self,button_Q_SelectProposition,frameProposition):
         #print("Question 2")
@@ -362,13 +423,17 @@ class PageTwo(Frame):
             frameProposition[0].destroy()
             frameProposition[1].destroy()
 
+        for widgets in self.frame_questions.winfo_children():
+            #if widgets['text'] == 'Liste proposition' or :
+                widgets.destroy()
+
         label_Add_Column = ttk.Label(self.frame_questions, text="Si vous avez une autre colonne à ajouter ecrivez le. Exemple : birthPlace. Si vous n'en avez plus, écrivez -1:", wraplengt=750)
         label_Add_Column.pack(padx = 5,fill="none",expand="false", side = "top")
         textBox_rep_Q2 = ttk.Entry(self.frame_questions)
         textBox_rep_Q2.pack(padx = 5,fill="none",expand="false")
 
         #Show la liste de proposition
-        frameListProposition = tk.LabelFrame(self.label_frame_selection, text='Liste proposition')
+        frameListProposition = tk.LabelFrame(self.frame_questions, text='Liste proposition')
         frameListProposition.pack(padx = 5,expand="false", fill="x")
 
         tvI = ttk.Treeview(frameListProposition)
@@ -386,11 +451,8 @@ class PageTwo(Frame):
         button_Q2_Proposition = tk.Button(self.frame_questions, text='Choisir', command=lambda:self.algo_question2(textBox_rep_Q2,tvI))
         button_Q2_Proposition.pack(padx = 5,fill="none",expand="false")
 
-        #Show button selection
-        button_Q2_SelectProposition = tk.Button(self.label_frame_selection, text='Ajouter', command=lambda:self.algo_question_proposition(tvI))
-        button_Q2_SelectProposition.pack()
-
-
+        button_Q3_Continue = tk.Button(self.frame_questions, text='Continuer', command=lambda:self.askQuestion3())
+        button_Q3_Continue.pack()
 
 
     def algo_question2(self,textBox_rep_Q2,tvI):
@@ -428,6 +490,10 @@ class PageTwo(Frame):
         for row in df_rows:
             tvI.insert("", "end",values=row)
 
+        #Show button selection
+        button_Q2_SelectProposition = tk.Button(self.frame_questions, text='Ajouter', command=lambda:self.algo_question_proposition(tvI))
+        button_Q2_SelectProposition.pack()
+
 
     def algo_question_proposition(self,tvI):
         #get items from proposition's list
@@ -440,52 +506,26 @@ class PageTwo(Frame):
             print(columnAdd)
             self.df[columnAdd] = 'nan'
 
-        self.df.to_excel(r'Deuxième Question Tour'+str(self.increment)+'.xlsx', index=False)
-
         #### refresh df resultat
         self.refreshTvResult(False)
 
 
-    def askQuestion3(self,tvI_Q2,frameDfQ2,button_Q2_Proposition,button_Q2_SelectProposition,button_Q2_EndProposition,label_Add_Column,textBox_rep_Q2):
-        #DESTUCTION DES OBJETS. Il faudrait peut etre pas detruire label_Add_Column mais plutot changer son text.
-        #label_frame_selection.destroy()
-        tvI_Q2.destroy()
-        frameDfQ2.destroy()
-        button_Q2_Proposition.destroy()
-        button_Q2_SelectProposition.destroy()
-        button_Q2_EndProposition.destroy()
-        label_Add_Column.destroy()
-        textBox_rep_Q2.destroy()
-        #
+    def askQuestion3(self):
+        for widgets in self.frame_questions.winfo_children():
+            widgets.destroy()
+
         label_Add_Column_Q3 = ttk.Label(self.frame_questions, text="Ce que vous cherchez n'a toujours pas été trouvé? Veuillez insérer l'URI de la colonne souhaitée. Exemple : http://dbpedia.org/ontology/deathDate", wraplengt=750)
         label_Add_Column_Q3.pack(padx = 5,fill="none",expand="false", side = "top")
         textBox_rep_Q3 = ttk.Entry(self.frame_questions)
         textBox_rep_Q3.pack(padx = 5,fill="none",expand="false")
         button_Q3_SelectProposition = tk.Button(self.frame_questions, text='Ajouter', command=lambda:self.algo_question3_proposition(str(textBox_rep_Q3.get())))
         button_Q3_SelectProposition.pack()
-        button_Q3_SelectProposition = tk.Button(self.frame_questions, text='Terminer', command=lambda:show_df_result())
-        button_Q3_SelectProposition.pack()
 
 
 
-    def algo_question3_proposition(self,textQ3):
-        newColumn = textQ3.strip()
-        global listPropositionQ3
-        try:
-            request = "" #requests.get(newColumn)
-        except ConnectionError:
-            print('Le lien n existe pas')
-        except MissingSchema:
-            print('Le lien n existe pas')
+    def algo_question3_proposition(self,newColumn):
+        if newColumn not in self.df.columns.values:
+            self.df[newColumn] = 'nan'
         else:
-            #print('Le lien existe')
-            if newColumn and newColumn not in listPropositionQ3 and newColumn not in self.df.columns.values:
-                self.df[newColumn] = 'nan'
-                listPropositionQ3.append(newColumn)
-                #df[newColumn] = np.nan
-                #df[newColumn] = df[newColumn].astype('string')
-                #printDf(df)
-            else:
-                print("La colonne existe déjà dans le DF")
-
+            print("La colonne existe déjà dans le DF")
         self.refreshTvResult(False)

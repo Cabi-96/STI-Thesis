@@ -45,7 +45,7 @@ class Container(tk.Frame):
 
 
         #button terminer pour aller page 3
-        p2.button_Q3_SelectProposition = tk.Button(p2.frame_questions, text='Terminer', command=lambda:[p3.show_df_result(p2.df),p2.refreshTvResult(p2.isNbFilesSup)])
+        p2.button_Q3_SelectProposition = tk.Button(p2.label_frame_selection, text='Terminer', command=lambda:[p3.show_df_result(p2.df),p2.refreshTvResult(p2.isNbFilesSup)])
         p2.button_Q3_SelectProposition.pack(side='bottom', padx = 5)
 
 
@@ -66,7 +66,7 @@ class Container(tk.Frame):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Semantic Table Intepreter")
+    root.title("Cabrhelle Table")
 
     # menu tutorial https://www.delftstack.com/fr/tutorial/tkinter-tutorial/tkinter-menubar/
     main = Container(root)

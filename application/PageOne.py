@@ -68,16 +68,15 @@ class PageOne(Frame):
         """If the file selected is valid this will load the file into the Treeview"""
         directory = os.fsencode(self.label_file["text"])
         #Changer l'init ici il faut transformer listFrame en variable globale.
-        #global listFrame1
-        #for frame in listFrame1:
-        #    frame.destroy()
-        listFrame1 = list()
+
+        for widgets in self.label_frame_data.winfo_children():
+            widgets.destroy()
 
         i = 0
         for file in os.listdir(directory):
             filename = os.fsdecode(file)
-            listFrame1.append(tk.LabelFrame(self.label_frame_data, text=filename, bg='white'))
-            listFrame1[i].pack(fill="both",expand="yes", pady = 10, padx = 10)
+            frameFile = tk.LabelFrame(self.label_frame_data, text=filename, bg='white')
+            frameFile.pack(fill="both",expand="yes", pady = 10, padx = 10)
 
             global file_path
             file_path = self.label_file["text"]+"/"+filename
@@ -97,12 +96,12 @@ class PageOne(Frame):
                     tk.messagebox.showerror("Information", f"No such file as {file_path}")
                     return None
 
-            tvI = ttk.Treeview(listFrame1[i])
+            tvI = ttk.Treeview(frameFile)
             tvI.place(relheight=1, relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).
 
-            treescrolly = tk.Scrollbar(listFrame1[i], orient="vertical",
+            treescrolly = tk.Scrollbar(frameFile, orient="vertical",
                                        command=tvI.yview)  # command means update the yaxis view of the widget
-            treescrollx = tk.Scrollbar(listFrame1[i], orient="horizontal",
+            treescrollx = tk.Scrollbar(frameFile, orient="horizontal",
                                        command=tvI.xview)  # command means update the xaxis view of the widget
             tvI.configure(xscrollcommand=treescrollx.set,
                           yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
