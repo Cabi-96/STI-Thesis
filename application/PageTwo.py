@@ -314,19 +314,21 @@ class PageTwo(Frame):
         self.df = self.listDf[0]
         frameProposition = None
         if choice == "1":
-            #df1.to_excel(r'Premier Dataset Tour'+str(self.increment)+'.xlsx', index=False)
-            #df2.to_excel(r'Deuxième Dataset Tour'+str(self.increment)+'.xlsx', index=False)
 
             self.df = pd.merge(df1,df2)
+
             #Evite les doublons dans le tableau final pour l'étape append
             if self.increment == 1:
                 df1 = df1[~df1.isin(self.df)].dropna()
+                df1 = df1[~df1["Core Attribute"].isin(self.df["Core Attribute"])].dropna()
 
             df2 = df2[~df2.isin(self.df)].dropna()
+            df2 = df2[~df2["Core Attribute"].isin(self.df["Core Attribute"])].dropna()
+            print("-----------------------------------------df2--------------------")
             self.df = self.df.append(df1, ignore_index=True, sort=False)
             self.df = self.df.append(df2, ignore_index=True, sort=False)
 
-            #df = df.drop_duplicates(subset=['Core Attribute'], keep='first')
+
             self.df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
 
             #print(tabulate(df, headers='keys', tablefmt='psql'))

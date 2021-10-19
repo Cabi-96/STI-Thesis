@@ -11376,3 +11376,23 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1634394444004	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 console.log: WebExtensions: reset-default-search: starting.
 console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1634664612582	geckodriver	INFO	Listening on 127.0.0.1:56971
+1634664615679	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilece4U9j"
+1634664622172	geckodriver	INFO	Listening on 127.0.0.1:56982
+1634664625235	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileF8391H"
+*** You are running in headless mode.
+1634664625492	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileF8391H\\search.json.mozlz4", (void 0)))
+1634664626294	Marionette	INFO	Listening on port 56990
+1634664626785	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1634664645811	Marionette	INFO	Stopped listening on port 56990
+JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1634665425160	geckodriver	INFO	Listening on 127.0.0.1:57285
+1634665428231	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileOYlH5Q"
+*** You are running in headless mode.
+1634665428493	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileOYlH5Q\\search.json.mozlz4", (void 0)))
+1634665429314	Marionette	INFO	Listening on port 57293
+1634665429774	RemoteAgent	WARN	TLS certificate errors will be ignored for this session

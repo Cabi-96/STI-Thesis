@@ -1,5 +1,7 @@
-Core Attribute,http://dbpedia.org/ontology/deathPlace,http://dbpedia.org/ontology/parent,http://dbpedia.org/ontology/deathDate,http://dbpedia.org/ontology/birthDate,http://dbpedia.org/ontology/birthPlace,http://dbpedia.org/ontology/contest
-http://dbpedia.org/resource/Giovanni_Francesco_Guidi_di_Bagno,http://dbpedia.org/resource/Rome,http://dbpedia.org/resource/Colonna_family,http://dbpedia.org/resource/1641,1578-10-04 ,http://dbpedia.org/resource/Florence http://dbpedia.org/resource/Grand_Duchy_of_Tuscany ,nan
-http://dbpedia.org/resource/Giovanni_Doria,http://dbpedia.org/resource/Palermo,http://dbpedia.org/resource/Giovanni_Andrea_Doria,http://dbpedia.org/resource/1642,,,nan
-http://dbpedia.org/resource/Dick_Sheppard_(priest),http://dbpedia.org/resource/City_of_London ,http://dbpedia.org/resource/Edgar_Sheppard ,1937-10-31 ,http://dbpedia.org/resource/1880,http://dbpedia.org/resource/Windsor,nan
-http://dbpedia.org/resource/Claus_Westermann,http://dbpedia.org/resource/Heidelberg http://dbpedia.org/resource/Germany ,http://dbpedia.org/resource/Mother http://dbpedia.org/resource/Father ,2000-06-11 ,http://dbpedia.org/resource/1909,http://dbpedia.org/resource/Berlin,nan
+Core Attribute,test1.csv-COL2,test1.csv-COL3,test1.csv-COL4,http://dbpedia.org/ontology/percentage,test1.csv-COL6,http://dbpedia.org/ontology/populationTotal,test2.csv-COL2,test2.csv-COL3,http://dbpedia.org/ontology/weight,test3.csv-COL3,test3.csv-COL4,test3.csv-COL5
+http://dbpedia.org/resource/Terp,http://dbpedia.org/resource/NAMUR,92136,5100,54,http://dbpedia.org/resource/WD,1845,http://dbpedia.org/resource/A1,92094046,92044,http://dbpedia.org/resource/Terp,5023,4.605
+http://dbpedia.org/resource/Terp,http://dbpedia.org/resource/NAMUR,92136,5100,54,http://dbpedia.org/resource/WD,1845,,,92044,http://dbpedia.org/resource/Terp,5023,4.605
+http://dbpedia.org/resource/Flawinne,http://dbpedia.org/resource/NAMUR,92043,5020,71,http://dbpedia.org/resource/FW,4491,,,92043,http://dbpedia.org/resource/Flawinne,5020,6.742
+http://dbpedia.org/resource/Citadelle,,,,,,,,,92075,http://dbpedia.org/resource/Citadelle,5101,3.315
+http://dbpedia.org/resource/Flawinne,,,,,,,,,92043,http://dbpedia.org/resource/Flawinne,5020,6.742
+http://dbpedia.org/resource/Terp,,,,,,,,,92044,http://dbpedia.org/resource/Terp,5023,4.605
