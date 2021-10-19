@@ -317,19 +317,28 @@ class PageTwo(Frame):
 
             self.df = pd.merge(df1,df2)
 
-            #Evite les doublons dans le tableau final pour l'étape append
-            if self.increment == 1:
-                df1 = df1[~df1.isin(self.df)].dropna()
-                df1 = df1[~df1["Core Attribute"].isin(self.df["Core Attribute"])].dropna()
+            print("-----------------------------------------df--------------------")
+            utils.printDf(self.df)
 
-            df2 = df2[~df2.isin(self.df)].dropna()
-            df2 = df2[~df2["Core Attribute"].isin(self.df["Core Attribute"])].dropna()
-            print("-----------------------------------------df2--------------------")
-            self.df = self.df.append(df1, ignore_index=True, sort=False)
+            print("-----------------------------------------df1--------------------")
+            utils.printDf(df1)
+
+
+            #Evite les doublons dans le tableau final pour l'étape append
+            #if self.increment == 1:
+            #    df1 = df1[~df1["Core Attribute"].isin(self.df["Core Attribute"])].dropna()
+
+            cond = df1["Core Attribute"].isin(self.df['Core Attribute'])
+            df1.drop(df1[cond].index, inplace = True)
+
+            cond = df2["Core Attribute"].isin(self.df['Core Attribute'])
+            df2.drop(df2[cond].index, inplace = True)
+
+
+            self.df = self.df.append(df1,ignore_index=True,sort=False)
             self.df = self.df.append(df2, ignore_index=True, sort=False)
 
-
-            self.df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
+            #self.df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
 
             #print(tabulate(df, headers='keys', tablefmt='psql'))
 
