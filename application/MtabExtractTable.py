@@ -148,7 +148,12 @@ class MtabAnnotationApi:
             if links == []:
                if(i > 0):
                   listCPA.insert(i-1,'')
-                  listCPA[i-1] = filename[filename.rfind("\\")+1:]+"-COL"+str(i)
+                  if listCTA[i] != []:
+                     #print(listCTA[i])
+                     #listCPA[i-1] = ' '.join(listCTA[i])
+                     listCPA[i-1] = listCTA[i][0]
+                  else :
+                     listCPA[i-1] = filename[filename.rfind("\\")+1:]+"-COL"+str(i)
                i = i+1
             else:
                #print('Col'+str(i))
@@ -160,7 +165,7 @@ class MtabAnnotationApi:
                      listCPA[i-1] = unquote(link.get_attribute("href"))
                i = i+1
 
-         listCPA[0] = 'Core Attribute'
+         listCPA[0] = listCTA[1][0]
          self.__list_CPA_Global.append(listCPA)
          #print("listCPA")
          #print(listCPA)

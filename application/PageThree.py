@@ -24,7 +24,7 @@ class PageThree(Frame):
         treescrollx = tk.Scrollbar(self.tvResult, orient="horizontal",
                                    command=self.tvResult.xview)  # command means update the xaxis view of the widget
         self.tvResult.configure(xscrollcommand=treescrollx.set,
-                           yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
+                                yscrollcommand=treescrolly.set)  # assign the scrollbars to the Treeview Widget
         treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
         treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
 
@@ -71,6 +71,6 @@ class PageThree(Frame):
 
         for row in df_rows:
             self.tvResult.insert("", "end",
-                       values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
+                                 values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
 
         self.show()

@@ -325,10 +325,10 @@ class PageTwo(Frame):
             #if self.increment == 1:
             #    df1 = df1[~df1["Core Attribute"].isin(self.df["Core Attribute"])].dropna()
 
-            cond = df1["Core Attribute"].isin(self.df['Core Attribute'])
+            cond = df1.iloc[:,0].isin(self.df.iloc[:,0])
             df1.drop(df1[cond].index, inplace = True)
 
-            cond = df2["Core Attribute"].isin(self.df['Core Attribute'])
+            cond = df2.iloc[:,0].isin(self.df.iloc[:,0])
             df2.drop(df2[cond].index, inplace = True)
 
 
