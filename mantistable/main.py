@@ -3,7 +3,7 @@ import os
 
 print("run")
 
-FILE = os.path.abspath(os.curdir) + "\\Australian_Test.json"
+FILE = os.path.abspath(os.curdir) + "\\mantistable\\Australian_Test.json"
 
 print(FILE)
 
