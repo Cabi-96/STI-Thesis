@@ -27,7 +27,7 @@ class MtabAnnotationApi:
       # L'option Headless permet d'éviter d'ouvrir une page web a chaque fois que l'algorithme est lancé. + performant
       options = Options()
       options.add_argument('--headless')
-      path = str(pathlib.Path().absolute())+'/plugin/geckodriver.exe'
+      path = str(pathlib.Path().absolute())+'\plugin\geckodriver.exe'
       #print(path)
       driver = webdriver.Firefox(options=options,executable_path=path)
       #driver = webdriver.Firefox(executable_path=path)
