@@ -68,6 +68,7 @@ class Container(tk.Frame):
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("TabIntegration")
+    # Icon from : https://icons8.com/icon/set/data/material-rounded
     iconPath = str(pathlib.Path().absolute())+'\Icon\LogoApp.png'
     root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file=iconPath))
 
