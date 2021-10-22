@@ -6,7 +6,7 @@ Make sure to put
 as a comment at the end of lines that contain a function call that don't also contain an assignment (=).
 '''
 
-python_file = 'STI.py'
+python_file = '../Console_STI/STI.py'
 work_file = None
 
 basic_conversion_rules = {"for": "FOR", "=": "TO", "if": "IF", "==": "EQUALS", "while": "WHILE", "until": "UNTIL", "import": "IMPORT", "class": "DEFINE CLASS", "def": "DEFINE FUNCTION", "else:": "ELSE:", "elif": "ELSEIF", "except:": "EXCEPT:", "try:": "TRY:", "pass": "PASS", "in": "IN"}

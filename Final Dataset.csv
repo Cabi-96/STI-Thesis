@@ -1,7 +1,0 @@
-Core Attribute,test1.csv-COL2,test1.csv-COL3,test1.csv-COL4,http://dbpedia.org/ontology/percentage,test1.csv-COL6,http://dbpedia.org/ontology/populationTotal,test2.csv-COL2,test2.csv-COL3,http://dbpedia.org/ontology/weight,test3.csv-COL3,test3.csv-COL4,test3.csv-COL5
-http://dbpedia.org/resource/Terp,http://dbpedia.org/resource/NAMUR,92136,5100,54,http://dbpedia.org/resource/WD,1845,http://dbpedia.org/resource/A1,92094046,92044,http://dbpedia.org/resource/Terp,5023,4.605
-http://dbpedia.org/resource/Terp,http://dbpedia.org/resource/NAMUR,92136,5100,54,http://dbpedia.org/resource/WD,1845,,,92044,http://dbpedia.org/resource/Terp,5023,4.605
-http://dbpedia.org/resource/Flawinne,http://dbpedia.org/resource/NAMUR,92043,5020,71,http://dbpedia.org/resource/FW,4491,,,92043,http://dbpedia.org/resource/Flawinne,5020,6.742
-http://dbpedia.org/resource/Citadelle,,,,,,,,,92075,http://dbpedia.org/resource/Citadelle,5101,3.315
-http://dbpedia.org/resource/Flawinne,,,,,,,,,92043,http://dbpedia.org/resource/Flawinne,5020,6.742
-http://dbpedia.org/resource/Terp,,,,,,,,,92044,http://dbpedia.org/resource/Terp,5023,4.605

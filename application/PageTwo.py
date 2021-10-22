@@ -1,15 +1,12 @@
 #Interface
 import tkinter as tk
 from tkinter import *
-from tkinter import filedialog, messagebox, ttk
-import os
-import copy
+from tkinter import messagebox, ttk
 
 #Algo Integration
-from requests.exceptions import MissingSchema, HTTPError
-from tabulate import tabulate
+from requests.exceptions import HTTPError
 import pandas as pd
-from MtabExtractTable import MtabAnnotationApi
+from application.MtabExtractTable import MtabAnnotationApi
 
 import utils
 

@@ -1,9 +1,6 @@
 #Algo Integration
-from requests.exceptions import MissingSchema, HTTPError
 from tabulate import tabulate
-import pandas as pd
 from SPARQLWrapper import SPARQLWrapper, JSON
-from MtabExtractTable import MtabAnnotationApi
 
 
 def executeSparqlQuery(query):
