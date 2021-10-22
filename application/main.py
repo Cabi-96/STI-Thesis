@@ -1,4 +1,5 @@
 #Interface
+import pathlib
 import tkinter as tk
 from tkinter import *
 from tkinter import filedialog, messagebox, ttk
@@ -66,7 +67,11 @@ class Container(tk.Frame):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Cabrhelle Table")
+    root.title("TabIntegration")
+    iconPath = str(pathlib.Path().absolute())+'\Icon\LogoApp.png'
+    root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file=iconPath))
+
+    #root.iconbitmap('C:/Users/ANTHONY/Downloads/icons8-doughnut-chart-24.ico')
 
     # menu tutorial https://www.delftstack.com/fr/tutorial/tkinter-tutorial/tkinter-menubar/
     main = Container(root)
