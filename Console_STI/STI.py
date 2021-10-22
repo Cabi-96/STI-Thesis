@@ -232,8 +232,8 @@ for i in range(1, len(listDictDf), 1):
     df2 = listDf[i]
     if choice == "1":
         # DF1
-        df1.to_excel(r'Premier Dataset Tour'+str(i)+'.xlsx', index=False)
-        df2.to_excel(r'Deuxième Dataset Tour'+str(i)+'.xlsx', index=False)
+        #df1.to_excel(r'Premier Dataset Tour'+str(i)+'.xlsx', index=False)
+        #df2.to_excel(r'Deuxième Dataset Tour'+str(i)+'.xlsx', index=False)
 
         df = pd.merge(df1,df2)
         #Evite les doublons dans le tableau final pour l'étape append
@@ -244,7 +244,7 @@ for i in range(1, len(listDictDf), 1):
         df = df.append(df2, ignore_index=True, sort=False)
 
         #df = df.drop_duplicates(subset=['Core Attribute'], keep='first')
-        df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
+        #df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
 
         print(tabulate(df, headers='keys', tablefmt='psql'))
         """
@@ -289,11 +289,11 @@ for i in range(1, len(listDictDf), 1):
 
         askQuestion2(df)
 
-        df.to_excel(r'Deuxième Question Tour'+str(i)+'.xlsx', index=False)
+        #df.to_excel(r'Deuxième Question Tour'+str(i)+'.xlsx', index=False)
 
         # Question 3
         listDf[0] = askQuestion3(df)
-        df.to_excel(r'Troisième Question Tour'+str(i)+'.xlsx', index=False)
+        #df.to_excel(r'Troisième Question Tour'+str(i)+'.xlsx', index=False)
 
 # Si les colonnes sujet ne correspondent pas.
     elif choice == "2":
@@ -359,15 +359,15 @@ for i in range(1, len(listDictDf), 1):
         # Permet d'itérer sur un nombre de proposition. En donnant leur index dans la liste pour permettre de facilement les sélectionner.
         # Question 1
         askQuestion1(df1,listProposition)
-        df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
+        #df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
 
         # Question 2
         askQuestion2(df1)
-        df.to_excel(r'Deuxième Question Tour'+str(i)+'.xlsx', index=False)
+        #df.to_excel(r'Deuxième Question Tour'+str(i)+'.xlsx', index=False)
         # Question 3
         # Rajouter des colonnes que l'algorithme n'aura pas retrouver
         df = askQuestion3(df1)
-        df.to_excel(r'Troisième Question Tour'+str(i)+'.xlsx', index=False)
+        #df.to_excel(r'Troisième Question Tour'+str(i)+'.xlsx', index=False)
         listDf[0] = df
 
 
