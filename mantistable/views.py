@@ -1,8 +1,4 @@
 import datetime
-import json
-
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
 
 
 from utils.assets import importer
@@ -11,10 +7,6 @@ from columns_classification import info_tables
 from subject_column_detection.sub_detection import SubDetection
 from utils.export.format_exporters.csv_exporter import CSVExporter
 
-
-def index(request):
-    context = {}
-    return render(request, 'mantistable/index.html', context)
 
 
 
