@@ -84,17 +84,15 @@ class PageOne(Frame):
             if file_path.endswith(".csv"):
                 try:
                     excel_filename = r"{}".format(file_path)
-                    if excel_filename[-4:] == ".csv":
-                        df = pd.read_csv(excel_filename)
-                    else:
-                        df = pd.read_excel(excel_filename)
-
+                    df = pd.read_csv(excel_filename)
                 except ValueError:
                     tk.messagebox.showerror("Information", "The file you have chosen is invalid")
                     return None
                 except FileNotFoundError:
                     tk.messagebox.showerror("Information", f"No such file as {file_path}")
                     return None
+            else:
+                tk.messagebox.showerror("Error", "This is not a CSV file")
 
             tvI = ttk.Treeview(frameFile)
             tvI.place(relheight=1, relwidth=1)  # set the height and width of the widget to 100% of its container (frame1).

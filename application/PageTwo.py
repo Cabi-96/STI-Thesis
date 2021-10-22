@@ -370,7 +370,7 @@ class PageTwo(Frame):
                     try:
                         results1 = utils.executeSparqlQuery(queryString)
                     except HTTPError:
-                        print("Problème Http dbpedia veuillez ressayer plus tard.")
+                        messagebox.showerror("Error", "Http Problem with DBpedia try later")
                     if results1["results"]["bindings"]:
                         listSubjectOntology.append(item)
                         resultInserCol = utils.insertColumnDf(listProposition, item,df1.columns.values)
@@ -396,7 +396,7 @@ class PageTwo(Frame):
                             try:
                                 results1 = utils.executeSparqlQuery(queryString)
                             except HTTPError:
-                                print("Problème Http avec dbpedia veuillez ressayer plus tard.")
+                                messagebox.showerror("Error", "Http Problem with DBpedia try later")
                             for result in results1["results"]["bindings"]:
                                 predicate = result["predicate"]["value"]
                                 if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":

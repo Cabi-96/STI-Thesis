@@ -50,7 +50,7 @@ class PageThree(Frame):
                     try:
                         results1 = utils.executeSparqlQuery(queryString)
                     except HTTPError:
-                        print("Problème Http dbpedia veuillez réessayer plus tard.")
+                        messagebox.showerror("Error", "Http Problem with DBpedia try later")
                     # J'écris les résultats trouvés grâce à la query au dessus.
                     df = utils.insertDataDf(df, results1, i, item)
             i = i + 1
