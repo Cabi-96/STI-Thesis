@@ -54,12 +54,12 @@ def process_directTable(tableRve, tableDataRve):
     print("La colonne sujet est TADADADADADADA (roulement de tambours) : " )
     print( tableDataRve.infoTableRve.subject_col)
 
-    download_csv(tableRve, tableDataRve)
+
 
     #######
 
 
-
+# download doesnt work, TODO
 def download_csv(tableRve, tableDataRve):
     def build_file_response_download(name_prefix, data, ext):
 
@@ -86,7 +86,7 @@ def download_csv(tableRve, tableDataRve):
     header = [header]
     print(header)
 
-    # Filter data ? TODO
+    # Error to export TODO
     # On recupère les données de la table
     data = [
         [

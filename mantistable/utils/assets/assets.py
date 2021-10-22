@@ -1,8 +1,8 @@
 import os
-#import app.settings
+
 from utils.singleton import Singleton
 
-ROOT_DIR = os.path.abspath(os.curdir) + "\\private\\"
+ROOT_DIR = os.path.abspath(os.curdir) + "\\mantistable\\private\\"
 
 class Assets(metaclass=Singleton):
     def __init__(self):
