@@ -26,7 +26,7 @@ import json
 import re
 from enum import Enum
 
-from utils.assets.assets import Assets
+from mantistable.utils.assets.assets import Assets
 
 
 class TokenTagEnum(Enum):

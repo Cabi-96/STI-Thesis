@@ -1,4 +1,4 @@
-from utils.data_type import DataTypeEnum
+from mantistable.utils.data_type import DataTypeEnum
 
 
 def generate_datatype_frequency_table(num_cols, table_data):

@@ -5,9 +5,9 @@ from mimetypes import MimeTypes
 import isbnlib
 import dateutil.parser as dateutil
 
-from utils.nlp import utils as nlp
-from normalization.converter import Converter
-from utils.assets.assets import Assets
+from mantistable.utils.nlp import utils as nlp
+from mantistable.normalization.converter import Converter
+from mantistable.utils.assets.assets import Assets
 
 
 class Validator:

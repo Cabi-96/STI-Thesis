@@ -1,7 +1,7 @@
 import math
 
 
-from subject_column_detection.metric import EMCMetric, UCMetric, AWMetric, \
+from mantistable.subject_column_detection.metric import EMCMetric, UCMetric, AWMetric, \
     DFMetric
 
 

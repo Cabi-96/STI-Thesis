@@ -1,9 +1,9 @@
 import re
 
 
-from normalization.abbreviation import Abbreviator
-from normalization.check_type import check_type
-from normalization.transformer import transformer, convert_to_datatype
+from mantistable.normalization.abbreviation import Abbreviator
+from mantistable.normalization.check_type import check_type
+from mantistable.normalization.transformer import transformer, convert_to_datatype
 
 
 def normalizeRve(tableRve, tableDataRve):

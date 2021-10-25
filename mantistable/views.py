@@ -2,11 +2,11 @@ import datetime
 import os
 import pandas as pd
 
-from utils.assets import importer
-from normalization.normalize import normalizeRve
-from columns_classification import info_tables
-from subject_column_detection.sub_detection import SubDetection
-from utils.export.format_exporters.csv_exporter import CSVExporter
+from mantistable.utils.assets import importer
+from mantistable.normalization.normalize import normalizeRve
+from mantistable.columns_classification import info_tables
+from mantistable.subject_column_detection.sub_detection import SubDetection
+from mantistable.utils.export.format_exporters.csv_exporter import CSVExporter
 
 
 def get_subject_index_mantistable(file_csv):
@@ -46,6 +46,7 @@ def get_index_and_create_tables(file):
     subject_index= 0
 
     data = file.read()
+    #TODO get file name
     file_name = "FileName"
     table_name = "Table Name"
 

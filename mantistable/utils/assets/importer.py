@@ -2,7 +2,7 @@ import datetime
 import json
 
 
-from models.models import TableRve, TableDataRve
+from mantistable.models.models import TableRve, TableDataRve
 
 
 

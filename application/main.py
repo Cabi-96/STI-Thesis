@@ -25,9 +25,6 @@ class Container(tk.Frame):
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
 
-
-
-
         #page 1
         p1 = PageOne(self, bg='white')
 

@@ -1,7 +1,7 @@
 import csv
 import io
 
-from utils.export.format_exporters.format_exporter import FormatExporter
+from mantistable.utils.export.format_exporters.format_exporter import FormatExporter
 
 
 class CSVExporter(FormatExporter):

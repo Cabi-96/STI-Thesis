@@ -10,6 +10,9 @@ from selenium.webdriver.support import expected_conditions as ec
 import glob
 from urllib.parse import unquote
 
+from mantistable import views
+
+
 class MtabAnnotationApi:
    #__list_CTA_Global = []
    #__list_CPA_Global = []
@@ -83,6 +86,8 @@ class MtabAnnotationApi:
       for filename in files:
          #print("Fichier"+str(p))
          #print(filename)
+         # get subjectCOlumn index from mantisTable
+         subject_column_index = views.get_subject_index_mantistable(filename)
          p = p+1
          with open(filename, 'r', encoding='utf-8') as read_obj:
             # pass the file object to reader() to get the reader object
@@ -96,6 +101,10 @@ class MtabAnnotationApi:
                #rowFinal = str(row)[1:]
                #rowFinal = rowFinal[:-1]
                #inputText = inputText + rowFinal + '\r'
+
+               # rve: with mantistable move the subject column to first index
+               row.insert(0, row.pop(subject_column_index))
+
                firstWordLine = True
                for rowWord in row:
                   if firstWordLine == True:

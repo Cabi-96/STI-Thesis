@@ -1,6 +1,6 @@
-from subject_column_detection import metric, utils
-from normalization.transformer import transformer
-from utils.data_type import DataTypeEnum
+from mantistable.subject_column_detection import metric, utils
+from mantistable.normalization.transformer import transformer
+from mantistable.utils.data_type import DataTypeEnum
 
 
 

@@ -1,5 +1,5 @@
-from utils.data_type import DataTypeEnum
-from utils.validator import Validator
+from mantistable.utils.data_type import DataTypeEnum
+from mantistable.utils.validator import Validator
 
 
 def check_type(value):

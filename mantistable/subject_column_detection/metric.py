@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-from subject_column_detection.utils import generate_datatype_frequency_table
-from utils.data_type import DataTypeEnum
-from utils.nlp import utils
+from mantistable.subject_column_detection.utils import generate_datatype_frequency_table
+from mantistable.utils.data_type import DataTypeEnum
+from mantistable.utils.nlp import utils
 
 
 class Metric(ABC):

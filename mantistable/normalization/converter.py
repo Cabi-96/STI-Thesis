@@ -1,7 +1,7 @@
 import re
 
-from utils.assets.assets import Assets
-from utils.singleton import Singleton
+from mantistable.utils.assets.assets import Assets
+from mantistable.utils.singleton import Singleton
 
 
 class Converter(metaclass=Singleton):

@@ -1,7 +1,7 @@
-from normalization.tokenizer import TokenTagEnum, Tokenizer
+from mantistable.normalization.tokenizer import TokenTagEnum, Tokenizer
 from nltk.corpus import stopwords
 
-from utils.data_type import DataTypeEnum
+from mantistable.utils.data_type import DataTypeEnum
 import dateutil.parser as dateutil
 
 
