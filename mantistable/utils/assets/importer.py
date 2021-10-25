@@ -13,7 +13,6 @@ def load_table(table_name, file_name, content):
     assert (len(file_name) > 0)
     assert (len(content) > 0)
 
-    print(file_name)
     json_data = json.loads(content)
     header = list(json_data[0].keys())
 
@@ -49,10 +48,7 @@ def load_table(table_name, file_name, content):
         header=header,
         data_original=datas,
         data=datas,
-        #table=None,
-        #header=None,
-        #data_original=None,
-        #data=None,
+
     )
 
     return [0, tableRve, tableDataRve]

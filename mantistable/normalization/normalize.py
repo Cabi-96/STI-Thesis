@@ -7,7 +7,6 @@ from normalization.transformer import transformer, convert_to_datatype
 
 
 def normalizeRve(tableRve, tableDataRve):
-    print('Start DATA PREPARATION RVE')
 
     table = tableRve
     table_data = tableDataRve
@@ -61,6 +60,5 @@ def normalizeRve(tableRve, tableDataRve):
 
         # ===== Saving =====
         table_data.header = header_clean
-
         # ===== ====== =====
 

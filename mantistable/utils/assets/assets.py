@@ -15,7 +15,6 @@ class Assets(metaclass=Singleton):
         :return string:
         """
         p = os.path.join(ROOT_DIR,path)
-        print(p)
         with open(p, 'r') as asset:
             data = asset.read()
 

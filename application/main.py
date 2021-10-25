@@ -69,7 +69,8 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("TabIntegration")
     # Icon from : https://icons8.com/icon/set/data/material-rounded
-    iconPath = str(pathlib.Path().absolute())+'\Icon\LogoApp.png'
+    #iconPath = str(pathlib.Path().absolute())+'\Icon\LogoApp.png'
+    iconPath = os.path.abspath(os.curdir) + "\\application\\Icon\\LogoApp.png"
     root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file=iconPath))
 
     #root.iconbitmap('C:/Users/ANTHONY/Downloads/icons8-doughnut-chart-24.ico')

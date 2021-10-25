@@ -11396,3 +11396,13 @@ JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILU
 console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileOYlH5Q\\search.json.mozlz4", (void 0)))
 1634665429314	Marionette	INFO	Listening on port 57293
 1634665429774	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1635147916241	geckodriver	INFO	Listening on 127.0.0.1:2025
+1635147919086	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileVhhSyf"
+*** You are running in headless mode.
+1635147920963	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at D:\\Users\\rve\\AppData\\Local\\Temp\\rust_mozprofileVhhSyf\\search.json.mozlz4", (void 0)))
+1635147923714	Marionette	INFO	Listening on port 2048
+1635147923989	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1635147938730	Marionette	INFO	Stopped listening on port 2048
+JavaScript error: resource:///modules/Interactions.jsm, line 230: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]

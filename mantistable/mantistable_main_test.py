@@ -1,14 +1,13 @@
 import views
 import os
 
-print("run")
 
-FILE = os.path.abspath(os.curdir) + "\\mantistable\\Australian_Test.json"
+print("run mantistable_main_test")
 
-print(FILE)
+file_csv = os.path.abspath(os.curdir) + "\\mantistable\\Jeuxvideos.csv"
 
-f = open(FILE, "r")
-
+column_subject_index = views.get_subject_index_mantistable(file_csv)
 
 
-views.create_tables(f)
+print(column_subject_index)
+print("end mantistable_main_test")
