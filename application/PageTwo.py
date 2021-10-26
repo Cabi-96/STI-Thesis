@@ -176,20 +176,18 @@ class PageTwo(Frame):
             common_element = set(cta[0][0]).intersection(cta[self.increment][0])
             frame_text = "CTA from the first Dataset :" + str(cta[0][0]) + "\n" + "\nCTA from the second Dataset :" + str(cta[self.increment][0]) + "\n" + "\nVoici les éléments en communs :" + str(common_element)
 
-            self.label_cta = tk.Text(self.frame_questions,background='SystemButtonFace',highlightthickness = 0, borderwidth=0,font=("aerial", 10))
+            if len(common_element) == len(cta[0][0]):
+                frame_text += "\nTous les types de la liste sujet se retrouvent dans la liste cible. Nous suggérons donc de choisir le premier choix d'intégration de dataset."
+            elif len(common_element) > 0:
+                frame_text += "\nTous les types de la liste sujet ne se retrouvent pas dans la liste cible. Nous suggérons donc de choisir le deuxième choix d'intégration de dataset."
+            else:
+                frame_text += "\nAucun type n'est retrouvé dans la liste cible. Le deuxième choix d'intégration sera utilisé."
+
+
+            self.label_cta = tk.Text(self.frame_questions,background='SystemButtonFace',highlightthickness = 0, borderwidth=0,font=("aerial", 9), height= 15)
             self.label_cta.insert("end",frame_text)
             self.label_cta.config(state='disabled')
             self.label_cta.pack(padx = 5,fill="none",expand="false")
-
-            if len(common_element) == len(cta[0][0]):
-                text_label_Q1="Tous les types de la liste sujet se retrouvent dans la liste cible. Nous suggérons donc de choisir le premier choix d'intégration de dataset."
-            elif len(common_element) > 0:
-                text_label_Q1="Tous les types de la liste sujet ne se retrouvent pas dans la liste cible. Nous suggérons donc de choisir le deuxième choix d'intégration de dataset."
-            else:
-                text_label_Q1="Aucun type n'est retrouvé dans la liste cible. Le deuxième choix d'intégration sera utilisé."
-
-            self.label_Q1 = ttk.Label(self.frame_questions, text= text_label_Q1, wraplengt=750)
-            self.label_Q1.pack(padx = 5,fill="none",expand="false")
 
             self.label_rep_Q1 = ttk.Label(self.frame_questions, text="Pour choisir le premier choix taper 1 sinon taper 2:", wraplengt=750)
             self.label_rep_Q1.pack(padx = 5,fill="none",expand="false")
