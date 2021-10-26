@@ -45,6 +45,7 @@ class PageOne(Frame):
         self.lift()
 
 
+
     def File_dialog(self):
         """This Function will open the file explorer and assign the chosen file path to label_file"""
         """filename = filedialog.askopenfilename(initialdir="/",
