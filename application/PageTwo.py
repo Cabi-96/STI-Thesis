@@ -443,10 +443,10 @@ class PageTwo(Frame):
         textBox_rep_Q2 = ttk.Entry(self.frame_questions)
         textBox_rep_Q2.pack(padx = 5,fill="none",expand="false")
 
-        button_Q2_Proposition = tk.Button(self.frame_questions, text='Choisir', command=lambda:self.algo_question2(textBox_rep_Q2,tvI))
+        button_Q2_Proposition = tk.Button(self.frame_questions, text='Choose', command=lambda:self.algo_question2(textBox_rep_Q2,tvI))
         button_Q2_Proposition.pack(padx = 5,fill="none",expand="false")
 
-        button_Q3_Continue = tk.Button(self.frame_questions, text='Continuer', command=lambda:self.askQuestion3())
+        button_Q3_Continue = tk.Button(self.frame_questions, text='Continue', command=lambda:self.askQuestion3())
         button_Q3_Continue.pack()
 
         #Show la liste de proposition
@@ -503,7 +503,7 @@ class PageTwo(Frame):
             tvI.insert("", "end",values=row)
 
         #Show button selection
-        button_Q2_SelectProposition = tk.Button(self.frame_questions, text='Ajouter', command=lambda:self.algo_question_proposition(tvI))
+        button_Q2_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question_proposition(tvI))
         button_Q2_SelectProposition.pack()
 
 
@@ -530,7 +530,7 @@ class PageTwo(Frame):
         label_Add_Column_Q3.pack(padx = 5,fill="none",expand="false", side = "top")
         textBox_rep_Q3 = ttk.Entry(self.frame_questions)
         textBox_rep_Q3.pack(padx = 5,fill="none",expand="false")
-        button_Q3_SelectProposition = tk.Button(self.frame_questions, text='Ajouter', command=lambda:self.algo_question3_proposition(str(textBox_rep_Q3.get())))
+        button_Q3_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question3_proposition(str(textBox_rep_Q3.get())))
         button_Q3_SelectProposition.pack()
 
 

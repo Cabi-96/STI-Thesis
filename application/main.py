@@ -41,7 +41,7 @@ class Container(tk.Frame):
         self.p2 = PageTwo(self, bg='white')
 
         #button terminer pour aller page 3
-        self.p2.button_Q3_SelectProposition = tk.Button(self.p2.label_frame_selection, text='Terminer', command=lambda:[self.p3.show_df_result(self.p2.df),self.p2.refreshTvResult(self.p2.isNbFilesSup)])
+        self.p2.button_Q3_SelectProposition = tk.Button(self.p2.label_frame_selection, text='Finish', command=lambda:[self.p3.show_df_result(self.p2.df),self.p2.refreshTvResult(self.p2.isNbFilesSup)])
         self.p2.button_Q3_SelectProposition.pack(side='bottom', padx = 5)
 
         #page 3
