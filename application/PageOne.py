@@ -38,9 +38,6 @@ class PageOne(Frame):
             self.button2["state"] = "disable"
 
 
-
-
-
     def show(self):
         self.lift()
 

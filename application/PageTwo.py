@@ -2,11 +2,13 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox, ttk
+from tkinter.messagebox import showinfo
 
 #Algo Integration
 from requests.exceptions import HTTPError
 import pandas as pd
 from application.MtabExtractTable import MtabAnnotationApi
+import validators
 
 import utils
 
@@ -132,7 +134,7 @@ class PageTwo(Frame):
             listDictDf.append(dictDf)
 
             ##--------------------------------------------Afficher dataFrames-------------------------------------------------------------------------
-            self.listFrame2.append(tk.LabelFrame(self.label_frame_data, text='df'))
+            self.listFrame2.append(tk.LabelFrame(self.label_frame_data, text='df',bg='white'))
             #On affiche que les deux premiers DF frames
             if i < 2:
                 self.isNbFilesSup = True
@@ -172,9 +174,11 @@ class PageTwo(Frame):
 
         if self.uriLoad  == True:
             common_element = set(cta[0][0]).intersection(cta[self.increment][0])
-            frame_text = "CTA from the first Dataset :" + str(cta[0][0]) + "\n" + "CTA from the second Dataset :" + str(cta[self.increment][0]) + "\n" + "Voici les éléments en communs :" + str(common_element)
+            frame_text = "CTA from the first Dataset :" + str(cta[0][0]) + "\n" + "\nCTA from the second Dataset :" + str(cta[self.increment][0]) + "\n" + "\nVoici les éléments en communs :" + str(common_element)
 
-            self.label_cta = ttk.Label(self.frame_questions, text= frame_text) #, wraplengt=750)
+            self.label_cta = tk.Text(self.frame_questions,background='SystemButtonFace',highlightthickness = 0, borderwidth=0,font=("aerial", 10))
+            self.label_cta.insert("end",frame_text)
+            self.label_cta.config(state='disabled')
             self.label_cta.pack(padx = 5,fill="none",expand="false")
 
             if len(common_element) == len(cta[0][0]):
@@ -435,10 +439,16 @@ class PageTwo(Frame):
             #if widgets['text'] == 'Liste proposition' or :
                 widgets.destroy()
 
-        label_Add_Column = ttk.Label(self.frame_questions, text="Si vous avez une autre colonne à ajouter ecrivez le. Exemple : birthPlace. Si vous n'en avez plus, écrivez -1:", wraplengt=750)
+        label_Add_Column = ttk.Label(self.frame_questions, text="Si vous avez une autre colonne à ajouter ecrivez le. \nExemple : birthPlace. \nSi vous n'en avez plus, cliquer sur continuer:", wraplengt=750)
         label_Add_Column.pack(padx = 5,fill="none",expand="false", side = "top")
         textBox_rep_Q2 = ttk.Entry(self.frame_questions)
         textBox_rep_Q2.pack(padx = 5,fill="none",expand="false")
+
+        button_Q2_Proposition = tk.Button(self.frame_questions, text='Choisir', command=lambda:self.algo_question2(textBox_rep_Q2,tvI))
+        button_Q2_Proposition.pack(padx = 5,fill="none",expand="false")
+
+        button_Q3_Continue = tk.Button(self.frame_questions, text='Continuer', command=lambda:self.askQuestion3())
+        button_Q3_Continue.pack()
 
         #Show la liste de proposition
         frameListProposition = tk.LabelFrame(self.frame_questions, text='Liste proposition')
@@ -456,18 +466,13 @@ class PageTwo(Frame):
         treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
         treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
 
-        button_Q2_Proposition = tk.Button(self.frame_questions, text='Choisir', command=lambda:self.algo_question2(textBox_rep_Q2,tvI))
-        button_Q2_Proposition.pack(padx = 5,fill="none",expand="false")
-
-        button_Q3_Continue = tk.Button(self.frame_questions, text='Continuer', command=lambda:self.askQuestion3())
-        button_Q3_Continue.pack()
 
 
     def algo_question2(self,textBox_rep_Q2,tvI):
         listProposition = list()
         newColumn = str(textBox_rep_Q2.get())
-        if(newColumn == "-1"):
-            return
+        #if(newColumn == "-1"):
+        #    return
         queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n SELECT ?predicate \nWHERE {\n?predicate a rdf:Property\nFILTER ( REGEX ( STR (?predicate), \"http://dbpedia.org/ontology/\", \"i\" ) )\nFILTER ( REGEX ( STR (?predicate), \"" + newColumn + "\", \"i\" ) )\n}\nORDER BY ?predicate"
         # print(queryString)
         try:
@@ -532,8 +537,13 @@ class PageTwo(Frame):
 
 
     def algo_question3_proposition(self,newColumn):
-        if newColumn not in self.df.columns.values:
+        if not validators.url(newColumn):
+            showinfo(message='URI Not valid')
+        elif newColumn not in self.df.columns.values :
             self.df[newColumn] = 'nan'
+            self.refreshTvResult(False)
         else:
-            print("La colonne existe déjà dans le DF")
-        self.refreshTvResult(False)
+            #print("La colonne existe déjà dans le DF")
+            showinfo(message='La colonne existe déjà dans le DF')
+
+
