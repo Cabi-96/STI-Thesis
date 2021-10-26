@@ -303,6 +303,7 @@ class PageTwo(Frame):
         #return listComponentDestroy
 
     def question_2(self):
+        self.button_Q1_OK["state"] = "disable"
         choice = self.textBox_rep_Q1.get()
         df1 = self.listDf[0]
 
