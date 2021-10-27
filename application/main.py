@@ -14,6 +14,9 @@ import pathlib
 
 
 #variables
+from application.PageFive import PageFive
+from application.PageFor import PageFor
+
 isDebug = 0
 file_path_absolute = os.path.dirname(__file__)
 file_path_debug = os.path.join(file_path_absolute, ".idea\\files\\case_test")
@@ -48,6 +51,12 @@ class Container(tk.Frame):
         #page 3
         self.p3 = PageThree(self, bg='white')
 
+        #page 3
+        self.p4 = PageFor(self, bg='white')
+
+        #page 3
+        self.p5 = PageFive(self, bg='white')
+
         #progress bar
         self.pframe = Frame(self)
         self.progress = Progressbar(self.pframe, orient=HORIZONTAL,length=500,  mode='indeterminate')
@@ -57,6 +66,8 @@ class Container(tk.Frame):
         self.p1.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
         self.p2.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
         self.p3.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+        self.p4.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
+        self.p5.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
         self.pframe.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
 
         root.config(menu=self.create_menubar())
@@ -65,6 +76,12 @@ class Container(tk.Frame):
         self.displayed_page = 1
 
 
+    def show_help(self):
+        pathBase = str(pathlib.Path(__file__).parent.resolve())
+        strip_character = "\\"
+        ROOT_DIR =strip_character.join(pathBase.split(strip_character)[:5])+'\\readme.txt'
+
+        os.startfile(ROOT_DIR)
 
 
     def show_nextpage(self):
@@ -77,6 +94,19 @@ class Container(tk.Frame):
             self.p3.show()
             self.displayed_page = 3
 
+        elif self.displayed_page == 3:
+            self.p1.show()
+            self.displayed_page = 1
+
+        #On retourne d'office à la page 1
+        elif self.displayed_page == 4:
+            self.p1.show()
+            self.displayed_page = 1
+
+        elif self.displayed_page == 5:
+            self.p1.show()
+            self.displayed_page = 1
+
 
     def show_previouspage(self):
         if self.displayed_page == 2:
@@ -85,8 +115,24 @@ class Container(tk.Frame):
 
         elif self.displayed_page == 3:
             self.p2.show()
-            self.displayed_page = 2
+            self.displayed_page = 1
+        #On retourne d'office à la page 1
+        elif self.displayed_page == 4:
+            self.p1.show()
+            self.displayed_page = 1
 
+        elif self.displayed_page == 5:
+            self.p1.show()
+            self.displayed_page = 1
+
+
+    def show_pageFor(self):
+        self.p4.show()
+        self.displayed_page = 4
+
+    def show_pageFive(self):
+        self.p5.show()
+        self.displayed_page = 5
 
 
 
@@ -106,18 +152,25 @@ class Container(tk.Frame):
         menubar = tk.Menu(self)
 
         menu_file = tk.Menu(menubar, tearoff=0)
-        menu_file.add_command(label="Help")
+        menu_file.add_command(label="Help",command=self.show_help)
         menu_file.add_command(label="Exit",command=root.destroy)
+
 
         menu_navigate = tk.Menu(menubar, tearoff=0)
         menu_navigate.add_command(label="Next page", command = self.show_nextpage)
         menu_navigate.add_command(label="Previous page", command = self.show_previouspage)
+
+        menu_graph_comparison = tk.Menu(menubar, tearoff=0)
+        menu_graph_comparison.add_command(label="Graph", command = self.show_pageFor)
+        menu_graph_comparison.add_command(label="Comparison", command = self.show_pageFive)
+
 
         # TODO : close firefox quand on exit ?
 
 
         menubar.add_cascade(label="File", menu=menu_file)
         menubar.add_cascade(label="Navigate", menu=menu_navigate)
+        menubar.add_cascade(label="Graph & Comparison", menu=menu_graph_comparison)
 
         return menubar
 
