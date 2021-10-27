@@ -7,8 +7,11 @@ from tkinter.messagebox import showinfo
 #Algo Integration
 from requests.exceptions import HTTPError
 import pandas as pd
-from application.MtabExtractTable import MtabAnnotationApi
+
+
+from application.utils.MtabExtractTable import MtabAnnotationApi
 import validators
+from application.utils.utils import printDf, executeSparqlQuery, insertColumnDf
 
 import utils
 
@@ -224,7 +227,7 @@ class PageTwo(Frame):
             self.isNbFilesSup = False
 
         print("PAGE TWO"+str(self.increment))
-        utils.printDf(self.df)
+        printDf(self.df)
         print("END PAGE TWO")
 
         if self.isNbFilesSup == True and isLastQuestion == True:
@@ -308,7 +311,8 @@ class PageTwo(Frame):
         df1 = self.listDf[0]
 
         print("Question 2"+str(self.increment))
-        utils.printDf(df1)
+        printDf(df1)
+
         print("End Question 2")
         df2 = self.listDf[self.increment]
         self.df = self.listDf[0]
@@ -318,10 +322,11 @@ class PageTwo(Frame):
             self.df = pd.merge(df1,df2)
 
             print("-----------------------------------------df--------------------")
-            utils.printDf(self.df)
+            printDf(self.df)
+
 
             print("-----------------------------------------df1--------------------")
-            utils.printDf(df1)
+            printDf(df1)
 
 
             #Evite les doublons dans le tableau final pour l'étape append
@@ -368,12 +373,12 @@ class PageTwo(Frame):
                     queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + dbrSubject + "> <" + item + "> ?object } \n}"
                     #print(queryString)
                     try:
-                        results1 = utils.executeSparqlQuery(queryString)
+                        results1 = executeSparqlQuery(queryString)
                     except HTTPError:
                         messagebox.showerror("Error", "Http Problem with DBpedia try later")
                     if results1["results"]["bindings"]:
                         listSubjectOntology.append(item)
-                        resultInserCol = utils.insertColumnDf(listProposition, item,df1.columns.values)
+                        resultInserCol = insertColumnDf(listProposition, item,df1.columns.values)
                         #print("Liste proposition :")
                         #print(listProposition)
                         if resultInserCol:
@@ -394,7 +399,7 @@ class PageTwo(Frame):
                             queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select distinct ?predicate where { \n { <" + dbrSubject + "> ?predicate <" + dbrSubject1 + ">} \n}"
                             #print(queryString)
                             try:
-                                results1 = utils.executeSparqlQuery(queryString)
+                                results1 = executeSparqlQuery(queryString)
                             except HTTPError:
                                 messagebox.showerror("Error", "Http Problem with DBpedia try later")
                             for result in results1["results"]["bindings"]:
@@ -402,7 +407,7 @@ class PageTwo(Frame):
                                 if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
                                     # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
                                     print("InsertCol2")
-                                    resultInserCol = utils.insertColumnDf(listProposition, predicate,df1.columns.values)
+                                    resultInserCol = insertColumnDf(listProposition, predicate,df1.columns.values)
                                     print("Fin InsertCol2")
                                     if resultInserCol:
                                         listProposition.append(resultInserCol)
@@ -475,7 +480,7 @@ class PageTwo(Frame):
         queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n SELECT ?predicate \nWHERE {\n?predicate a rdf:Property\nFILTER ( REGEX ( STR (?predicate), \"http://dbpedia.org/ontology/\", \"i\" ) )\nFILTER ( REGEX ( STR (?predicate), \"" + newColumn + "\", \"i\" ) )\n}\nORDER BY ?predicate"
         # print(queryString)
         try:
-            results1 = utils.executeSparqlQuery(queryString)
+            results1 = executeSparqlQuery(queryString)
         except HTTPError:
             print("Problème Http dbpedia veuillez ressayer plus tard.")
         for result in results1["results"]["bindings"]:
@@ -483,7 +488,7 @@ class PageTwo(Frame):
             print("predicate: "+predicate)
             if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
                 # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
-                resultInserCol = utils.insertColumnDf(listProposition, predicate,self.df.columns.values)
+                resultInserCol = insertColumnDf(listProposition, predicate,self.df.columns.values)
                 if resultInserCol and resultInserCol not in listProposition and resultInserCol not in self.df.columns.values:
                     listProposition.append(resultInserCol)
 
