@@ -1,0 +1,254 @@
+[
+  {
+    "Pos": 1,
+    "No.": 12,
+    "Driver": "Lex Davison",
+    "Car": "Ferrari 625 \\/ Ferrari 3.0L",
+    "Laps": 30,
+    "Time": "1h 25m 18s",
+    "Pts": 8
+  },
+  {
+    "Pos": 2,
+    "No.": 1,
+    "Driver": "Ern Seeliger",
+    "Car": "Maybach III \\/ Chevrolet 4.6L",
+    "Laps": 30,
+    "Time": "1h 27m 20s",
+    "Pts": 5
+  },
+  {
+    "Pos": 3,
+    "No.": 46,
+    "Driver": "Tom Hawkes",
+    "Car": "Cooper T23 \\/ Holden 2.3L",
+    "Laps": 30,
+    "Time": "1h 27m 26s",
+    "Pts": 3
+  },
+  {
+    "Pos": 4,
+    "No.": 5,
+    "Driver": "Merv Neil",
+    "Car": "Cooper T45 \\/ Climax 1.7L",
+    "Laps": 29,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": 5,
+    "No.": 9,
+    "Driver": "Curley Brydon",
+    "Car": "Ferrari 125 F1 \\/ Chevrolet 4.7L",
+    "Laps": 28,
+    "Time": "",
+    "Pts": 1
+  },
+  {
+    "Pos": 6,
+    "No.": 33,
+    "Driver": "Len Lukey",
+    "Car": "Lukey \\/ Bristol 2.2L",
+    "Laps": 28,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": 7,
+    "No.": 10,
+    "Driver": "Alec Mildren",
+    "Car": "Cooper T43 \\/ Climax FPE 2.0L",
+    "Laps": 28,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": 8,
+    "No.": 19,
+    "Driver": "Ray Walmsley",
+    "Car": "Alfa Romeo Tipo B \\/ Chevrolet 4.7L",
+    "Laps": 28,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": 9,
+    "No.": 22,
+    "Driver": "Tom Clark",
+    "Car": "Ferrari 555 Super Squalo \\/ Ferrari 3.4L",
+    "Laps": 28,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": 10,
+    "No.": 3,
+    "Driver": "Jack Myers",
+    "Car": "WM Special \\/ Holden 2.4L",
+    "Laps": 27,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": 11,
+    "No.": 56,
+    "Driver": "Bill Reynolds",
+    "Car": "Orlando MG \\/ MG 1.5L",
+    "Laps": 22,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": 12,
+    "No.": 32,
+    "Driver": "Keith Moy",
+    "Car": "MG NE \\/ Holden 2.4L",
+    "Laps": 19,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": 13,
+    "No.": 11,
+    "Driver": "Gordon Stewart",
+    "Car": "MG Special \\/ MG 1.5L",
+    "Laps": 18,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 4,
+    "Driver": "Stan Jones",
+    "Car": "Maserati 250F \\/ Maserati 2.5L",
+    "Laps": 26,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 21,
+    "Driver": "Syd Negus",
+    "Car": "Cooper T20 \\/ Bristol 2.0L",
+    "Laps": 24,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 39,
+    "Driver": "Ted Gray",
+    "Car": "Tornado II \\/ Chevrolet 4.6L",
+    "Laps": 24,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 25,
+    "Driver": "Ray Gibbs",
+    "Car": "Cooper T23 \\/ Holden 2.4L",
+    "Laps": 18,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 20,
+    "Driver": "Alf Harvey",
+    "Car": "Maserati 4CLT \\/ O.S.C.A. 4.5L",
+    "Laps": 16,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 41,
+    "Driver": "Frank Walters",
+    "Car": "So Cal Special \\/ Ford 4.4L",
+    "Laps": 10,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 62,
+    "Driver": "John Schroder",
+    "Car": "Nota Consul \\/ Ford 1.5L",
+    "Laps": 10,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 45,
+    "Driver": "Alan Ferguson",
+    "Car": "MG TC \\/ Holden 2.4L",
+    "Laps": 8,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 15,
+    "Driver": "Barry Collerson",
+    "Car": "MG TA \\/ MG 1.5L",
+    "Laps": 6,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 48,
+    "Driver": "Bill Cooke",
+    "Car": "Peugeot Special \\/ Peugeot 1.5L",
+    "Laps": 6,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 58,
+    "Driver": "Ern Tadgell",
+    "Car": "Lotus 12 \\/ Climax FPE 1.5L",
+    "Laps": 4,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "Ret",
+    "No.": 14,
+    "Driver": "Jack Robinson",
+    "Car": "Jaguar Special \\/ Jaguar 3.4L",
+    "Laps": 2,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "DSQ",
+    "No.": 44,
+    "Driver": "Jack Neal",
+    "Car": "Maserati 4C \\/ Maserati 1.5L",
+    "Laps": 18,
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "DNS",
+    "No.": 59,
+    "Driver": "Bill Patterson",
+    "Car": "Cooper T43 \\/ Climax 1.7L",
+    "Laps": "",
+    "Time": "",
+    "Pts": ""
+  },
+  {
+    "Pos": "DNS",
+    "No.": 71,
+    "Driver": "Noel Hall",
+    "Car": "Ralt Mk.4 \\/ Vincent 1.0L",
+    "Laps": "",
+    "Time": "",
+    "Pts": ""
+  }
+]
