@@ -175,7 +175,8 @@ class MtabAnnotationApi:
                      listCPA[i-1] = unquote(link.get_attribute("href"))
                i = i+1
 
-         listCPA[0] = listCTA[1][0]
+         #listCPA[0] = listCTA[1][0]
+         listCPA[0] = 'Core attribute'
          self.__list_CPA_Global.append(listCPA)
          #print("listCPA")
          #print(listCPA)
