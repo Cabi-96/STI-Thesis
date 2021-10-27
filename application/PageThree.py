@@ -1,7 +1,8 @@
 #Interface
 import tkinter as tk
 from tkinter import *
-from tkinter import messagebox, ttk
+from tkinter import messagebox, ttk, filedialog
+from tkinter.filedialog import asksaveasfile, askopenfilename, asksaveasfilename
 from urllib.error import HTTPError
 
 
@@ -15,6 +16,8 @@ class PageThree(Frame):
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
 
+        self.df = None
+
         self.tvResult = ttk.Treeview(self)
         self.tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)   # set the height and width of the widget to 100% of its container (frame1).
 
@@ -27,10 +30,36 @@ class PageThree(Frame):
         treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
         treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
 
+        self.button = tk.Button(self, text="Save File as xlsx", command=self.saveXlsx)
+        self.button.pack(side='left', padx = 5)
+
+        self.button = tk.Button(self, text="Save File as csv", command=self.saveCsv)
+        self.button.pack(side='left', padx = 5)
 
     def show(self):
         self.lift()
 
+    def saveXlsx(self):
+        #SAVING_PATH = filedialog.asksaveasfile(mode='w', defaultextension=".csv")
+        #self.df.to_csv(SAVING_PATH,index=False)
+            try:
+                savefile = asksaveasfilename(filetypes=(("Excel files", "*.xlsx"),
+                                                        ("All files", "*.*") ))
+                self.df.to_excel(savefile + ".xlsx", index=False, sheet_name="Results")
+            except:
+                tk.messagebox.showerror("Error. Please try again.")
+            return
+
+    def saveCsv(self):
+        #SAVING_PATH = filedialog.asksaveasfile(mode='w', defaultextension=".csv")
+        #self.df.to_csv(SAVING_PATH,index=False)
+        try:
+            savefile = asksaveasfilename(filetypes=(("Excel files", "*.csv"),
+                                                    ("All files", "*.*") ))
+            self.df.to_csv(savefile + ".csv", index=False)
+        except:
+            tk.messagebox.showerror("Error. Please try again.")
+        return
 
 
     def show_df_result(self,df):
@@ -71,5 +100,5 @@ class PageThree(Frame):
         for row in df_rows:
             self.tvResult.insert("", "end",
                                  values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
-
+        self.df = df
         self.show()
