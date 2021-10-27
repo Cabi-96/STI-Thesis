@@ -1,8 +1,13 @@
 import os
+import pathlib
 
 from mantistable.utils.singleton import Singleton
 
-ROOT_DIR = os.path.abspath(os.curdir) + "\\mantistable\\private\\"
+
+pathBase = str(pathlib.Path(__file__).parent.resolve())
+strip_character = "\\"
+
+ROOT_DIR =strip_character.join(pathBase.split(strip_character)[:5])+ "\\mantistable\\private\\"
 
 class Assets(metaclass=Singleton):
     def __init__(self):

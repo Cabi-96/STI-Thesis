@@ -30,8 +30,11 @@ class MtabAnnotationApi:
       # L'option Headless permet d'éviter d'ouvrir une page web a chaque fois que l'algorithme est lancé. + performant
       options = Options()
       options.add_argument('--headless')
-      path = str(pathlib.Path().absolute())+'\plugin\geckodriver.exe'
-      #print(path)
+
+
+      #path = str(pathlib.Path().absolute())+'\plugin\geckodriver.exe'
+      path = str(pathlib.Path(__file__).parent.resolve()).rsplit('\\', 1)[0]+'\plugin\geckodriver.exe'
+      print(path)
       driver = webdriver.Firefox(options=options,executable_path=path)
       #driver = webdriver.Firefox(executable_path=path)
 
@@ -95,8 +98,15 @@ class MtabAnnotationApi:
             csv_reader = csv.reader(read_obj, quotechar='\'', delimiter=',',
                                     quoting=csv.QUOTE_ALL, skipinitialspace=True)
             # Iterate over each row in the csv using reader object
+            z = 0
             inputText =''
+            colheader = list()
             for row in csv_reader:
+               if z == 0:
+                  colheader = row
+                  z = 1
+                  print(colheader)
+               #print(row)
                # row variable is a list that represents a row in csv
                #print(row)
                #rowFinal = str(row)[1:]
@@ -115,10 +125,10 @@ class MtabAnnotationApi:
                   else:
                      inputText = inputText+','+rowWord
                      #print(inputText)
-         #print(inputText)
+
 
          self.__interactPage(driver,inputText,'table_text_content','annotation1','table-info')
-
+         #print(inputText)
          #CTA
          listCTA = []
 
@@ -163,7 +173,9 @@ class MtabAnnotationApi:
                      #listCPA[i-1] = ' '.join(listCTA[i])
                      listCPA[i-1] = listCTA[i][0]
                   else :
-                     listCPA[i-1] = filename[filename.rfind("\\")+1:]+"-COL"+str(i)
+                     #listCPA[i-1] = filename[filename.rfind("\\")+1:]+"-COL"+str(i)
+                     #listCPA[i-1] = filename[filename.rfind("\\")+1:]+"-"+colheader[i-1]
+                     listCPA[i-1] = colheader[i-1]
                i = i+1
             else:
                #print('Col'+str(i))

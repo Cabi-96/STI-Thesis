@@ -127,11 +127,8 @@ class Container(tk.Frame):
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("TabIntegration")
-    # Icon from : https://icons8.com/icon/set/data/material-rounded
-    #iconPath = str(pathlib.Path().absolute())+'\Icon\LogoApp.png'
     print(pathlib.Path(__file__).parent.resolve())
-    print(pathlib.Path().resolve())
-    iconPath = os.path.abspath(os.curdir) + "\\Icon\\LogoApp.png"
+    iconPath = str(pathlib.Path(__file__).parent.resolve()) + "\\Icon\\LogoApp.png"
     root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file=iconPath))
 
     #root.iconbitmap('C:/Users/ANTHONY/Downloads/icons8-doughnut-chart-24.ico')
