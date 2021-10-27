@@ -5,7 +5,7 @@ import pandas as pd
 from SPARQLWrapper import SPARQLWrapper, JSON
 import pathlib
 import requests
-from application.MtabExtractTable import MtabAnnotationApi
+from application import MtabAnnotationApi
 
 def printDf(df):
     print(tabulate(df, headers='keys', tablefmt='psql'))

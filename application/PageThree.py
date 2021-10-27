@@ -1,14 +1,13 @@
 #Interface
 import tkinter as tk
 from tkinter import *
-from tkinter import filedialog, messagebox, ttk
-import os
+from tkinter import messagebox, ttk
 from urllib.error import HTTPError
 
-import utils
+
 import pandas as pd
 
-
+from application.utils.utils import printDf, executeSparqlQuery, insertDataDf
 
 
 class PageThree(Frame):
@@ -48,15 +47,15 @@ class PageThree(Frame):
                     queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select ?object where { \n { <" + str(dbrSubject) + "> <" + str(item) + "> ?object } \n}"
                     #print(queryString)
                     try:
-                        results1 = utils.executeSparqlQuery(queryString)
+                        results1 = executeSparqlQuery(queryString)
                     except HTTPError:
                         messagebox.showerror("Error", "Http Problem with DBpedia try later")
                     # J'écris les résultats trouvés grâce à la query au dessus.
-                    df = utils.insertDataDf(df, results1, i, item)
+                    df = insertDataDf(df, results1, i, item)
             i = i + 1
 
         print("UTILS.PRINTDF FINAL")
-        utils.printDf(df)
+        printDf(df)
         #label_frame_selection.destroy()
 
         for record in self.tvResult.get_children():

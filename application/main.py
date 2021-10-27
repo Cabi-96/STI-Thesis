@@ -1,11 +1,11 @@
 #Interface
-import pathlib
+
 import threading
 import tkinter as tk
-import time
+
 from tkinter import *
 from tkinter.ttk import Progressbar
-from tkinter import filedialog, messagebox, ttk
+
 import os
 from PageOne import PageOne
 from PageTwo import PageTwo
