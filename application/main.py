@@ -115,7 +115,7 @@ class Container(tk.Frame):
 
         elif self.displayed_page == 3:
             self.p2.show()
-            self.displayed_page = 1
+            self.displayed_page = 2
         #On retourne d'office à la page 1
         elif self.displayed_page == 4:
             self.p1.show()

@@ -116,8 +116,8 @@ class PageTwo(Frame):
         #file_path = label_file["text"]
         for i in range(0, self.numberOfDf, 1):
             self.df = pd.DataFrame(data=cea[i],
-                              columns=cpa[i],
-                              dtype=str)
+                                   columns=cpa[i],
+                                   dtype=str)
             #Supprime la premiere ligne du fichier en ajustant les indexes
             self.df = self.df.reindex(self.df.index.drop(0)).reset_index(drop=True)
             cta[i].pop(0)
@@ -165,7 +165,7 @@ class PageTwo(Frame):
 
             for row in df_rows:
                 tvI.insert("", "end",
-                            values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
+                           values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
 
         self.uriLoad = True
         self.ask_question()
@@ -267,7 +267,7 @@ class PageTwo(Frame):
 
                 for widgets in self.frame_questions.winfo_children():
                     #if widgets['text'] != 'Terminer':
-                        widgets.destroy()
+                    widgets.destroy()
                 self.ask_question()
 
     def askQuestion1(self,listProposition):
@@ -418,8 +418,8 @@ class PageTwo(Frame):
             #self.df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
 
             #print(tabulate(df, headers='keys', tablefmt='psql'))
-           #if self.frameDf != None:
-           #    self.frameDf.destroy()
+            #if self.frameDf != None:
+            #    self.frameDf.destroy()
             self.df = df1
 
             self.frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
@@ -441,7 +441,7 @@ class PageTwo(Frame):
 
         for widgets in self.frame_questions.winfo_children():
             #if widgets['text'] == 'Liste proposition' or :
-                widgets.destroy()
+            widgets.destroy()
 
         label_Add_Column = ttk.Label(self.frame_questions, text="Si vous avez une autre colonne à ajouter ecrivez le. \nExemple : birthPlace. \nSi vous n'en avez plus, cliquer sur continuer:", wraplengt=750)
         label_Add_Column.pack(padx = 5,fill="none",expand="false", side = "top")
