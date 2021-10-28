@@ -50,7 +50,8 @@ class Container(tk.Frame):
 
         #page 3
         self.p3 = PageThree(self, bg='white')
-
+        self.p3.button_Q3_SelectProposition = tk.Button(self.p3, text='Core attribute to Uri', command=lambda:self.p3.transformCoreToUri(self.p2.getCta()))
+        self.p3.button_Q3_SelectProposition.pack(side='bottom', padx = 5)
         #page 3
         self.p4 = PageFor(self, bg='white')
 

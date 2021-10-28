@@ -15,7 +15,6 @@ class PageThree(Frame):
 
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
-
         self.df = None
 
         self.tvResult = ttk.Treeview(self)
@@ -38,6 +37,26 @@ class PageThree(Frame):
 
     def show(self):
         self.lift()
+
+    def transformCoreToUri(self, cta):
+        self.df.columns.values[0] = cta[0][0]
+
+        for record in self.tvResult.get_children():
+            self.tvResult.delete(record)
+
+        self.tvResult["column"] = list(self.df.columns)
+        self.tvResult["show"] = "headings"
+
+        for column in self.tvResult["columns"]:
+            self.tvResult.heading(column, text=column)  # let the column heading = column name
+            df_rows = self.df.to_numpy().tolist()  # turns the dataframe into a list of lists
+
+        for row in df_rows:
+            self.tvResult.insert("", "end",
+                                    values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
+        self.show()
+
+
 
     def saveXlsx(self):
         #SAVING_PATH = filedialog.asksaveasfile(mode='w', defaultextension=".csv")

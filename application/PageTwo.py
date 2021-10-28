@@ -5,15 +5,15 @@ from tkinter import messagebox, ttk
 from tkinter.messagebox import showinfo
 
 #Algo Integration
+import copy
 from requests.exceptions import HTTPError
 import pandas as pd
-
+from tabulate import tabulate
 
 from application.utils.MtabExtractTable import MtabAnnotationApi
 import validators
 from application.utils.utils import printDf, executeSparqlQuery, insertColumnDf
 
-import utils
 
 
 
@@ -24,11 +24,16 @@ class PageTwo(Frame):
         Frame.__init__(self, *args, **kwargs)
 
         # variables
+        self.textBox_changedf2 = list()
+        self.label_changedf2 = list()
+        self.textBox_changedf1 = list()
+        self.label_changedf1 = list()
         self.listFrame2 = list()
         self.increment = 1
         self.uriLoad = False
         self.isNbFilesSup = False
         self.listTvi = list()
+        self.cta = list()
 
         #### two frames: data and selection (questions)
         ## data
@@ -64,6 +69,8 @@ class PageTwo(Frame):
         self.df = None
 
 
+    def getCta(self):
+        return self.cta
 
     def show(self):
         self.lift()
@@ -100,8 +107,7 @@ class PageTwo(Frame):
         #print("CPA")
         #print(cpa)
 
-        global cta
-        cta = api.getList_CTA_Global()
+        self.cta = api.getList_CTA_Global()
         #print("CTA")
         # Pour chaque CTA, le premier index est nul. Je l'ai enlevé dans le for juste en dessous.
         #print(cta)
@@ -120,7 +126,7 @@ class PageTwo(Frame):
                                    dtype=str)
             #Supprime la premiere ligne du fichier en ajustant les indexes
             self.df = self.df.reindex(self.df.index.drop(0)).reset_index(drop=True)
-            cta[i].pop(0)
+            self.cta[i].pop(0)
             listCol = self.df.columns.values.tolist()
             #Supprime les colonnes qui n'ont pas été trouvées par Mtab
             if "" in listCol:
@@ -130,11 +136,14 @@ class PageTwo(Frame):
             #Affiche le tableau
             #print(tabulate(self.df, headers='keys', tablefmt='psql'))
             self.listDf.append(self.df)
-            j = 0
+
             dictDf = dict()
             for j in range(0, len(cpa[i]), 1):
-                dictDf[tuple(cta[i][j])] = cpa[i][j]
+                dictDf[tuple(self.cta[i][j])] = cpa[i][j]
             listDictDf.append(dictDf)
+
+            print("Load uri self.df")
+            print(self.df)
 
             ##--------------------------------------------Afficher dataFrames-------------------------------------------------------------------------
             self.listFrame2.append(tk.LabelFrame(self.label_frame_data, text='df',bg='white'))
@@ -168,18 +177,147 @@ class PageTwo(Frame):
                            values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
 
         self.uriLoad = True
+        self.first_question_show()
+
+
+    def column_to_uri(self):
+        #self.refreshTv()
+        for label in self.label_changedf1:
+            label.destroy()
+
+        for textb in self.textBox_changedf1:
+            textb.destroy()
+
+        for label in self.label_changedf2:
+            label.destroy()
+
+        for textb in self.textBox_changedf2:
+            textb.destroy()
+
+        self.textBox_changedf1 = list()
+        self.label_changedf2 = list()
+        self.textBox_changedf2 = list()
+
+
+        df1 = self.listDf[0]
+        df2 = self.listDf[self.increment]
+        print("test")
+        columnsDf1 = list(df1.columns)
+        columnsDf2 = list(df2.columns)
+
+        i = 0
+        change_columnsDf1 = list()
+        for column in columnsDf1:
+            if str(column).startswith("http") or str(column) == 'Core attribute':
+                print('test')
+            else:
+                change_columnsDf1.append(str(i)+'#'+str(column))
+
+            i = i + 1
+
+        i = 0
+        change_columnsDf2 = list()
+        for column in columnsDf2:
+            if str(column).startswith("http") or str(column) == 'Core attribute':
+                print('test')
+            else:
+                change_columnsDf2.append(str(i)+'#'+str(column))
+
+            i = i + 1
+
+        if len(change_columnsDf1) + len(change_columnsDf2) > 0:
+            self.label_changeColumn = ttk.Label(self.frame_questions, text="Some Columns have not been identified as URI. You can change it by writing the URI in the input text.", wraplengt=750)
+            self.label_changeColumn.pack(padx = 5,fill="none",expand="false")
+
+            i = 0
+            for column in change_columnsDf1:
+                self.label_changedf1.append(ttk.Label(self.frame_questions, text=str(column), wraplengt=750))
+                self.label_changedf1[i].pack(padx = 5,fill="none",expand="false")
+                self.textBox_changedf1.append(ttk.Entry(self.frame_questions))
+                self.textBox_changedf1[i].pack(padx = 5,fill="none",expand="false")
+                i = i + 1
+
+            i = 0
+            for column in change_columnsDf2:
+                self.label_changedf2.append(ttk.Label(self.frame_questions, text=str(column), wraplengt=750))
+                self.label_changedf2[i].pack(padx = 5,fill="none",expand="false")
+                self.textBox_changedf2.append(ttk.Entry(self.frame_questions))
+                self.textBox_changedf2[i].pack(padx = 5,fill="none",expand="false")
+                i = i + 1
+
+            self.button_column_to_uri_OK = tk.Button(self.frame_questions, text='OK', command=lambda:self.column_to_uri_command())
+            self.button_column_to_uri_OK.pack(padx = 5,fill="none",expand="false")
+
+    def column_to_uri_command(self):
+        #self.button_Q1_OK["state"] = "disable"
+        print("Column_to_uri_command")
+        i = 0
+        for textBox in self.textBox_changedf1:
+            increment = str(self.label_changedf1[i]['text']).split('#')[0]
+            if str(textBox.get()).strip().startswith('http://dbpedia.org/ontology/'):
+                self.listDf[0].columns.values[int(increment)] = str(textBox.get()).strip()
+            i = i +1
+
+        i = 0
+        for textBox in self.textBox_changedf2:
+            increment = str(self.label_changedf2[i]['text']).split('#')[0]
+            if str(textBox.get()).strip().startswith('http://dbpedia.org/ontology/'):
+                self.listDf[self.increment].columns.values[int(increment)] = str(textBox.get()).strip()
+            i = i +1
+
+        self.button_column_to_uri_OK.destroy()
+        #self.refreshTv()
         self.ask_question()
         self.show()
+
+
+    def first_question_show(self):
+        df1 = self.listDf[0]
+        df2 = self.listDf[self.increment]
+        print("test")
+        columnsDf1 = list(df1.columns)
+        columnsDf2 = list(df2.columns)
+
+        i = 0
+        change_columnsDf1 = list()
+        for column in columnsDf1:
+            if str(column).startswith("http") or str(column) == 'Core attribute':
+                print('test')
+            else:
+                change_columnsDf1.append(str(i)+'#'+str(column))
+
+            i = i + 1
+
+        i = 0
+        change_columnsDf2 = list()
+        for column in columnsDf2:
+            if str(column).startswith("http") or str(column) == 'Core attribute':
+                print('test')
+            else:
+                change_columnsDf2.append(str(i)+'#'+str(column))
+
+            i = i + 1
+
+        if len(change_columnsDf1) + len(change_columnsDf2) > 0:
+            self.column_to_uri()
+        else :
+            self.ask_question()
+        self.show()
+
+
+
+
 
     def ask_question(self):
         for widgets in self.frame_questions.winfo_children():
             widgets.destroy()
 
-        if self.uriLoad  == True:
-            common_element = set(cta[0][0]).intersection(cta[self.increment][0])
-            frame_text = "CTA from the first Dataset :" + str(cta[0][0]) + "\n" + "\nCTA from the second Dataset :" + str(cta[self.increment][0]) + "\n" + "\nVoici les éléments en communs :" + str(common_element)
 
-            if len(common_element) == len(cta[0][0]):
+        if self.uriLoad  == True:
+            common_element = set(self.cta[0][0]).intersection(self.cta[self.increment][0])
+            frame_text = "CTA from the first Dataset :" + str(self.cta[0][0]) + "\n" + "\nCTA from the second Dataset :" + str(self.cta[self.increment][0]) + "\n" + "\nVoici les éléments en communs :" + str(common_element)
+
+            if len(common_element) == len(self.cta[0][0]):
                 frame_text += "\nTous les types de la liste sujet se retrouvent dans la liste cible. Nous suggérons donc de choisir le premier choix d'intégration de dataset."
             elif len(common_element) > 0:
                 frame_text += "\nTous les types de la liste sujet ne se retrouvent pas dans la liste cible. Nous suggérons donc de choisir le deuxième choix d'intégration de dataset."
@@ -198,6 +336,64 @@ class PageTwo(Frame):
             self.textBox_rep_Q1.pack(padx = 5,fill="none",expand="false")
             self.button_Q1_OK = tk.Button(self.frame_questions, text='OK', command=lambda:self.question_2())
             self.button_Q1_OK.pack(padx = 5,fill="none",expand="false")
+
+    def refreshTv(self):
+        z = -1
+        print(str(len(self.listTvi)))
+        for tvI in self.listTvi:
+            z = z + 1
+
+            if z == 0:
+                print("I ici: "+str(z))
+                for record in tvI.get_children():
+                    tvI.delete(record)
+                df = self.listDf[0]
+                tvI["column"] = list(df.columns)
+                tvI["show"] = "headings"
+
+                nbrColumn = 0
+                for column in tvI["columns"]:
+                    nbrColumn += 1
+                    tvI.heading(column, text=column)  # let the column heading = column name
+                    df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
+                for row in df_rows:
+                    tvI.insert("", "end", values=row)
+
+                # Set minimum size for columns
+                for i in range(nbrColumn):
+                    tvI.column('#' + str(nbrColumn), minwidth=300, stretch=0)
+                    # tvResult.heading(i, text="Column {}".format(i))
+                    tvI.column('#0', stretch=0)
+
+                tvI.pack(fill="both", expand="yes", pady=10, padx=10)
+
+            elif z == self.increment:
+                print("I ici: "+str(z))
+                for record in tvI.get_children():
+                    tvI.delete(record)
+                print("Je rentre "+str(z)+" fois")
+                df = self.listDf[self.increment]
+                print(df)
+                tvI["column"] = list(df.columns)
+                tvI["show"] = "headings"
+
+                nbrColumn = 0
+                for column in tvI["columns"]:
+                    nbrColumn += 1
+                    tvI.heading(column, text=column)  # let the column heading = column name
+                    df_rows = df.to_numpy().tolist()  # turns the dataframe into a list of lists
+                for row in df_rows:
+                    tvI.insert("", "end", values=row)
+
+                # Set minimum size for columns
+                for i in range(nbrColumn):
+                    tvI.column('#' + str(nbrColumn), minwidth=300, stretch=0)
+                    # tvResult.heading(i, text="Column {}".format(i))
+                    tvI.column('#0', stretch=0)
+
+                tvI.pack(fill="both", expand="yes", pady=10, padx=10)
+
+
 
     def refreshTvResult(self, isLastQuestion):
 
@@ -234,6 +430,7 @@ class PageTwo(Frame):
             self.increment = self.increment + 1
             if self.increment < len(self.listFrame2):
                 self.listDf[0] = self.df
+
                 self.listFrame2[self.increment].pack(fill="both",expand="yes", pady = 10, padx = 10)
 
                 for widgets in self.listFrame2[0].winfo_children():
@@ -268,7 +465,7 @@ class PageTwo(Frame):
                 for widgets in self.frame_questions.winfo_children():
                     #if widgets['text'] != 'Terminer':
                     widgets.destroy()
-                self.ask_question()
+                self.first_question_show()
 
     def askQuestion1(self,listProposition):
         frameDf = tk.LabelFrame(self.frame_questions, text='Liste proposition')
@@ -316,10 +513,40 @@ class PageTwo(Frame):
         print("End Question 2")
         df2 = self.listDf[self.increment]
         self.df = self.listDf[0]
+
+        print("ASK QUESTION 1 INCREMENT")
+        print(self.increment)
+
         frameProposition = None
         if choice == "1":
 
-            self.df = pd.merge(df1,df2)
+
+            columnDf1 =  df1.columns.values.tolist()
+            columnDf2 =  df2.columns.values.tolist()
+
+            listIndexDf2 = list()
+            for i in range(len(columnDf2)):
+                listIndexDf2.append(i)
+
+
+            commonElement = list(set(columnDf1).intersection(columnDf2))
+            commonElement.remove('Core attribute')
+            print(type(commonElement))
+            listIndex = list()
+            if len(commonElement) > 0:
+                for element in commonElement:
+                    listIndex.append(columnDf2.index(element))
+
+                for index in listIndex:
+                    print('index')
+                    print(index)
+                    del listIndexDf2[index]
+                df2tmp = copy.deepcopy(df2.iloc[:, listIndexDf2]) #return all columns except the nth column
+
+            else:
+                df2tmp = df2
+
+            self.df = pd.merge(df1,df2tmp)
 
             print("-----------------------------------------df--------------------")
             printDf(self.df)
@@ -336,12 +563,12 @@ class PageTwo(Frame):
             cond = df1.iloc[:,0].isin(self.df.iloc[:,0])
             df1.drop(df1[cond].index, inplace = True)
 
-            cond = df2.iloc[:,0].isin(self.df.iloc[:,0])
-            df2.drop(df2[cond].index, inplace = True)
+            cond = df2tmp.iloc[:,0].isin(self.df.iloc[:,0])
+            df2tmp.drop(df2[cond].index, inplace = True)
 
 
             self.df = self.df.append(df1,ignore_index=True,sort=False)
-            self.df = self.df.append(df2, ignore_index=True, sort=False)
+            self.df = self.df.append(df2tmp, ignore_index=True, sort=False)
 
             #self.df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
 
