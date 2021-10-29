@@ -226,7 +226,9 @@ class PageTwo(Frame):
             i = i + 1
 
         if len(change_columnsDf1) + len(change_columnsDf2) > 0:
-            self.label_changeColumn = ttk.Label(self.frame_questions, text="Some Columns have not been identified as URI. You can change it by writing the URI in the input text.", wraplengt=750)
+            self.label_changeColumn = tk.Text(self.frame_questions,background='SystemButtonFace',highlightthickness = 0, borderwidth=0,font=("aerial", 9), height= 3)
+            self.label_changeColumn.insert("end","Some Columns have not been identified as URI. You can change it by writing the URI in the input text.")
+            self.label_changeColumn.config(state='disabled')
             self.label_changeColumn.pack(padx = 5,fill="none",expand="false")
 
             i = 0
@@ -319,11 +321,11 @@ class PageTwo(Frame):
             frame_text = "CTA from the first Dataset :" + str(self.cta[0][0]) + "\n" + "\nCTA from the second Dataset :" + str(self.cta[self.increment][0]) + "\n" + "\nVoici les éléments en communs :" + str(common_element)
 
             if len(common_element) == len(self.cta[0][0]):
-                frame_text += "\nTous les types de la liste sujet se retrouvent dans la liste cible. Nous suggérons donc de choisir le premier choix d'intégration de dataset."
+                frame_text += "\nAll the types in the subject list are found in the target list. We suggest to choose the first choice of dataset integration."
             elif len(common_element) > 0:
-                frame_text += "\nTous les types de la liste sujet ne se retrouvent pas dans la liste cible. Nous suggérons donc de choisir le deuxième choix d'intégration de dataset."
+                frame_text += "\nNot all types in the subject list are found in the target list. We therefore suggest to choose the second choice of dataset integration."
             else:
-                frame_text += "\nAucun type n'est retrouvé dans la liste cible. Le deuxième choix d'intégration sera utilisé."
+                frame_text += "\nNo type is found in the target list."
 
 
             self.label_cta = tk.Text(self.frame_questions,background='SystemButtonFace',highlightthickness = 0, borderwidth=0,font=("aerial", 9), height= 15)
@@ -331,7 +333,7 @@ class PageTwo(Frame):
             self.label_cta.config(state='disabled')
             self.label_cta.pack(padx = 5,fill="none",expand="false")
 
-            self.label_rep_Q1 = ttk.Label(self.frame_questions, text="Pour choisir le premier choix taper 1 sinon taper 2:", wraplengt=750)
+            self.label_rep_Q1 = ttk.Label(self.frame_questions, text="To select the first choice type 1 otherwise type 2:", wraplengt=750)
             self.label_rep_Q1.pack(padx = 5,fill="none",expand="false")
             self.textBox_rep_Q1 = ttk.Entry(self.frame_questions)
             self.textBox_rep_Q1.pack(padx = 5,fill="none",expand="false")
@@ -496,7 +498,7 @@ class PageTwo(Frame):
             for row in df_rows:
                 tvI.insert("", "end",values=row)
 
-        button_Q_SelectProposition = tk.Button(self.frame_questions, text='Ajouter', command=lambda:self.algo_question_proposition(tvI))
+        button_Q_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question_proposition(tvI))
         button_Q_SelectProposition.pack()
         #listComponentDestroy = list()
         #listComponentDestroy.append(button_Q_SelectProposition)
@@ -679,8 +681,12 @@ class PageTwo(Frame):
             #if widgets['text'] == 'Liste proposition' or :
             widgets.destroy()
 
-        label_Add_Column = ttk.Label(self.frame_questions, text="Si vous avez une autre colonne à ajouter ecrivez le. \nExemple : birthPlace. \nSi vous n'en avez plus, cliquer sur continuer:", wraplengt=750)
-        label_Add_Column.pack(padx = 5,fill="none",expand="false", side = "top")
+
+        label_Add_Column = tk.Text(self.frame_questions,background='SystemButtonFace',highlightthickness = 0, borderwidth=0,font=("aerial", 9), height= 3)
+        label_Add_Column.insert("end","If you have another column to add, write it down. \nExample : birthPlace. \nIf you have no more, click on continue:")
+        label_Add_Column.config(state='disabled')
+        label_Add_Column.pack(padx = 5,fill="none",expand="false")
+
         textBox_rep_Q2 = ttk.Entry(self.frame_questions)
         textBox_rep_Q2.pack(padx = 5,fill="none",expand="false")
 
@@ -718,7 +724,7 @@ class PageTwo(Frame):
         try:
             results1 = executeSparqlQuery(queryString)
         except HTTPError:
-            print("Problème Http dbpedia veuillez ressayer plus tard.")
+            print("Http dbpedia problem please try again later.")
         for result in results1["results"]["bindings"]:
             predicate = result["predicate"]["value"]
             print("predicate: "+predicate)
@@ -767,8 +773,11 @@ class PageTwo(Frame):
         for widgets in self.frame_questions.winfo_children():
             widgets.destroy()
 
-        label_Add_Column_Q3 = ttk.Label(self.frame_questions, text="Ce que vous cherchez n'a toujours pas été trouvé? Veuillez insérer l'URI de la colonne souhaitée. Exemple : http://dbpedia.org/ontology/deathDate", wraplengt=750)
-        label_Add_Column_Q3.pack(padx = 5,fill="none",expand="false", side = "top")
+
+        label_Add_Column_Q3 = tk.Text(self.frame_questions,background='SystemButtonFace',highlightthickness = 0, borderwidth=0,font=("aerial", 9), height= 4)
+        label_Add_Column_Q3.insert("end","Still can't find what you are looking for?\n Please insert the URI of the desired column.\n Example: http://dbpedia.org/ontology/deathDate")
+        label_Add_Column_Q3.config(state='disabled')
+        label_Add_Column_Q3.pack(padx = 5,fill="none",expand="false")
         textBox_rep_Q3 = ttk.Entry(self.frame_questions)
         textBox_rep_Q3.pack(padx = 5,fill="none",expand="false")
         button_Q3_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question3_proposition(str(textBox_rep_Q3.get())))
@@ -784,6 +793,6 @@ class PageTwo(Frame):
             self.refreshTvResult(False)
         else:
             #print("La colonne existe déjà dans le DF")
-            showinfo(message='La colonne existe déjà dans le DF')
+            showinfo(message='The column already exists in the DF')
 
 

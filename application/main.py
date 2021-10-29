@@ -78,9 +78,12 @@ class Container(tk.Frame):
 
 
     def show_help(self):
-        pathBase = str(pathlib.Path(__file__).parent.resolve())
-        strip_character = "\\"
-        ROOT_DIR =strip_character.join(pathBase.split(strip_character)[:5])+'\\readme.txt'
+        #pathBase = str(pathlib.Path(__file__).parent.resolve())
+        #strip_character = "\\"
+
+        pathBase = str(pathlib.Path(__file__).parent.resolve()).rsplit('\\', 1)[0]
+
+        ROOT_DIR =pathBase+'\\readme.txt'
 
         os.startfile(ROOT_DIR)
 
