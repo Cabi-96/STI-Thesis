@@ -181,7 +181,6 @@ class PageTwo(Frame):
 
 
     def column_to_uri(self):
-        #self.refreshTv()
         for label in self.label_changedf1:
             label.destroy()
 
@@ -194,6 +193,7 @@ class PageTwo(Frame):
         for textb in self.textBox_changedf2:
             textb.destroy()
 
+        self.label_changedf1 = list()
         self.textBox_changedf1 = list()
         self.label_changedf2 = list()
         self.textBox_changedf2 = list()
@@ -230,6 +230,7 @@ class PageTwo(Frame):
             self.label_changeColumn.pack(padx = 5,fill="none",expand="false")
 
             i = 0
+            print(len(self.label_changedf1))
             for column in change_columnsDf1:
                 self.label_changedf1.append(ttk.Label(self.frame_questions, text=str(column), wraplengt=750))
                 self.label_changedf1[i].pack(padx = 5,fill="none",expand="false")
@@ -255,14 +256,14 @@ class PageTwo(Frame):
         for textBox in self.textBox_changedf1:
             increment = str(self.label_changedf1[i]['text']).split('#')[0]
             if str(textBox.get()).strip().startswith('http://dbpedia.org/ontology/'):
-                self.listDf[0].columns.values[int(increment)] = str(textBox.get()).strip()
+                self.listDf[0].rename(columns={ self.listDf[0].columns[int(increment)]: str(textBox.get()) }, inplace = True)
             i = i +1
 
         i = 0
         for textBox in self.textBox_changedf2:
             increment = str(self.label_changedf2[i]['text']).split('#')[0]
             if str(textBox.get()).strip().startswith('http://dbpedia.org/ontology/'):
-                self.listDf[self.increment].columns.values[int(increment)] = str(textBox.get()).strip()
+                self.listDf[self.increment].rename(columns={ self.listDf[self.increment].columns[int(increment)]: str(textBox.get()) }, inplace = True)
             i = i +1
 
         self.button_column_to_uri_OK.destroy()
@@ -563,15 +564,23 @@ class PageTwo(Frame):
             cond = df1.iloc[:,0].isin(self.df.iloc[:,0])
             df1.drop(df1[cond].index, inplace = True)
 
-            cond = df2tmp.iloc[:,0].isin(self.df.iloc[:,0])
-            df2tmp.drop(df2[cond].index, inplace = True)
+            print("df1")
+            printDf(df1)
 
+            cond = df2tmp.iloc[:,0].isin(self.df.iloc[:,0])
+            df2.drop(df2[cond].index, inplace = True)
+
+            print("df2tmp")
+            printDf(df2)
 
             self.df = self.df.append(df1,ignore_index=True,sort=False)
-            self.df = self.df.append(df2tmp, ignore_index=True, sort=False)
+
+            print("self.df")
+            printDf(self.df)
+
+            self.df = self.df.append(df2, ignore_index=True, sort=False)
 
             #self.df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
-
             #print(tabulate(df, headers='keys', tablefmt='psql'))
 
             self.frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
