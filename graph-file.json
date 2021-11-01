@@ -1,0 +1,40 @@
+{
+  "nodes": [
+    {"id": "http://dbpedia.org/ontology/Person", "group": 5},
+    {"id": "http://dbpedia.org/ontology/birthPlace", "group": 6},
+    {"id": "http://dbpedia.org/ontology/party", "group": 7},
+    {"id": "http://dbpedia.org/ontology/birthDate", "group": 8},
+    {"id": "http://dbpedia.org/resource/Barack_Obama", "group": 1},
+    {"id": "http://dbpedia.org/resource/Donald_Trump", "group": 1},
+    {"id": "http://dbpedia.org/resource/Jimmy_Carter", "group": 1},
+    {"id": "http://dbpedia.org/resource/Honolulu", "group": 2},
+    {"id": "http://dbpedia.org/resource/Queens", "group": 2},
+    {"id": "http://dbpedia.org/resource/Plains,_Georgia", "group": 2},
+    {"id": "http://dbpedia.org/resource/Democratic_Party_(United_States)", "group": 3},
+    {"id": "http://dbpedia.org/resource/Republican_Party_(United_States)", "group": 3},
+    {"id": "http://dbpedia.org/resource/Republican_Party", "group": 3},
+    {"id": "1961-08-04", "group": 4},
+    {"id": "1946-06-14", "group": 4},
+    {"id": "1924-10-01", "group": 4}
+  ],
+  "links": [
+    {"source": "http://dbpedia.org/ontology/Person", "target": "http://dbpedia.org/resource/Barack_Obama", "value": 1},
+    {"source": "http://dbpedia.org/ontology/Person", "target": "http://dbpedia.org/resource/Donald_Trump", "value": 1},
+    {"source": "http://dbpedia.org/ontology/Person", "target": "http://dbpedia.org/resource/Jimmy_Carter", "value": 1},
+    {"source": "http://dbpedia.org/ontology/birthPlace", "target": "http://dbpedia.org/resource/Honolulu", "value": 2},
+    {"source": "http://dbpedia.org/ontology/birthPlace", "target": "http://dbpedia.org/resource/Queens", "value": 2},
+    {"source": "http://dbpedia.org/ontology/birthPlace", "target": "http://dbpedia.org/resource/Plains,_Georgia", "value": 2},
+    {"source": "http://dbpedia.org/ontology/party", "target": "http://dbpedia.org/resource/Democratic_Party_(United_States)", "value": 3},
+    {"source": "http://dbpedia.org/ontology/party", "target": "http://dbpedia.org/resource/Republican_Party_(United_States)", "value": 3},
+    {"source": "http://dbpedia.org/ontology/party", "target": "http://dbpedia.org/resource/Republican_Party", "value": 3},
+    {"source": "http://dbpedia.org/ontology/birthDate", "target": "1961-08-04", "value": 4},
+    {"source": "http://dbpedia.org/ontology/birthDate", "target": "1946-06-14", "value": 4},
+    {"source": "http://dbpedia.org/ontology/birthDate", "target": "1924-10-01", "value": 4},
+    {"source": "http://dbpedia.org/ontology/Person", "target": "http://dbpedia.org/ontology/birthPlace", "value": 9},
+    {"source": "http://dbpedia.org/ontology/Person", "target": "http://dbpedia.org/ontology/party", "value": 10},
+    {"source": "http://dbpedia.org/ontology/Person", "target": "http://dbpedia.org/ontology/birthDate", "value": 11},
+    {"source": "http://dbpedia.org/resource/Barack_Obama","target": "http://dbpedia.org/resource/Honolulu" , "value": 12},
+    {"source": "http://dbpedia.org/resource/Barack_Obama","target": "http://dbpedia.org/resource/Democratic_Party_(United_States)" , "value": 12},
+    {"source": "http://dbpedia.org/resource/Barack_Obama","target": "1961-08-04" , "value": 12}
+  ]
+}
