@@ -1,0 +1,10 @@
+body {
+    background-color: aquamarine;
+}
+
+#barchart{
+    width: 600px;
+    height: 300px;
+    background-color: antiquewhite;
+    margin: 10px auto;
+}
