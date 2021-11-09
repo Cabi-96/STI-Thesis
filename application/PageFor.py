@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox, ttk
+import tkinterweb
 
 
 import pandas as pd
@@ -13,7 +14,9 @@ class PageFor(Frame):
 
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
-
+        frame = tkinterweb.HtmlFrame(self)
+        frame.load_website("https://www.google.com/")
+        frame.pack(fill="both", expand=True)
 
 
 
