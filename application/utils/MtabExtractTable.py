@@ -92,6 +92,9 @@ class MtabAnnotationApi:
          # get subjectCOlumn index from mantisTable
          subject_column_index = views.get_subject_index_mantistable(filename)
 
+         print(filename)
+         print(subject_column_index)
+
          p = p+1
          with open(filename, 'r', encoding='utf-8') as read_obj:
             # pass the file object to reader() to get the reader object

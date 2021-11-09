@@ -109,7 +109,6 @@ def askQuestion2(df):
                 # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
                 resultInserCol = insertColumnDf(listProposition, predicate,df.columns.values)
                 if resultInserCol and resultInserCol not in listProposition and resultInserCol not in df.columns.values:
-                    print("Wesh")
                     listProposition.append(resultInserCol)
         choice = 0
         while int(choice) != -1:

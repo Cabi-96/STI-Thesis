@@ -470,7 +470,7 @@ class PageTwo(Frame):
                     widgets.destroy()
                 self.first_question_show()
 
-    def askQuestion1(self,listProposition):
+    def askQuestion1(self,listProposition,listWikiLink):
         frameDf = tk.LabelFrame(self.frame_questions, text='Liste proposition')
         frameDf.pack(padx = 5,expand="false", fill="x")
 
@@ -498,7 +498,7 @@ class PageTwo(Frame):
             for row in df_rows:
                 tvI.insert("", "end",values=row)
 
-        button_Q_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question_proposition(tvI))
+        button_Q_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question_proposition(tvI,listWikiLink))
         button_Q_SelectProposition.pack()
         #listComponentDestroy = list()
         #listComponentDestroy.append(button_Q_SelectProposition)
@@ -614,7 +614,7 @@ class PageTwo(Frame):
                         results1 = executeSparqlQuery(queryString)
                     except HTTPError:
                         messagebox.showerror("Error", "Http Problem with DBpedia try later")
-                    if results1["results"]["bindings"]:
+                    if results1["results"]["bindings"] and item != "http://dbpedia.org/ontology/wikiPageWikiLink":
                         listSubjectOntology.append(item)
                         resultInserCol = insertColumnDf(listProposition, item,df1.columns.values)
                         #print("Liste proposition :")
@@ -626,15 +626,19 @@ class PageTwo(Frame):
             # Avec ça, on enlève les colonnes qui ont été insérées dans le df via le insert columnDf en haut.
             headers = set(headers) - set(listSubjectOntology)
             i = 0
+            listWikiLink = list()
+            headers.add('Core attribute')
+            print(df2.columns.values)
             # S'il y a encore des colonnes dans le headers, ca veut dire que toutes les colonnes vont faire une sorte de produit cartésien. On va prendre chaque cellule de la colonne sujet du df1 et voir si elle a un lien avec les cellules du df2. La perf est de n^4 pas terrible! Peut être moyen de descendre à n^3 mais je ne pense pas.
             if headers:
                 while i < rowCountDf1:
                     j = 0
+                    resultWiki = set()
                     while j < rowCountDf2:
                         for item in headers:
                             dbrSubject = df1.at[i, headerSubjectTable1]
                             dbrSubject1 = df2.at[j, item]
-                            queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select distinct ?predicate where { \n { <" + dbrSubject + "> ?predicate <" + dbrSubject1 + ">} \n}"
+                            queryString = "PREFIX dbr:  <http://dbpedia.org/resource/> \n select distinct ?predicate where { \n { <" + dbrSubject + "> ?predicate <" + dbrSubject1.replace(" ", "") + ">} \n}"
                             #print(queryString)
                             try:
                                 results1 = executeSparqlQuery(queryString)
@@ -642,14 +646,17 @@ class PageTwo(Frame):
                                 messagebox.showerror("Error", "Http Problem with DBpedia try later")
                             for result in results1["results"]["bindings"]:
                                 predicate = result["predicate"]["value"]
-                                if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
-                                    # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
-                                    print("InsertCol2")
-                                    resultInserCol = insertColumnDf(listProposition, predicate,df1.columns.values)
-                                    print("Fin InsertCol2")
-                                    if resultInserCol:
-                                        listProposition.append(resultInserCol)
+                                # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
+                                #print("InsertCol2")
+                                resultInserCol = insertColumnDf(listProposition, predicate,df1.columns.values)
+                                #print("Fin InsertCol2")
+                                if resultInserCol:
+                                    listProposition.append(resultInserCol)
+                                if predicate == "http://dbpedia.org/ontology/wikiPageWikiLink":
+                                    #print(df2.at[j, item])
+                                    resultWiki.add(df2.at[j, item]+' ')
                         j = j + 1
+                    listWikiLink.append(resultWiki)
                     i = i + 1
 
             #df = df.drop_duplicates(subset=['Core Attribute'], keep='first')
@@ -664,7 +671,7 @@ class PageTwo(Frame):
             self.tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)
             self.refreshTvResult(False)
 
-            self.askQuestion1(listProposition)
+            self.askQuestion1(listProposition,listWikiLink)
             #self.df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
 
         button_Q_SelectProposition = tk.Button(self.frame_questions, text='Questions', command=lambda:self.algo_question2_begin(button_Q_SelectProposition,frameProposition))
@@ -754,7 +761,7 @@ class PageTwo(Frame):
         button_Q2_SelectProposition.pack()
 
 
-    def algo_question_proposition(self,tvI):
+    def algo_question_proposition(self,tvI,listWikiLink):
         #get items from proposition's list
         for item in tvI.selection():
             columnAdd = tvI.item(item,"values")
@@ -762,9 +769,18 @@ class PageTwo(Frame):
             if(columnAdd.startswith("(")):
                 columnAdd = columnAdd[2:]
                 columnAdd = columnAdd[:-3]
-            print(columnAdd)
-            self.df[columnAdd] = 'nan'
-
+            #print(columnAdd)
+            if columnAdd == "http://dbpedia.org/ontology/wikiPageWikiLink":
+                self.df[columnAdd] = 'nan'
+                z = 0
+                for wikiLink in listWikiLink:
+                    print(wikiLink)
+                    for wiki in wikiLink:
+                        print(wiki)
+                        self.df.at[z,columnAdd] = str(wiki)
+                    z = z + 1
+            else:
+                self.df[columnAdd] = 'nan'
         #### refresh df resultat
         self.refreshTvResult(False)
 
