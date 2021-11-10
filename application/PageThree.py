@@ -125,7 +125,7 @@ class PageThree(Frame):
         grapheFileLinksColumn = ""
         grapheFileLinksValues = ""
         countTot = columnCountDf + columnCountDf + 1
-        countLast = countTot + columnCountDf + 1
+        countLast = countTot + columnCountDf
         for item in headers:
             i = 0
             grapheFileColumn +=  "{"+'"id": "'+str(df.columns.values[j])+'", "group": '+str(columnCountDf  + j + 1)+'},\n'
