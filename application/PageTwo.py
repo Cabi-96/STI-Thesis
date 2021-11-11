@@ -757,7 +757,7 @@ class PageTwo(Frame):
             tvI.insert("", "end",values=row)
 
         #Show button selection
-        button_Q2_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question_proposition(tvI))
+        button_Q2_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question_proposition(tvI, None))
         button_Q2_SelectProposition.pack()
 
 
