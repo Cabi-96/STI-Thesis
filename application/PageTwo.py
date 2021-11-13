@@ -540,10 +540,11 @@ class PageTwo(Frame):
                 for element in commonElement:
                     listIndex.append(columnDf2.index(element))
 
+
                 for index in listIndex:
-                    print('index')
-                    print(index)
-                    del listIndexDf2[index]
+                    #print('index')
+                    #print(index)
+                    del listIndexDf2[index-1]
                 df2tmp = copy.deepcopy(df2.iloc[:, listIndexDf2]) #return all columns except the nth column
 
             else:
