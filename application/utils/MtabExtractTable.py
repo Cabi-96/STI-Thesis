@@ -117,7 +117,8 @@ class MtabAnnotationApi:
                #inputText = inputText + rowFinal + '\r'
 
                # rve: with mantistable move the subject column to first index
-               row.insert(0, row.pop(subject_column_index))
+               if(len(row) > 1):
+                  row.insert(0, row.pop(subject_column_index))
 
                firstWordLine = True
                for rowWord in row:
