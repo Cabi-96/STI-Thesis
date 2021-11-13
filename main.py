@@ -7,9 +7,9 @@ from tkinter import *
 from tkinter.ttk import Progressbar
 
 import os
-from PageOne import PageOne
-from PageTwo import PageTwo
-from PageThree import PageThree
+from application.PageOne import PageOne
+from application.PageTwo import PageTwo
+from application.PageThree import PageThree
 import pathlib
 
 
@@ -186,7 +186,7 @@ if __name__ == "__main__":
     root.title("TabIntegration")
     print(pathlib.Path(__file__).parent.resolve())
     iconPath = str(pathlib.Path(__file__).parent.resolve()) + "\\Icon\\LogoApp.png"
-    root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file=iconPath))
+    #root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file=iconPath))
 
     #root.iconbitmap('C:/Users/ANTHONY/Downloads/icons8-doughnut-chart-24.ico')
 
