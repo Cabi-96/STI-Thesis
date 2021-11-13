@@ -1,4 +1,6 @@
 #Algo Integration
+import pathlib
+
 from tabulate import tabulate
 from SPARQLWrapper import SPARQLWrapper, JSON
 
@@ -46,3 +48,56 @@ def printDf(df):
     print(tabulate(df, headers='keys', tablefmt='psql'))
     df.to_csv(r'Final Dataset.csv',index=False)
     df.to_excel(r'Final Dataset.xlsx', index=False)
+
+def writeHtmlFile(df):
+    rowCountDf = len(df.index)
+    columnCountDf = len(df.columns)
+    headers = list(df.columns.values)
+
+    j = 0
+    grapheFileColumn = "{\n "+'  "nodes":[\n'
+    grapheFileValues = ""
+    grapheFileLinks = ""
+    grapheFileLinksColumn = ""
+    grapheFileLinksValues = ""
+    countTot = columnCountDf + columnCountDf + 1
+    countLast = countTot + columnCountDf
+    for item in headers:
+        i = 0
+        print(item)
+        grapheFileColumn +=  "{"+'"id": "'+str(df.columns.values[j])+'", "group": '+str(columnCountDf  + j + 1)+'},\n'
+        grapheFileLinksColumn += '{"source": "'+str(df.columns.values[0])+'", "target": "'+str(df.columns.values[j])+'", "value": '+str(countTot+j)+'},\n'
+        while i < rowCountDf:
+            grapheFileValues += "{"+'"id": "'+str(df[item].values[i])+'", "group": '+str(j+1)+'},\n'
+            grapheFileLinks += '{"source": "'+str(df.columns.values[j])+'", "target": "'+str(df[item].values[i])+'", "value": '+str(j + 1)+'},\n'
+            i = i + 1
+        j = j + 1
+
+    i = 0
+    subjectColumn = "Core attribute"
+    while i < rowCountDf:
+        j = 0
+        for item in headers:
+            if j != 0:
+                grapheFileLinksValues += '{"source": "'+str(df[subjectColumn].values[i])+'", "target": "'+str(df[item].values[i])+'", "value": '+str(countLast+i)+'},\n'
+            else:
+                subjectColumn = item
+            j = j + 1
+        i = i + 1
+
+    grapheFileValues = grapheFileValues[:-2]+'\n'
+    grapheFileLinksValues = grapheFileLinksValues[:-2]+'\n'
+    graphePhile = grapheFileColumn+''+grapheFileValues+"],\n"+'"links": [\n'+grapheFileLinks+''+grapheFileLinksColumn+''+grapheFileLinksValues+']\n}'
+
+
+    #print(graphePhile)
+    pathBase = str(pathlib.Path(__file__).parent.resolve()).rsplit('\\', 2)[0]
+
+    print(pathBase)
+
+    ROOT_DIR =pathBase+'\\graph-file.json'
+    f = open(ROOT_DIR, "a")
+    f.seek(0)                        # <- This is the missing piece
+    f.truncate()
+    f.write(graphePhile)
+    f.close()

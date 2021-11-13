@@ -1,7 +1,9 @@
 #Interface
-
+import codecs
+import subprocess
 import threading
 import tkinter as tk
+import webbrowser
 
 from tkinter import *
 from tkinter.ttk import Progressbar
@@ -81,7 +83,7 @@ class Container(tk.Frame):
         #pathBase = str(pathlib.Path(__file__).parent.resolve())
         #strip_character = "\\"
 
-        pathBase = str(pathlib.Path(__file__).parent.resolve()).rsplit('\\', 1)[0]
+        pathBase = str(pathlib.Path(__file__).parent.resolve())
 
         ROOT_DIR =pathBase+'\\readme.txt'
 
@@ -131,8 +133,13 @@ class Container(tk.Frame):
 
 
     def show_pageFor(self):
-        self.p4.show()
-        self.displayed_page = 4
+        #pathBase = str(pathlib.Path(__file__).parent.resolve())
+        #ROOT_DIR =pathBase+'\\graph-annotation.html'
+        #print(ROOT_DIR)
+        #self.p4.show()
+        #self.displayed_page = 4
+        webbrowser.open_new_tab("http://localhost:63342/STI_Thesis/graph_d3/graph-annotation.html")
+
 
     def show_pageFive(self):
         self.p5.show()

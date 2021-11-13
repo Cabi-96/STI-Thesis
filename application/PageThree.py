@@ -8,7 +8,7 @@ from urllib.error import HTTPError
 
 import pandas as pd
 
-from application.utils.utils import printDf, executeSparqlQuery, insertDataDf
+from application.utils.utils import printDf, executeSparqlQuery, insertDataDf, writeHtmlFile
 
 
 class PageThree(Frame):
@@ -39,7 +39,10 @@ class PageThree(Frame):
         self.lift()
 
     def transformCoreToUri(self, cta):
-        self.df.columns.values[0] = cta[0][0]
+        #self.df.columns.values[0] = ''.join(cta[0][0])
+
+        self.df.rename(columns={ self.df.columns[0]: ' '.join(cta[0][0]) }, inplace = True)
+
 
         for record in self.tvResult.get_children():
             self.tvResult.delete(record)
@@ -55,7 +58,7 @@ class PageThree(Frame):
             self.tvResult.insert("", "end",
                                     values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
         self.show()
-
+        writeHtmlFile(self.df)
 
 
     def saveXlsx(self):
@@ -114,40 +117,8 @@ class PageThree(Frame):
 
         print("UTILS.PRINTDF FINAL")
         printDf(df)
+        writeHtmlFile(df)
 
-        rowCountDf = len(df.index)
-        columnCountDf = len(df.columns)
-
-        j = 0
-        grapheFileColumn = "{\n "+'  "nodes":[\n'
-        grapheFileValues = ""
-        grapheFileLinks = ""
-        grapheFileLinksColumn = ""
-        grapheFileLinksValues = ""
-        countTot = columnCountDf + columnCountDf + 1
-        countLast = countTot + columnCountDf
-        for item in headers:
-            i = 0
-            grapheFileColumn +=  "{"+'"id": "'+str(df.columns.values[j])+'", "group": '+str(columnCountDf  + j + 1)+'},\n'
-            grapheFileLinksColumn += '{"source": "'+str(df.columns.values[0])+', "target": "'+str(df.columns.values[j])+', "value": '+str(countTot+j)+'},\n'
-            while i < rowCountDf:
-                grapheFileValues += "{"+'"id": "'+str(df[item].values[i])+'", "group": '+str(j+1)+'},\n'
-                grapheFileLinks += '{"source": "'+str(df.columns.values[j])+', "target": "'+str(df[item].values[i])+', "value": '+str(j + 1)+'},\n'
-                i = i + 1
-            j = j + 1
-
-        i = 0
-        while i < rowCountDf:
-            for item in headers:
-                if item != "Core attribute":
-                    grapheFileLinksValues += '{"source": "'+str(df["Core attribute"].values[i])+', "target": "'+str(df[item].values[i])+', "value": '+str(countLast+i)+'},\n'
-            i = i + 1
-
-        grapheFileValues = grapheFileValues[:-2]+'\n'
-        grapheFileLinksValues = grapheFileLinksValues[:-2]+'\n'
-        graphePhile = grapheFileColumn+''+grapheFileValues+"],\n"+'"links": [\n'+grapheFileLinks+''+grapheFileLinksColumn+''+grapheFileLinksValues+']\n}'
-
-        print(graphePhile)
 
         for record in self.tvResult.get_children():
             self.tvResult.delete(record)

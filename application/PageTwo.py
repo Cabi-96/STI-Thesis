@@ -546,7 +546,7 @@ class PageTwo(Frame):
                     #print(index)
                     del listIndexDf2[index-1]
                 df2tmp = copy.deepcopy(df2.iloc[:, listIndexDf2]) #return all columns except the nth column
-
+                printDf(df2tmp)
             else:
                 df2tmp = df2
 
