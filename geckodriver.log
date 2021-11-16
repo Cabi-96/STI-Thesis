@@ -13238,3 +13238,45 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1636815864110	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 1636815879397	Marionette	INFO	Stopped listening on port 6853
 JavaScript error: resource:///modules/Interactions.jsm, line 201: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1637085766339	geckodriver	INFO	Listening on 127.0.0.1:55322
+1637085769408	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilecT0VPx"
+*** You are running in headless mode.
+1637085769696	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilecT0VPx\\search.json.mozlz4", (void 0)))
+1637085770585	Marionette	INFO	Listening on port 55334
+1637085770957	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1637085789416	Marionette	INFO	Stopped listening on port 55334
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1637086185774	geckodriver	INFO	Listening on 127.0.0.1:55734
+1637086188833	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilehUZjwb"
+*** You are running in headless mode.
+1637086189102	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofilehUZjwb\\search.json.mozlz4", (void 0)))
+1637086189889	Marionette	INFO	Listening on port 55744
+1637086190381	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1637086208364	Marionette	INFO	Stopped listening on port 55744
+1637086293610	geckodriver	INFO	Listening on 127.0.0.1:55700
+1637086296670	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofile43RZIk"
+*** You are running in headless mode.
+1637086296942	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofile43RZIk\\search.json.mozlz4", (void 0)))
+1637086297754	Marionette	INFO	Listening on port 55710
+1637086298207	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1637086313502	Marionette	INFO	Stopped listening on port 55710
+1637086383693	geckodriver	INFO	Listening on 127.0.0.1:55996
+1637086386765	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileQ0n7hR"
+*** You are running in headless mode.
+1637086387033	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileQ0n7hR\\search.json.mozlz4", (void 0)))
+1637086387812	Marionette	INFO	Listening on port 56008
+1637086388300	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1637086403609	Marionette	INFO	Stopped listening on port 56008
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+

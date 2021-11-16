@@ -1,5 +1,6 @@
 #Algo Integration
 import pathlib
+import codecs
 
 from tabulate import tabulate
 from SPARQLWrapper import SPARQLWrapper, JSON
@@ -96,7 +97,8 @@ def writeHtmlFile(df):
     print(pathBase)
 
     ROOT_DIR =pathBase+'\\graph-file.json'
-    f = open(ROOT_DIR, "a")
+    #f = open(ROOT_DIR, "a")
+    f = codecs.open(ROOT_DIR, "w", "utf-8")
     f.seek(0)                        # <- This is the missing piece
     f.truncate()
     f.write(graphePhile)
