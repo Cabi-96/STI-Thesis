@@ -138,7 +138,8 @@ class Container(tk.Frame):
         #print(ROOT_DIR)
         #self.p4.show()
         #self.displayed_page = 4
-        webbrowser.open_new_tab("http://localhost:63342/STI_Thesis/graph_d3/graph-annotation.html")
+        current_directory = os.getcwd().split(os.sep)[-1]
+        webbrowser.open_new_tab("http://localhost:63342/"+ current_directory + "/graph_d3/graph-annotation.html")
 
 
     def show_pageFive(self):
