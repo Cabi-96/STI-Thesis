@@ -27,3 +27,7 @@ subprocess.check_call([sys.executable, '-m', 'pip', 'install','sparqlwrapper'])
 subprocess.check_call([sys.executable, '-m', 'pip', 'install','tkinterweb'])
 subprocess.check_call([sys.executable, '-m', 'pip', 'install','openpyxl'])
 subprocess.check_call([sys.executable, '-m', 'pip', 'install','sparqlwrapper.skipssl'])
+
+
+import nltk
+nltk.download('stopwords')
