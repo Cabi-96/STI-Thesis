@@ -92,7 +92,7 @@ class Container(tk.Frame):
 
     def show_nextpage(self):
         if self.displayed_page == 1:
-            print(self.displayed_page)
+            #print(self.displayed_page)
             self.p2.show()
             self.displayed_page = 2
 
@@ -192,7 +192,7 @@ class Container(tk.Frame):
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("TabIntegration")
-    print(pathlib.Path(__file__).parent.resolve())
+    #print(pathlib.Path(__file__).parent.resolve())
     iconPath = str(pathlib.Path(__file__).parent.resolve()) + "\\Icon\\LogoApp.png"
     #root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file=iconPath))
 

@@ -93,11 +93,11 @@ class PageThree(Frame):
 
     def show_df_result(self,df):
         rowCount = len(df.index)
-        print(rowCount)
+        #print(rowCount)
         headers = list(df.columns.values)
         i = 0
         while i < rowCount:
-            print(i)
+            #print(i)
             for item in headers:
                 if item != "http://dbpedia.org/ontology/wikiPageWikiLink":
                     # Si l'item est null il faut le remplir. -> Faudrait changer le if. Ici le nan est en string via la fonction insertColumnDf il faudrait éviter de la mettre en string.
@@ -115,8 +115,8 @@ class PageThree(Frame):
                             df = insertDataDf(df, results1, i, item)
             i = i + 1
 
-        print("UTILS.PRINTDF FINAL")
-        printDf(df)
+        #print("UTILS.PRINTDF FINAL")
+        #printDf(df)
         writeHtmlFile(df)
 
 

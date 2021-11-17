@@ -142,8 +142,8 @@ class PageTwo(Frame):
                 dictDf[tuple(self.cta[i][j])] = cpa[i][j]
             listDictDf.append(dictDf)
 
-            print("Load uri self.df")
-            print(self.df)
+            #print("Load uri self.df")
+            #print(self.df)
 
             ##--------------------------------------------Afficher dataFrames-------------------------------------------------------------------------
             self.listFrame2.append(tk.LabelFrame(self.label_frame_data, text='df',bg='white'))
@@ -201,7 +201,7 @@ class PageTwo(Frame):
 
         df1 = self.listDf[0]
         df2 = self.listDf[self.increment]
-        print("test")
+        #print("test")
         columnsDf1 = list(df1.columns)
         columnsDf2 = list(df2.columns)
 
@@ -209,7 +209,7 @@ class PageTwo(Frame):
         change_columnsDf1 = list()
         for column in columnsDf1:
             if str(column).startswith("http") or str(column) == 'Core attribute':
-                print('test')
+                print('')
             else:
                 change_columnsDf1.append(str(i)+'#'+str(column))
 
@@ -219,7 +219,7 @@ class PageTwo(Frame):
         change_columnsDf2 = list()
         for column in columnsDf2:
             if str(column).startswith("http") or str(column) == 'Core attribute':
-                print('test')
+                print('')
             else:
                 change_columnsDf2.append(str(i)+'#'+str(column))
 
@@ -232,7 +232,7 @@ class PageTwo(Frame):
             self.label_changeColumn.pack(padx = 5,fill="none",expand="false")
 
             i = 0
-            print(len(self.label_changedf1))
+            #print(len(self.label_changedf1))
             for column in change_columnsDf1:
                 self.label_changedf1.append(ttk.Label(self.frame_questions, text=str(column), wraplengt=750))
                 self.label_changedf1[i].pack(padx = 5,fill="none",expand="false")
@@ -253,7 +253,7 @@ class PageTwo(Frame):
 
     def column_to_uri_command(self):
         #self.button_Q1_OK["state"] = "disable"
-        print("Column_to_uri_command")
+        #print("Column_to_uri_command")
         i = 0
         for textBox in self.textBox_changedf1:
             increment = str(self.label_changedf1[i]['text']).split('#')[0]
@@ -277,7 +277,7 @@ class PageTwo(Frame):
     def first_question_show(self):
         df1 = self.listDf[0]
         df2 = self.listDf[self.increment]
-        print("test")
+        #print("test")
         columnsDf1 = list(df1.columns)
         columnsDf2 = list(df2.columns)
 
@@ -285,7 +285,7 @@ class PageTwo(Frame):
         change_columnsDf1 = list()
         for column in columnsDf1:
             if str(column).startswith("http") or str(column) == 'Core attribute':
-                print('test')
+                print('')
             else:
                 change_columnsDf1.append(str(i)+'#'+str(column))
 
@@ -295,7 +295,7 @@ class PageTwo(Frame):
         change_columnsDf2 = list()
         for column in columnsDf2:
             if str(column).startswith("http") or str(column) == 'Core attribute':
-                print('test')
+                print('')
             else:
                 change_columnsDf2.append(str(i)+'#'+str(column))
 
@@ -342,12 +342,12 @@ class PageTwo(Frame):
 
     def refreshTv(self):
         z = -1
-        print(str(len(self.listTvi)))
+        #print(str(len(self.listTvi)))
         for tvI in self.listTvi:
             z = z + 1
 
             if z == 0:
-                print("I ici: "+str(z))
+                #print("I ici: "+str(z))
                 for record in tvI.get_children():
                     tvI.delete(record)
                 df = self.listDf[0]
@@ -371,12 +371,12 @@ class PageTwo(Frame):
                 tvI.pack(fill="both", expand="yes", pady=10, padx=10)
 
             elif z == self.increment:
-                print("I ici: "+str(z))
+                #print("I ici: "+str(z))
                 for record in tvI.get_children():
                     tvI.delete(record)
-                print("Je rentre "+str(z)+" fois")
+                #print("Je rentre "+str(z)+" fois")
                 df = self.listDf[self.increment]
-                print(df)
+                #print(df)
                 tvI["column"] = list(df.columns)
                 tvI["show"] = "headings"
 
@@ -425,9 +425,9 @@ class PageTwo(Frame):
         if self.increment == self.numberOfDf:
             self.isNbFilesSup = False
 
-        print("PAGE TWO"+str(self.increment))
-        printDf(self.df)
-        print("END PAGE TWO")
+        #print("PAGE TWO"+str(self.increment))
+        #printDf(self.df)
+        #print("END PAGE TWO")
 
         if self.isNbFilesSup == True and isLastQuestion == True:
             self.increment = self.increment + 1
@@ -510,15 +510,15 @@ class PageTwo(Frame):
         choice = self.textBox_rep_Q1.get()
         df1 = self.listDf[0]
 
-        print("Question 2"+str(self.increment))
-        printDf(df1)
+        #print("Question 2"+str(self.increment))
+        #printDf(df1)
 
-        print("End Question 2")
+        #print("End Question 2")
         df2 = self.listDf[self.increment]
         self.df = self.listDf[0]
 
-        print("ASK QUESTION 1 INCREMENT")
-        print(self.increment)
+        #print("ASK QUESTION 1 INCREMENT")
+        #print(self.increment)
 
         frameProposition = None
         if choice == "1":
@@ -534,7 +534,7 @@ class PageTwo(Frame):
 
             commonElement = list(set(columnDf1).intersection(columnDf2))
             commonElement.remove('Core attribute')
-            print(type(commonElement))
+            #print(type(commonElement))
             listIndex = list()
             if len(commonElement) > 0:
                 for element in commonElement:
@@ -546,18 +546,18 @@ class PageTwo(Frame):
                     #print(index)
                     del listIndexDf2[index-1]
                 df2tmp = copy.deepcopy(df2.iloc[:, listIndexDf2]) #return all columns except the nth column
-                printDf(df2tmp)
+                #printDf(df2tmp)
             else:
                 df2tmp = df2
 
             self.df = pd.merge(df1,df2tmp)
 
-            print("-----------------------------------------df--------------------")
-            printDf(self.df)
+            #print("-----------------------------------------df--------------------")
+            #printDf(self.df)
 
 
-            print("-----------------------------------------df1--------------------")
-            printDf(df1)
+            #print("-----------------------------------------df1--------------------")
+            #printDf(df1)
 
 
             #Evite les doublons dans le tableau final pour l'étape append
@@ -567,19 +567,19 @@ class PageTwo(Frame):
             cond = df1.iloc[:,0].isin(self.df.iloc[:,0])
             df1.drop(df1[cond].index, inplace = True)
 
-            print("df1")
-            printDf(df1)
+            #print("df1")
+            #printDf(df1)
 
             cond = df2tmp.iloc[:,0].isin(self.df.iloc[:,0])
             df2.drop(df2[cond].index, inplace = True)
 
-            print("df2tmp")
-            printDf(df2)
+            #print("df2tmp")
+            #printDf(df2)
 
             self.df = self.df.append(df1,ignore_index=True,sort=False)
 
-            print("self.df")
-            printDf(self.df)
+            #print("self.df")
+            #printDf(self.df)
 
             self.df = self.df.append(df2, ignore_index=True, sort=False)
 
@@ -629,7 +629,7 @@ class PageTwo(Frame):
             i = 0
             listWikiLink = list()
             headers.add('Core attribute')
-            print(df2.columns.values)
+            #print(df2.columns.values)
             # S'il y a encore des colonnes dans le headers, ca veut dire que toutes les colonnes vont faire une sorte de produit cartésien. On va prendre chaque cellule de la colonne sujet du df1 et voir si elle a un lien avec les cellules du df2. La perf est de n^4 pas terrible! Peut être moyen de descendre à n^3 mais je ne pense pas.
             if headers:
                 while i < rowCountDf1:
@@ -732,10 +732,10 @@ class PageTwo(Frame):
         try:
             results1 = executeSparqlQuery(queryString)
         except HTTPError:
-            print("Http dbpedia problem please try again later.")
+            messagebox.showerror("Error", "Http Problem with DBpedia try later")
         for result in results1["results"]["bindings"]:
             predicate = result["predicate"]["value"]
-            print("predicate: "+predicate)
+            #print("predicate: "+predicate)
             if predicate != "http://dbpedia.org/ontology/wikiPageWikiLink":
                 # Pour l'instant ca va insérer automatiquement la colonne dans le df -> A changer.
                 resultInserCol = insertColumnDf(listProposition, predicate,self.df.columns.values)
@@ -775,9 +775,9 @@ class PageTwo(Frame):
                 self.df[columnAdd] = 'nan'
                 z = 0
                 for wikiLink in listWikiLink:
-                    print(wikiLink)
+                    #print(wikiLink)
                     for wiki in wikiLink:
-                        print(wiki)
+                        #print(wiki)
                         self.df.at[z,columnAdd] = str(wiki)
                     z = z + 1
             else:
