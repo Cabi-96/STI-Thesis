@@ -146,7 +146,7 @@ class MtabAnnotationApi:
             ctaList = []
             for link in links:
                # print link href
-               ctaList.append(unquote(link.get_attribute("href")))
+               ctaList.append(unquote(link.get_attribute("href")).replace('"',''))
                #print(link.get_attribute("href")) #prints text from the element
             listCTA.insert(i,ctaList)
             i = i+1
@@ -175,11 +175,11 @@ class MtabAnnotationApi:
                   if listCTA[i] != []:
                      #print(listCTA[i])
                      #listCPA[i-1] = ' '.join(listCTA[i])
-                     listCPA[i-1] = listCTA[i][0]
+                     listCPA[i-1] = listCTA[i][0].replace('"','')
                   else :
                      #listCPA[i-1] = filename[filename.rfind("\\")+1:]+"-COL"+str(i)
                      #listCPA[i-1] = filename[filename.rfind("\\")+1:]+"-"+colheader[i-1]
-                     listCPA[i-1] = colheader[i-1]
+                     listCPA[i-1] = colheader[i-1].replace('"','')
                i = i+1
             else:
                #print('Col'+str(i))
@@ -188,7 +188,7 @@ class MtabAnnotationApi:
                   for link in links:
                      # print link href
                      #print(link.get_attribute("href")) #prints text from the element
-                     listCPA[i-1] = unquote(link.get_attribute("href"))
+                     listCPA[i-1] = unquote(link.get_attribute("href")).replace('"','')
                i = i+1
 
          #listCPA[0] = listCTA[1][0]
@@ -220,7 +220,7 @@ class MtabAnnotationApi:
                   #linkString = str(link.get_attribute("href"))
                   #linkString = linkString.encode('utf8')
                   if link.get_attribute("href") != None:
-                     listCEA[i] = unquote(link.get_attribute("href"))
+                     listCEA[i] = unquote(link.get_attribute("href")).replace('"','')
             i = i+1
 
          #Ca déconne

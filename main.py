@@ -1,6 +1,3 @@
-#Interface
-import codecs
-import subprocess
 import threading
 import tkinter as tk
 import webbrowser

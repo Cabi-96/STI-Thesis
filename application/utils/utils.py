@@ -94,7 +94,7 @@ def writeHtmlFile(df):
     #print(graphePhile)
     pathBase = str(pathlib.Path(__file__).parent.resolve()).rsplit('\\', 2)[0]
 
-    print(pathBase)
+    printDf(df)
 
     ROOT_DIR =pathBase+'\\graph-file.json'
     #f = open(ROOT_DIR, "a")
