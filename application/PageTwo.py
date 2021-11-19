@@ -318,7 +318,7 @@ class PageTwo(Frame):
 
         if self.uriLoad  == True:
             common_element = set(self.cta[0][0]).intersection(self.cta[self.increment][0])
-            frame_text = "CTA from the first Dataset :" + str(self.cta[0][0]) + "\n" + "\nCTA from the second Dataset :" + str(self.cta[self.increment][0]) + "\n" + "\nVoici les éléments en communs :" + str(common_element)
+            frame_text = "CTA from the first Dataset :" + str(self.cta[0][0]) + "\n" + "\nCTA from the second Dataset :" + str(self.cta[self.increment][0]) + "\n" + "\nHere are the common elements :" + str(common_element)
 
             if len(common_element) == len(self.cta[0][0]):
                 frame_text += "\nAll the types in the subject list are found in the target list. We suggest to choose the first choice of dataset integration."
