@@ -34,6 +34,7 @@ class PageTwo(Frame):
         self.isNbFilesSup = False
         self.listTvi = list()
         self.cta = list()
+        self.button_Q2_SelectProposition = None
 
         #### two frames: data and selection (questions)
         ## data
@@ -498,8 +499,8 @@ class PageTwo(Frame):
             for row in df_rows:
                 tvI.insert("", "end",values=row)
 
-        button_Q_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question_proposition(tvI,listWikiLink))
-        button_Q_SelectProposition.pack()
+        self.button_Q_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question_proposition(tvI,listWikiLink))
+        self.button_Q_SelectProposition.pack()
         #listComponentDestroy = list()
         #listComponentDestroy.append(button_Q_SelectProposition)
         #listComponentDestroy.append(frameDf)algo_question_proposition
@@ -684,6 +685,7 @@ class PageTwo(Frame):
     def algo_question2_begin(self,button_Q_SelectProposition,frameProposition):
         #print("Question 2")
         button_Q_SelectProposition.destroy()
+
         if frameProposition != None:
             frameProposition[0].destroy()
             frameProposition[1].destroy()
@@ -691,7 +693,6 @@ class PageTwo(Frame):
         for widgets in self.frame_questions.winfo_children():
             #if widgets['text'] == 'Liste proposition' or :
             widgets.destroy()
-
 
         label_Add_Column = tk.Text(self.frame_questions,background='SystemButtonFace',highlightthickness = 0, borderwidth=0,font=("aerial", 9), height= 3)
         label_Add_Column.insert("end","If you have another column to add, write it down. \nExample : birthPlace. \nIf you have no more, click on continue:")
@@ -723,7 +724,9 @@ class PageTwo(Frame):
         treescrollx.pack(side="bottom", fill="x")  # make the scrollbar fill the x axis of the Treeview widget
         treescrolly.pack(side="right", fill="y")  # make the scrollbar fill the y axis of the Treeview widget
 
-
+        #Show button selection
+        self.button_Q2_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question_proposition(tvI,None))
+        self.button_Q2_SelectProposition.pack()
 
     def algo_question2(self,textBox_rep_Q2,tvI):
         listProposition = list()
@@ -760,9 +763,7 @@ class PageTwo(Frame):
         for row in df_rows:
             tvI.insert("", "end",values=row)
 
-        #Show button selection
-        button_Q2_SelectProposition = tk.Button(self.frame_questions, text='Add', command=lambda:self.algo_question_proposition(tvI,None))
-        button_Q2_SelectProposition.pack()
+
 
 
     def algo_question_proposition(self,tvI,listWikiLink):

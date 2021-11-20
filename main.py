@@ -171,7 +171,7 @@ class Container(tk.Frame):
 
         menu_graph_comparison = tk.Menu(menubar, tearoff=0)
         menu_graph_comparison.add_command(label="Graph", command = self.show_pageFor)
-        menu_graph_comparison.add_command(label="Comparison", command = self.show_pageFive)
+        #menu_graph_comparison.add_command(label="Comparison", command = self.show_pageFive)
 
 
         # TODO : close firefox quand on exit ?
@@ -179,7 +179,7 @@ class Container(tk.Frame):
 
         menubar.add_cascade(label="File", menu=menu_file)
         menubar.add_cascade(label="Navigate", menu=menu_navigate)
-        menubar.add_cascade(label="Graph & Comparison", menu=menu_graph_comparison)
+        menubar.add_cascade(label="Graph", menu=menu_graph_comparison)
 
         return menubar
 
