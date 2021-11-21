@@ -82,7 +82,7 @@ class Container(tk.Frame):
 
         pathBase = str(pathlib.Path(__file__).parent.resolve())
 
-        ROOT_DIR =pathBase+'\\readme.txt'
+        ROOT_DIR =pathBase+'\\readme.md'
 
         os.startfile(ROOT_DIR)
 
