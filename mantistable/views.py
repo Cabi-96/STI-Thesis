@@ -14,15 +14,23 @@ def get_subject_index_mantistable(file_csv):
     file_json = convert_to_json(file_csv)
     # open file
     f = open(file_json, "r")
+    column_subject_index = 0
 
     # get subject column index
-    column_subject_index = get_index_and_create_tables(f)
+    try:
+        column_subject_index = get_index_and_create_tables(f)
+    except:
+        print("Error in get_subject_index_mantistable(file_csv)")
+    finally:
+        # remove file
+        if os.path.exists(file_json):
+            f.close()
+            os.remove(file_json)
 
-    # remove file
-    if os.path.exists(file_json):
-        f.close()
-        os.remove(file_json)
     return column_subject_index
+
+
+
 
 def convert_to_json(file_csv):
     head, tail = os.path.split(file_csv)
@@ -93,11 +101,6 @@ def download_csv(tableRve, tableDataRve):
         return response
 
     table = tableRve
-
-    #if table.process['phases'][PhasesEnum.COLUMN_ANALYSIS.value["key"]]['status'] == GlobalStatusEnum.DONE.value:
-    #    table = get_object_or_404(Table, id=table_id)
-    #    table_data = TableData.objects.get(table=table)
-    #    info_table = InfoTable.objects.get(table=table)
 
 
     print("TODO")
