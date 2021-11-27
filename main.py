@@ -11,6 +11,7 @@ from application.PageTwo import PageTwo
 from application.PageThree import PageThree
 import pathlib
 
+from http.server import HTTPServer, CGIHTTPRequestHandler
 
 #variables
 from application.PageFive import PageFive
@@ -19,13 +20,10 @@ from application.PageFor import PageFor
 isDebug = 0
 file_path_absolute = os.path.dirname(__file__)
 file_path_debug = os.path.join(file_path_absolute, ".idea\\files\\case_test")
-
+PORT = 7410
 
 
 class Container(tk.Frame):
-
-
-
 
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
@@ -138,7 +136,8 @@ class Container(tk.Frame):
         #self.p4.show()
         #self.displayed_page = 4
         current_directory = os.getcwd().split(os.sep)[-1]
-        webbrowser.open_new_tab("http://localhost:63342/"+ current_directory + "/graph_d3/graph-annotation.html")
+        #webbrowser.open_new_tab("http://localhost:"+ str(PORT) + "/"+ current_directory + "/graph-annotation.html")
+        webbrowser.open_new_tab("http://localhost:"+ str(PORT) + "/graph-annotation.html")
 
 
     def show_pageFive(self):
@@ -196,22 +195,25 @@ class Container(tk.Frame):
         return menubar
 
 
-
-
 if __name__ == "__main__":
+
+    os.chdir('.')
+    webServer = HTTPServer(('localhost', PORT), RequestHandlerClass=CGIHTTPRequestHandler)
+    print("Server enabled: http://localhost:" + str(PORT))
+    t = threading.Thread(target=webServer.serve_forever, daemon=True)
+    t.start()
+
+
     root = tk.Tk()
     root.title("TabIntegration")
-    #print(pathlib.Path(__file__).parent.resolve())
     iconPath = str(pathlib.Path(__file__).parent.resolve()) + "\\Icon\\LogoApp.png"
     #root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file=iconPath))
-
     #root.iconbitmap('C:/Users/ANTHONY/Downloads/icons8-doughnut-chart-24.ico')
 
     # menu tutorial https://www.delftstack.com/fr/tutorial/tkinter-tutorial/tkinter-menubar/
     main = Container(root)
     main.pack(side="top", fill="both", expand=True)
 
-
-
     root.wm_geometry("800x600")
     root.mainloop()
+
