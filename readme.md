@@ -1,8 +1,8 @@
 
 <h1>TabIntegration </h1>
-<hr>
+
 <h2>Description </h2>
-<hr>
+
 
 TODO 
 TODO
@@ -11,7 +11,7 @@ TODO
 
 <br>
 <h2>Installation and Run</h2>
-<hr>
+
 <h4> Requirements : </h4>
 <ul>
     <li> <a href="https://www.python.org/">Python 3.9</a></li>
@@ -32,7 +32,7 @@ TODO
 
 <br>
 <h2>Demo</h2>
-<hr>
+
 
 You can find some files on .idea/files
 ![Tuto_1_2](readme_img/TabIntegration_tuto_1_2.png "semantic bot schema view")
