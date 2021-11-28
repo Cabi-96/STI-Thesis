@@ -43,7 +43,7 @@ class Container(tk.Frame):
 
         #button terminer pour aller page 3
         #self.p2.button_Q3_SelectProposition = tk.Button(self.p2.label_frame_selection, text='Finish', command=lambda:[self.p3.show_df_result(self.p2.df),self.p2.refreshTvResult(self.p2.isNbFilesSup)])
-        self.p2.button_Q3_SelectProposition = tk.Button(self.p2.label_frame_selection, text='Finish', command=lambda:self.load_finish())
+        self.p2.button_Q3_SelectProposition = tk.Button(self.p2.label_frame_selection, text='Finish', state="disable", command=lambda:self.load_finish())
 
         self.p2.button_Q3_SelectProposition.pack(side='bottom', padx = 5)
 
@@ -186,7 +186,6 @@ class Container(tk.Frame):
 
 
         # TODO : close firefox quand on exit ?
-
 
         menubar.add_cascade(label="File", menu=menu_file)
         menubar.add_cascade(label="Navigate", menu=menu_navigate)
