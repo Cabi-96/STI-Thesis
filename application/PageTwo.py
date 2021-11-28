@@ -679,11 +679,12 @@ class PageTwo(Frame):
             self.askQuestion1(listProposition,listWikiLink)
             #self.df.to_excel(r'Première Question Tour'+str(i)+'.xlsx', index=False)
 
-        button_Q_SelectProposition = tk.Button(self.frame_questions, text='Questions', command=lambda:self.algo_question2_begin(button_Q_SelectProposition,frameProposition))
+        button_Q_SelectProposition = tk.Button(self.frame_questions, text='Questions',command=lambda:self.algo_question2_begin(button_Q_SelectProposition,frameProposition))
         button_Q_SelectProposition.pack()
 
     def algo_question2_begin(self,button_Q_SelectProposition,frameProposition):
         #print("Question 2")
+        self.button_Q3_SelectProposition["state"] = "normal"
         button_Q_SelectProposition.destroy()
 
         if frameProposition != None:
@@ -709,7 +710,7 @@ class PageTwo(Frame):
         button_Q3_Continue.pack()
 
         #Show la liste de proposition
-        frameListProposition = tk.LabelFrame(self.frame_questions, text='Liste proposition')
+        frameListProposition = tk.LabelFrame(self.frame_questions, text='List of proposals')
         frameListProposition.pack(padx = 5,expand="false", fill="x")
 
         tvI = ttk.Treeview(frameListProposition)
