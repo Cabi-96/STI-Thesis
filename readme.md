@@ -31,16 +31,19 @@ TODO
 <br>
 <h2>Demo</h2>
 
+<p align="center">
 
-<center>You can find some files on .idea/files</center>
+You can find some files on .idea/files
 
 ![Tuto_1_2](readme_img/TabIntegration_tuto_1_2.png "semantic bot schema view")
 
-<center>Load Files</center>
+Load Files
 
 ![Tuto_3](readme_img/TabIntegration_tuto_3.png "semantic bot schema view")
 
-<center>Load URI</center>
+Load URI
+
+</p>
 
 ![Tuto_4](readme_img/TabIntegration_tuto_4.png "semantic bot schema view")
 
