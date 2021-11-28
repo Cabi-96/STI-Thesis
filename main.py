@@ -1,6 +1,9 @@
 import threading
 import tkinter as tk
 import webbrowser
+import logging
+import logging.config
+from datetime import datetime
 
 from tkinter import *
 from tkinter.ttk import Progressbar
@@ -13,14 +16,16 @@ import pathlib
 
 from http.server import HTTPServer, CGIHTTPRequestHandler
 
-#variables
+#### variables
 from application.PageFive import PageFive
 from application.PageFor import PageFor
 
+#### set variables
 isDebug = 0
 file_path_absolute = os.path.dirname(__file__)
 file_path_debug = os.path.join(file_path_absolute, ".idea\\files\\case_test")
 PORT = 7410
+
 
 
 class Container(tk.Frame):
@@ -195,6 +200,20 @@ class Container(tk.Frame):
 
 
 if __name__ == "__main__":
+    #logger
+    global logger
+    logger=logging.getLogger()
+    logger.setLevel(logging.DEBUG)
+
+    # Create filehandler with desired filename.
+    fh = logging.FileHandler('log/'+ '{}.log'.format(datetime.now().strftime('%Y_%m_%d')))
+    fh.setLevel(logging.DEBUG)
+    log_formatter = logging.Formatter('%(asctime)s | %(levelname)-8s | %(lineno)04d | %(message)s')
+    fh.setFormatter(log_formatter)
+
+    ## Add filehandler to logger.
+    logger.addHandler(fh)
+    logger.debug("Begin")
 
     os.chdir('.')
     webServer = HTTPServer(('localhost', PORT), RequestHandlerClass=CGIHTTPRequestHandler)
@@ -202,14 +221,12 @@ if __name__ == "__main__":
     t = threading.Thread(target=webServer.serve_forever, daemon=True)
     t.start()
 
-
     root = tk.Tk()
     root.title("TabIntegration")
     iconPath = str(pathlib.Path(__file__).parent.resolve()) + "\\Icon\\LogoApp.png"
     #root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file=iconPath))
     #root.iconbitmap('C:/Users/ANTHONY/Downloads/icons8-doughnut-chart-24.ico')
 
-    # menu tutorial https://www.delftstack.com/fr/tutorial/tkinter-tutorial/tkinter-menubar/
     main = Container(root)
     main.pack(side="top", fill="both", expand=True)
 

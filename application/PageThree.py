@@ -1,14 +1,15 @@
 #Interface
 import tkinter as tk
+import pandas as pd
+import logging
+
 from tkinter import *
 from tkinter import messagebox, ttk, filedialog
 from tkinter.filedialog import asksaveasfile, askopenfilename, asksaveasfilename
 from urllib.error import HTTPError
-
-
-import pandas as pd
-
 from application.utils.utils import printDf, executeSparqlQuery, insertDataDf, writeHtmlFile
+
+logger = logging.getLogger(__name__)
 
 
 class PageThree(Frame):
