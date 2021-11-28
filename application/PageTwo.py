@@ -336,10 +336,17 @@ class PageTwo(Frame):
 
             self.label_rep_Q1 = ttk.Label(self.frame_questions, text="To select the first choice type 1 otherwise type 2:", wraplengt=750)
             self.label_rep_Q1.pack(padx = 5,fill="none",expand="false")
-            self.textBox_rep_Q1 = ttk.Entry(self.frame_questions)
+            vcmd = (self.register(self.callback))
+            self.textBox_rep_Q1 = ttk.Entry(self.frame_questions, validate='all',validatecommand=(vcmd, '%P'))
             self.textBox_rep_Q1.pack(padx = 5,fill="none",expand="false")
             self.button_Q1_OK = tk.Button(self.frame_questions, text='OK', command=lambda:self.question_2())
             self.button_Q1_OK.pack(padx = 5,fill="none",expand="false")
+
+    def callback(self, P):
+        if str(P) == "1" or str(P) == "2" or str(P) == "":
+            return True
+        else:
+            return False
 
     def refreshTv(self):
         z = -1
