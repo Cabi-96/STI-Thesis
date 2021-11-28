@@ -33,7 +33,8 @@ TODO
 
 <p align="center">
 
-You can find some files on .idea/files
+    You can find some files on .idea/files
+</p>
 
 ![Tuto_1_2](readme_img/TabIntegration_tuto_1_2.png "semantic bot schema view")
 
