@@ -1,4 +1,3 @@
-
 <h1>TabIntegration </h1>
 
 <h2>Description </h2>
@@ -32,13 +31,13 @@ TODO
 <h2>Demo</h2>
 
 <p align="center">
-
     You can find some files on .idea/files
-</p>
+
 
 ![Tuto_1_2](readme_img/TabIntegration_tuto_1_2.png "semantic bot schema view")
 
 Load Files
+</p>
 
 ![Tuto_3](readme_img/TabIntegration_tuto_3.png "semantic bot schema view")
 
