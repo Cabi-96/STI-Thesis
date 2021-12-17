@@ -557,7 +557,7 @@ class PageTwo(Frame):
                     del listIndexDf2[index-i]
                     i = i + 1
                 df2tmp = copy.deepcopy(df2.iloc[:, listIndexDf2]) #return all columns except the nth column
-                #printDf(df2tmp)
+                printDf(df2tmp)
             else:
                 df2tmp = df2
 
@@ -573,7 +573,7 @@ class PageTwo(Frame):
 
             #Evite les doublons dans le tableau final pour l'étape append
             #if self.increment == 1:
-            #    df1 = df1[~df1["Core Attribute"].isin(self.df["Core Attribute"])].dropna()
+            #df1 = df1[~df1["Core attribute"].isin(self.df["Core attribute"])].dropna()
 
             cond = df1.iloc[:,0].isin(self.df.iloc[:,0])
             df1.drop(df1[cond].index, inplace = True)
@@ -594,8 +594,10 @@ class PageTwo(Frame):
 
             self.df = self.df.append(df2, ignore_index=True, sort=False)
 
+            self.df = self.df.drop_duplicates(keep='first').reset_index(drop=True)
+            printDf(self.df)
             #self.df.to_excel(r'Première Question Tour'+str(self.increment)+'.xlsx', index=False)
-            #print(tabulate(df, headers='keys', tablefmt='psql'))
+
 
             self.frameDf.pack(fill="both",expand="yes", pady = 10, padx = 10)
             self.tvResult.pack(fill="both",expand="yes", pady = 10, padx = 10)
