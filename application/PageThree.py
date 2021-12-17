@@ -56,7 +56,7 @@ class PageThree(Frame):
 
         for row in df_rows:
             self.tvResult.insert("", "end",
-                                    values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
+                                 values=row)  # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
         self.show()
         writeHtmlFile(self.df)
 
@@ -64,13 +64,13 @@ class PageThree(Frame):
     def saveXlsx(self):
         #SAVING_PATH = filedialog.asksaveasfile(mode='w', defaultextension=".csv")
         #self.df.to_csv(SAVING_PATH,index=False)
-            try:
-                savefile = asksaveasfilename(filetypes=(("Excel files", "*.xlsx"),
-                                                        ("All files", "*.*") ))
-                self.df.to_excel(savefile + ".xlsx", index=False, sheet_name="Results")
-            except:
-                tk.messagebox.showerror("Error. Please try again.")
-            return
+        try:
+            savefile = asksaveasfilename(filetypes=(("Excel files", "*.xlsx"),
+                                                    ("All files", "*.*") ))
+            self.df.to_excel(savefile + ".xlsx", index=False, sheet_name="Results")
+        except:
+            tk.messagebox.showerror("Error. Please try again.")
+        return
 
     def saveCsv(self):
         #SAVING_PATH = filedialog.asksaveasfile(mode='w', defaultextension=".csv")
@@ -96,11 +96,14 @@ class PageThree(Frame):
         #print(rowCount)
         headers = list(df.columns.values)
         i = 0
+        printDf(df)
         while i < rowCount:
             #print(i)
             for item in headers:
                 if item != "http://dbpedia.org/ontology/wikiPageWikiLink":
                     # Si l'item est null il faut le remplir. -> Faudrait changer le if. Ici le nan est en string via la fonction insertColumnDf il faudrait éviter de la mettre en string.
+                    print("item: "+item)
+                    print(str(i)+" "+df.at[i, item])
                     if pd.isnull(df.at[i, item]) or df.at[i, item] == 'nan' or df.at[i, item] == '':
                         # Ici je récupère la cellule de la colonne sujet.
                         dbrSubject = df.at[i, headers[0]]
