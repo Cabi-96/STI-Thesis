@@ -16,6 +16,7 @@ import subprocess
 # pip install sparqlwrapper.skipssl
 
 # implement pip as a subprocess:
+subprocess.check_call([sys.executable, '-m', 'pip', 'install','logging'])
 subprocess.check_call([sys.executable, '-m', 'pip', 'install','pandas'])
 subprocess.check_call([sys.executable, '-m', 'pip', 'install','requests'])
 subprocess.check_call([sys.executable, '-m', 'pip', 'install','tabulate'])

@@ -3,12 +3,14 @@ import tkinter as tk
 from tkinter import *
 from tkinter import filedialog, messagebox, ttk
 import os
+import logging
 
 #Algo Integration
 import pandas as pd
 
 #variables
 file_path = ""
+logger = logging.getLogger(__name__)
 
 class PageOne(Frame):
 
@@ -58,6 +60,7 @@ class PageOne(Frame):
         return None
 
     def Load_excel_data(self):
+
         """If the file selected is valid this will load the file into the Treeview"""
         directory = os.fsencode(self.label_file["text"])
         #Changer l'init ici il faut transformer listFrame en variable globale.

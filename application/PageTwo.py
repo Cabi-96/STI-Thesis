@@ -8,12 +8,13 @@ from tkinter.messagebox import showinfo
 import copy
 from requests.exceptions import HTTPError
 import pandas as pd
-from tabulate import tabulate
+import logging
+import validators
 
 from application.utils.MtabExtractTable import MtabAnnotationApi
-import validators
 from application.utils.utils import printDf, executeSparqlQuery, insertColumnDf
 
+logger = logging.getLogger(__name__)
 
 
 
@@ -322,7 +323,7 @@ class PageTwo(Frame):
             frame_text = "CTA from the first Dataset :" + str(self.cta[0][0]) + "\n" + "\nCTA from the second Dataset :" + str(self.cta[self.increment][0]) + "\n" + "\nHere are the common elements :" + str(common_element)
 
             if len(common_element) == len(self.cta[0][0]):
-                frame_text += "\nAll the types in the subject list are found in the target list. We suggest to choose the first choice of dataset integration."
+                frame_text += "\nAll the types in the subject list are found in the target list.\nWe suggest to choose the first choice of dataset integration."
             elif len(common_element) > 0:
                 frame_text += "\nNot all types in the subject list are found in the target list. We therefore suggest to choose the second choice of dataset integration."
             else:

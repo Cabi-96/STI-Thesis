@@ -1,13 +1,7 @@
-#Interface
-import tkinter as tk
 from tkinter import *
-from tkinter import messagebox, ttk
-import tkinterweb
+import logging
 
-
-import pandas as pd
-
-from application.utils.utils import printDf, executeSparqlQuery, insertDataDf
+logger = logging.getLogger(__name__)
 
 
 class PageFor(Frame):
