@@ -15040,3 +15040,27 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 
 ###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
+1641300397578	geckodriver	INFO	Listening on 127.0.0.1:51701
+1641300400669	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileM5m7NG"
+*** You are running in headless mode.
+1641300400994	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofileM5m7NG\\search.json.mozlz4", (void 0)))
+1641300401947	Marionette	INFO	Listening on port 51709
+1641300402225	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1641300468979	Marionette	INFO	Stopped listening on port 51709
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1641300588474	geckodriver	INFO	Listening on 127.0.0.1:51826
+1641300591556	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofile3NwAv0"
+*** You are running in headless mode.
+1641300591853	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ANTHONY\\AppData\\Local\\Temp\\rust_mozprofile3NwAv0\\search.json.mozlz4", (void 0)))
+1641300592784	Marionette	INFO	Listening on port 51834
+1641300593117	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1641300657350	Marionette	INFO	Stopped listening on port 51834
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
