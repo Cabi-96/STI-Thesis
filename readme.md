@@ -6,6 +6,8 @@ This approach called SDA, which can expand the STI process with a semantic data 
 The STI process allows the transformation of the tabular data into machine-readable formats and is linked to other data sources on the
 Web through URI links.
 SDA provides users with a semantic visualization phase to facilitate the understanding of the semantically annotated file. It supports users to edit the interpretation provided by the annotation process.
+A video about this GUI application are available here: https://drive.google.com/file/d/1uxmEAwe7Ed7nz4VRaCB2VHrA0KIVsUDP/view
+
 <br>
 <br>
 
