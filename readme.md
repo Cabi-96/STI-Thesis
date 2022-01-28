@@ -7,6 +7,7 @@ The STI process allows the transformation of the tabular data into machine-reada
 Web through URI links.
 SDA provides users with a semantic visualization phase to facilitate the understanding of the semantically annotated file. It supports users to edit the interpretation provided by the annotation process.
 A video about this GUI application are available here: https://drive.google.com/file/d/1uxmEAwe7Ed7nz4VRaCB2VHrA0KIVsUDP/view
+For more details about the results of evalution are here: https://github.com/123rabida123/Datasets-and-Results-of-evaluation-SDA
 
 <br>
 <br>
