@@ -1,10 +1,11 @@
-<h1>TabIntegration </h1>
+<h1>SDA: Semantic Data Augmentation </h1>
 
 <h2>Description </h2>
 
-
-TODO 
-TODO
+This approach called SDA, which can expand the STI process with a semantic data augmentation phase by merging and adding missing data and adding new columns .
+The STI process allows the transformation of the tabular data into machine-readable formats and is linked to other data sources on the
+Web through URI links.
+SDA provides users with a semantic visualization phase to facilitate the understanding of the semantically annotated file. It supports users to edit the interpretation provided by the annotation process.
 <br>
 <br>
 
