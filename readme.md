@@ -28,25 +28,27 @@ For more details about the results of evalution are here: https://github.com/123
 
 <p align="center"> You can find some files on .idea/files </p>
 
-![text0](https://github.com/Cabi-96/STI-Thesis/blob/master/Screnshots-SINATRA/load%20URL-File.png?raw=true)
-
 ![test1](https://github.com/Cabi-96/STI-Thesis/blob/master/Screnshots-SINATRA/load%20URL-File.png)
 
 <p align="center"> Detection of the Subject Column </p>
 
-![test2](Screnshots-SINATRA/SUB-Col.png"semantic bot schema view")
+![test2](https://github.com/Cabi-96/STI-Thesis/blob/master/Screnshots-SINATRA/SUB-Col.png)
+
+<p align="center"> Data Repair </p>
+
+![test0](https://github.com/Cabi-96/STI-Thesis/blob/master/Screnshots-SINATRA/Repair.png)
 
 <p align="center"> Data annotation  </p>
 
-![test3](Screnshots-SINATRA/SINATRA 2.png"semantic bot schema view")
+![test3](https://github.com/Cabi-96/STI-Thesis/blob/master/Screnshots-SINATRA/SINATRA%202.png)
 
-<p align="center"> Add Column  </p>
+<p align="center"> Add Column "BirthDate" </p>
 
-![test4](Screnshots-SINATRA/AddCol.png"semantic bot schema view")
+![test4](https://github.com/Cabi-96/STI-Thesis/blob/master/Screnshots-SINATRA/AddCol.png)
 
-<p align="center"> Data augmentation  </p>
+<p align="center"> Final annotated Tabular data with Data repair and  Data augmentation  </p>
 
-![test5](Screnshots-SINATRA/final Dataset.png"semantic bot schema view")
+![test5](https://github.com/Cabi-96/STI-Thesis/blob/master/Screnshots-SINATRA/final%20Dataset.png)
 
 
 <br>
