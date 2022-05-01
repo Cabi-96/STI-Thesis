@@ -1,4 +1,9 @@
-<h1>SDA: Semantic Data  Repair and Augmentation </h1>
+<h1>SDA: Semantic Data Repair and Augmentation </h1>
+
+<p>
+ The descriptiotn of SINATRA is here: https://github.com/123rabida123/SINATRA-Annotation-Repair-Augmentation .
+</p>
+
 For more details about the results of evalution are here: https://github.com/123rabida123/Datasets-and-Results-of-evaluation-SDA
 
 <br>
