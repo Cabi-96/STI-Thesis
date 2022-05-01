@@ -34,13 +34,11 @@ For more details about the results of evalution are here: https://github.com/123
 <p align="center"> Load Files </p>
 
 
-![Tuto_3](readme_img/TabIntegration_tuto_3.png "semantic bot schema view")
 
 <p align="center"> Load URI </p>
-
+![Tuto_4](readme_img/TabIntegration_tuto_4.png "semantic bot schema view")
 </p>
 
-![Tuto_4](readme_img/TabIntegration_tuto_4.png "semantic bot schema view")
 
 ![Tuto_14](readme_img/TabIntegration_tuto_14.png "semantic bot schema view")
 <p align="center"> Now, you can display graph of results or save your results in file (csv or xlsx) </p>
