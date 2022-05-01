@@ -28,22 +28,11 @@ For more details about the results of evalution are here: https://github.com/123
 
 <p align="center"> You can find some files on .idea/files </p>
 
-
+![Tuto_1_2](readme_img/TabIntegration_tuto_1_2.png "semantic bot schema view")
 ![Tuto_1_2](readme_img/TabIntegration_tuto_1_2.png "semantic bot schema view")
 
 <p align="center"> Load Files </p>
 
-
-
-<p align="center"> Load URI </p>
-![Tuto_4](readme_img/TabIntegration_tuto_4.png "semantic bot schema view")
-</p>
-
-
-![Tuto_14](readme_img/TabIntegration_tuto_14.png "semantic bot schema view")
-<p align="center"> Now, you can display graph of results or save your results in file (csv or xlsx) </p>
-
-![Tuto_15_16](readme_img/TabIntegration_tuto_15_16.png "semantic bot schema view")
 
 
 
