@@ -28,10 +28,12 @@ For more details about the results of evalution are here: https://github.com/123
 
 <p align="center"> You can find some files on .idea/files </p>
 
-![Tuto_1_2](readme_img/TabIntegration_tuto_1_2.png "semantic bot schema view")
-![Tuto_1_2](readme_img/TabIntegration_tuto_1_2.png "semantic bot schema view")
+![load URL-File](Screnshots-SINATRA/load URL-File.png "semantic bot schema view")
 
-<p align="center"> Load Files </p>
+<p align="center"> Detection of the Subject Column </p>
+
+![SUB-Col](Screnshots-SINATRA/SUB-Col.png"semantic bot schema view")
+
 
 
 
