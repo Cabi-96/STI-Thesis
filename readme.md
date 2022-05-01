@@ -35,6 +35,8 @@ For more details about the results of evalution are here: https://github.com/123
 ![test2](https://github.com/Cabi-96/STI-Thesis/blob/master/Screnshots-SINATRA/SUB-Col.png)
 
 <p align="center"> Data annotation  </p>
+
+
 ![test3](https://github.com/Cabi-96/STI-Thesis/blob/master/Screnshots-SINATRA/SINATRA%202.png)
 
 <p align="center"> Data Repair </p>
