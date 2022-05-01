@@ -28,14 +28,25 @@ For more details about the results of evalution are here: https://github.com/123
 
 <p align="center"> You can find some files on .idea/files </p>
 
-![load URL-File](Screnshots-SINATRA/load URL-File.png "semantic bot schema view")
+![text0](https://github.com/Cabi-96/STI-Thesis/blob/master/Screnshots-SINATRA/load%20URL-File.png?raw=true)
+
+![test1](https://github.com/Cabi-96/STI-Thesis/blob/master/Screnshots-SINATRA/load%20URL-File.png)
 
 <p align="center"> Detection of the Subject Column </p>
 
-![SUB-Col](Screnshots-SINATRA/SUB-Col.png"semantic bot schema view")
+![test2](Screnshots-SINATRA/SUB-Col.png"semantic bot schema view")
 
+<p align="center"> Data annotation  </p>
 
+![test3](Screnshots-SINATRA/SINATRA 2.png"semantic bot schema view")
 
+<p align="center"> Add Column  </p>
+
+![test4](Screnshots-SINATRA/AddCol.png"semantic bot schema view")
+
+<p align="center"> Data augmentation  </p>
+
+![test5](Screnshots-SINATRA/final Dataset.png"semantic bot schema view")
 
 
 <br>
