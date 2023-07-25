@@ -1,4 +1,4 @@
-<h1>SDA: Semantic Data Repair and Augmentation </h1>
+<h1>Sinatra: Semantic Data Repair and Augmentation </h1>
 
 <p>
  The descriptiotn of SINATRA is here: https://github.com/123rabida123/SINATRA-Annotation-Repair-Augmentation .
